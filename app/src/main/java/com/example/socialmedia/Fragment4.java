@@ -306,6 +306,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                                             newMember.setUrl(url_result);
                                             newMember.setSeen("no");
                                             newMember.setText("Like your post");
+                                            newMember.setAction("L");
 
                                             ntref.child(currentUserid+"l").setValue(newMember);
                                             sendNotification(name_result,userid);

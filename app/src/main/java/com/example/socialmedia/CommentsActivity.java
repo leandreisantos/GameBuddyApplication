@@ -242,6 +242,7 @@ public class CommentsActivity extends AppCompatActivity {
             newMember.setUrl(Url);
             newMember.setSeen("no");
             newMember.setText("Commented on your post: " + comment);
+            newMember.setAction("C");
 
             String key = ntref.push().getKey();
             ntref.child(key).setValue(newMember);

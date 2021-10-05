@@ -2,7 +2,12 @@ package com.example.socialmedia;
 
 public class NewMember {
 
-    String url,name,text,uid,seen;
+    String url;
+    String name;
+    String text;
+    String uid;
+    String seen;
+    String action;
 
     public  NewMember(){
 
@@ -47,5 +52,13 @@ public class NewMember {
     public void setSeen(String seen) {
         this.seen = seen;
     }
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
 
 }

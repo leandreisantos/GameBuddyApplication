@@ -7,30 +7,57 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_nitem"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_nitem"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        app:cardPreventCornerOverlap="false"
-        app:cardCornerRadius="25dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/iv_new"
-            android:background="@drawable/ic_baseline_person_24"
-            android:clickable="true"
-            android:scaleType="centerCrop"/>
+        <androidx.cardview.widget.CardView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/cv_nitem"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            app:cardPreventCornerOverlap="false"
+            app:cardCornerRadius="25dp">
 
-    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_new"
+                android:background="@drawable/ic_baseline_person_24"
+                android:clickable="true"
+                android:scaleType="centerCrop"/>
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/icon_notifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_baseline_favorite_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="35dp"/>
+
+
 
     <TextView
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/cv_nitem"
+        app:layout_constraintLeft_toRightOf="@id/cl_nitem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
@@ -43,9 +70,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginBottom="5dp"/>
 
+
     <TextView
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/cv_nitem"
+        app:layout_constraintLeft_toRightOf="@id/cl_nitem"
         android:layout_marginTop="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,11 +84,21 @@
         android:textSize="15sp"
         android:layout_marginStart="10dp" />
 
+    <TextView
+        android:id="@+id/more_nitem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/more_vertical_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
     <TableRow
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cv_nitem"
+        app:layout_constraintTop_toBottomOf="@id/cl_nitem"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="0.1dp"

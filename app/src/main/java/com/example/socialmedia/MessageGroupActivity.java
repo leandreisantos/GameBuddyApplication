@@ -11,18 +11,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MessageGroupActivity extends AppCompatActivity {
 
     ImageView info;
+    TextView sendBtn;
+
+    //Database stuff
+    databaseReference dbr = new databaseReference();
+    FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
+    DatabaseReference databaseReference;
+    String sender_uid;
 
     //Drawer
     //Variables
     static final float END_SCALE = 0.7f;
     DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    TextView username;
-    ImageView imageView;
     LinearLayout contentView;
 
     @Override
@@ -30,16 +38,21 @@ public class MessageGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_group);
 
+        //database stuff
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        sender_uid = user.getUid();
+//        databaseReference = database.getReference("All group").child();
+
         info = findViewById(R.id.info_am);
         drawerLayout = findViewById(R.id.drawer_layout);
         contentView = findViewById(R.id.content);
+        sendBtn = findViewById(R.id.imageButtonsend);
+        
+        sendBtn.setOnClickListener(v -> doMessage());
+        info.setOnClickListener(v -> navDrawer());
+    }
 
-        info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navDrawer();
-            }
-        });
+    private void doMessage() {
     }
 
     private void navDrawer() {
