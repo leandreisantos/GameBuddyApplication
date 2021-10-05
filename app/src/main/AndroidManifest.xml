@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.socialmedia">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SocialMedia">
+        <activity android:name=".MessageGroupActivity"></activity>
+        <activity android:name=".CreateGroup" />
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".ShowLikedUser" />
+        <activity android:name=".UpdatePhoto" />
+        <activity android:name=".ShowStory" />
+        <activity android:name=".StoryActivity" />
+        <activity android:name=".MyProfileActivity" />
+        <activity android:name=".EventController.EventActivity" />
+        <activity android:name=".CommentsActivity" />
+        <activity android:name=".SendImage" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".WaitingActivity" />
+        <activity android:name=".OnBoardingActivity" />
+        <activity android:name=".FollowerActivity" />
+        <activity android:name=".MessageActivity" />
+        <activity android:name=".ShowUser" />
+        <activity
+            android:name=".IndividualPost"
+            android:label="@string/title_activity_individual_post"
+            android:theme="@style/Theme.SocialMedia.NoActionBar" />
+        <activity android:name=".PostActivity" />
+        <activity android:name=".AnswerActivity" />
+        <activity android:name=".ReplyActivity" />
+        <activity android:name=".YourQuestions" />
+        <activity android:name=".Related" />
+        <activity android:name=".AskActivity" />
+        <activity
+            android:name=".ImageActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".PrivacyActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".UpdateProfile"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".CreateProfile"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <service
+            android:name=".FIrebaseMessagingServices"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

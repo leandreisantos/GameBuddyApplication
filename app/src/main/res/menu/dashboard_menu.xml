@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home"
+            android:icon="@drawable/ic_round_home_24"/>
+        <item
+            android:id="@+id/nav_search"
+            android:title="Search"
+            android:icon="@drawable/ic_round_search_24"/>
+        <item
+            android:id="@+id/nav_all_game"
+            android:title="All Games"
+            android:icon="@drawable/ic_round_videogame_asset_24"/>
+        <item
+            android:id="@+id/nav_all_events"
+            android:title="Up Coming Events"
+            android:icon="@drawable/ic_round_emoji_events_24"/>
+
+    </group>
+
+    <item android:title="Profile">
+        <menu>
+            <group
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/notifications"
+                    android:title="Notifications"
+                    android:actionLayout="@layout/custom_action_item_notification"
+                    android:icon="@drawable/ic_round_notifications_24"/>
+                <item
+                    android:id="@+id/nav_profile"
+                    android:title="Profile"
+                    android:icon="@drawable/ic_round_person_24"/>
+                <item
+                    android:id="@+id/nav_friends"
+                    android:title="Friends"
+                    android:icon="@drawable/ic_round_people_24"/>
+                <item
+                    android:id="@+id/nav_logout"
+                    android:title="Logout"
+                    android:icon="@drawable/ic_round_logout_24"/>
+            </group>
+        </menu>
+    </item>
+
+
+    <item android:title="Share">
+        <menu>
+            <group
+                android:checkableBehavior="none">
+                <item
+                    android:id="@+id/nav_share"
+                    android:title="About Game Buddy"
+                    android:icon="@drawable/ic_round_info_24"/>
+                <item
+                    android:id="@+id/nav_rate_us"
+                    android:title="How to use"
+                    android:icon="@drawable/ic_round_contact_support_24"/>
+            </group>
+        </menu>
+    </item>
+
+</menu>

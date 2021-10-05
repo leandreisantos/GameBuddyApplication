@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+
+
+            <corners android:topRightRadius="30dp"
+                android:topLeftRadius="30dp"/>
+            <solid android:color="@color/complete_profile"/>
+        </shape>
+
+    </item>
+
+</selector>

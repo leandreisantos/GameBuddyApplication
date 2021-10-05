@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">GAME BUDDY</string>
+    <string name="url">https://social-media-981d0-default-rtdb.asia-southeast1.firebasedatabase.app/</string>
+    <string name="title_activity_individual_post">IndividualPost</string>
+    <string name="tab_text_1">Photos</string>
+    <string name="tab_text_2">Videos</string>
+    <string name="tab_text_3">Stories</string>
+
+    <!--Strings for On Boarding Screen -->
+    <string name="first_slide_title">Join to Game Events</string>
+    <string name="second_slide_title">Search your favorite Game</string>
+    <string name="third_slide_title">Create a team</string>
+    <string name="fourth_slide_title">Video Chat with your team</string>
+    <string name="fifth_slide_title">Get more subscriber</string>
+
+    <!--String in Dashboard fragment-->
+    <string name="c1_df">Strategy Game</string>
+    <string name="c2_df">Action Game</string>
+    <string name="c3_df">Adventure Game</string>
+    <string name="c4_df">Skills Game</string>
+
+    <!---Descriptopn-->
+    <string name="first_slide_desc">You can see all up coming events in your favorite game</string>
+    <string name="second_slide_desc">We provide categories to choose your favorite game</string>
+    <string name="third_slide_desc">Build a team with other players around the world</string>
+    <string name="fourth_slide_desc">Now you can easily communicate with your team by a video chat or group chat</string>
+    <string name="fifth_slide_desc">Upload your highlights and get more subcriber to become rank 1 in leaderboard</string>
+</resources>

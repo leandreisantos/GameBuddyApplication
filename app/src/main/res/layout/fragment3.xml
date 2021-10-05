@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
+
+    <EditText
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search user"
+        android:layout_margin="5dp"
+        android:id="@+id/search_f3"
+        android:padding="10dp"
+        android:textColorHint="@color/grey"
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:paddingLeft="20dp"
+        android:textColor="@color/black"
+        android:drawablePadding="10dp"/>
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/search_f3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Requests"
+        android:textColor="@color/red"
+        android:textSize="25sp"
+        android:padding="5dp"
+        android:id="@+id/requeststv"
+        android:layout_marginRight="10dp"/>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@id/requeststv"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/recyclerview_requestf3"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_requestf3"
+        android:id="@+id/recyclerview_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="260dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

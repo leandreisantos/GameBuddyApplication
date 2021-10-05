@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".CreateGroup">
+
+    <ScrollView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/btn_cg_close"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_round_close_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/title_cg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="80dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CREATE GROUP"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:fontFamily="sans-serif"/>
+
+            <TextView
+                android:id="@+id/lbl_cg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your group is where you and your friends hang out. Make yours and start talking."
+                android:textColor="@color/grey"
+                android:textSize="12sp"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/title_cg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_cg"
+                app:layout_constraintTop_toBottomOf="@id/lbl_cg"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_width="100dp"
+                app:cardBackgroundColor="@android:color/white"
+                android:layout_marginTop="20dp"
+                android:layout_height="100dp"
+                app:cardCornerRadius="50dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:id="@+id/iv_cg"
+                    android:backgroundTint="@color/secondary_background"
+                    android:background="@drawable/ic_baseline_camera_alt_24"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="85dp"
+                android:backgroundTint="@color/icon"
+                android:background="@drawable/ic_round_add_circle_24"
+                android:id="@+id/createcom"
+                app:layout_constraintTop_toBottomOf="@id/lbl_cg"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="90dp"/>
+
+            <TextView
+                android:id="@+id/lbl_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UPLOAD"
+                android:textColor="@color/grey"
+                android:fontFamily="sans-serif"
+                app:layout_constraintTop_toBottomOf="@id/cv_cg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="5dp"/>
+
+            <EditText
+                android:id="@+id/et_cg_name"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/border_btn"
+                app:layout_constraintTop_toBottomOf="@id/lbl_upload"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:drawableStart="@drawable/group_icon"
+                android:drawableTint="@color/white"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:hint="Group Name"
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"/>
+
+            <TextView
+                android:id="@+id/btn_cg"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/solid_btn"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Create Group"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/et_cg_name"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loginlot"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_cg"
+                app:lottie_rawRes="@raw/creategrouplot"
+                android:layout_marginTop="50dp"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true" />
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
