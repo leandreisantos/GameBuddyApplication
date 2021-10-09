@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.socialmedia"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -73,6 +73,9 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.15.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
+
+    implementation ('org.jitsi.react:jitsi-meet-sdk:2.+') { transitive = true }
+
 
     implementation 'com.github.shts:StoriesProgressView:3.0.0'
 

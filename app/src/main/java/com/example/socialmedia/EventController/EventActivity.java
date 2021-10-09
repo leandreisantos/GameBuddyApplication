@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.socialmedia.GetCurrentTime;
 import com.example.socialmedia.R;
 import com.example.socialmedia.databaseReference;
 import com.google.android.gms.tasks.Continuation;
@@ -193,17 +194,8 @@ public class EventActivity extends AppCompatActivity {
         String desc = etdesc.getText().toString();
         String title = etTitle.getText().toString();
 
-        Calendar cdate = Calendar.getInstance();
-        SimpleDateFormat currentdate = new SimpleDateFormat("dd-MMMM-yyy");
-        final String savedate = currentdate.format(cdate.getTime());
-
-        Calendar ctime = Calendar.getInstance();
-        SimpleDateFormat currenttime =new SimpleDateFormat("HH-mm-ss");
-        final String savetime = currenttime.format(ctime.getTime());
-
-
-        String time = savedate + ":" + savetime;
-
+              GetCurrentTime gc = new GetCurrentTime();
+              String time = gc.ctime();
 
         if(TextUtils.isEmpty(desc) || selectedUri != null){
 

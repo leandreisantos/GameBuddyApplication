@@ -15,16 +15,13 @@
         app:cardCornerRadius="100dp"
         android:layout_marginBottom="10dp"
         android:elevation="8dp"
-        android:onClick="chooseimage"
         app:cardElevation="8dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/iv_updatephoto"
-
             android:background="@drawable/ic_baseline_person_24"
-            android:clickable="true"
             android:scaleType="fitCenter"/>
 
     </androidx.cardview.widget.CardView>

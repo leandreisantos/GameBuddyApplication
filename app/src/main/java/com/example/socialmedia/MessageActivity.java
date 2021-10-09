@@ -64,7 +64,7 @@ public class MessageActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView imageView;
     ImageButton sendbtn,cambtn,micbtn;
-    TextView username,typingtv;
+    TextView username,typingtv,btnVc;
     EditText messageEt;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
@@ -112,6 +112,7 @@ public class MessageActivity extends AppCompatActivity {
         username = findViewById(R.id.username_messageTv);
         micbtn = findViewById(R.id.btn_mic);
         typingtv = findViewById(R.id.typingstatus);
+        btnVc = findViewById(R.id.btn_vc);
 
 
 
@@ -133,34 +134,22 @@ public class MessageActivity extends AppCompatActivity {
 
         mediaRecorder.setOutputFile(file);
 
-
-//        if (ActivityCompat.checkSelfPermission(MessageActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-//
-//            ActivityCompat.requestPermissions(MessageActivity.this, new String[]{Manifest.permission.RECORD_AUDIO},1);
-//            mediaRecorder = new MediaRecorder();
-//            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-//            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-//            mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-//
-//            mediaRecorder.setOutputFile(file);
-//
-//
-//        } else {
-//            mediaRecorder = new MediaRecorder();
-//            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-//            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//            mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-//
-//            mediaRecorder.setOutputFile(file);
-//
-//        }
-
         sendbtn.setOnClickListener(v -> SendMessage());
         cambtn.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(intent,PICK_IMAGE);
+        });
+
+
+        btnVc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MessageActivity.this,VideoCallOutgoing.class);
+                intent.putExtra("uid",receiver_uid);
+                startActivity(intent);
+            }
         });
 
         micbtn.setOnClickListener(v -> createDialog());

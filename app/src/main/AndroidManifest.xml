@@ -16,7 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialMedia">
-        <activity android:name=".MessageGroupActivity"></activity>
+        <activity android:name=".EventSelectedActivity"></activity>
+        <activity android:name=".VideoCallOutgoing" />
+        <activity android:name=".VideoCallinComing" />
+        <activity android:name=".MessageGroupActivity" />
         <activity android:name=".CreateGroup" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".ShowLikedUser" />

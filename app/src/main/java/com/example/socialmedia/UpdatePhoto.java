@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class UpdatePhoto extends AppCompatActivity {
     String currentuid;
     Button button;
     private final static int PICK_IMAGE = 1;
+    private static final int PICK_FILE = 1;
 
     Uri imageuri,url;
 
@@ -68,6 +70,16 @@ public class UpdatePhoto extends AppCompatActivity {
         currentuid = user.getUid();
 
         storageReference = FirebaseStorage.getInstance().getReference("Profile images");
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent,PICK_IMAGE);
+            }
+        });
         
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,10 +219,4 @@ public class UpdatePhoto extends AppCompatActivity {
 
     }
 
-    public void chooseimage(View view) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,PICK_IMAGE);
-    }
 }

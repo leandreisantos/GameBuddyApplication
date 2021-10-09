@@ -597,7 +597,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
     private void sendNotification(String name,String uid){
 
-        FirebaseDatabase.getInstance().getReference().child(uid).child("token")
+        FirebaseDatabase.getInstance(dbr.keyDb()).getReference("Token").child(uid).child("token")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

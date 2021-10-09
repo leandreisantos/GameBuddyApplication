@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -15,9 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -101,15 +100,26 @@ public class ShowUser extends AppCompatActivity {
         ntref = database.getReference("notification").child(currentUserId);
 
 
-        sendmessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        sendmessage.setOnClickListener(view -> {
 
-                Intent intent = new Intent(ShowUser.this,MessageActivity.class);
-                intent.putExtra("n",name);
-                intent.putExtra("u",url);
-                intent.putExtra("uid",userid);
+            Intent intent = new Intent(ShowUser.this,MessageActivity.class);
+            intent.putExtra("n",name);
+            intent.putExtra("u",url);
+            intent.putExtra("uid",userid);
+            startActivity(intent);
+        });
+
+        websitetv.setOnClickListener(v -> {
+            try{
+
+                String url = websitetv.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
                 startActivity(intent);
+
+
+            }catch (Exception e){
+                Toast.makeText(ShowUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -127,28 +137,22 @@ public class ShowUser extends AppCompatActivity {
         });
 
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String status = button.getText().toString();
-                if (status.equals("Follow")){
-                    follow();
-                }else if (status.equals("Requested")){
-                    delRequest();
-                }else if (status.equals("Following")){
-                    unFollow();
-                }
-
+        button.setOnClickListener(view -> {
+            String status = button.getText().toString();
+            if (status.equals("Follow")){
+                follow();
+            }else if (status.equals("Requested")){
+                delRequest();
+            }else if (status.equals("Following")){
+                unFollow();
             }
+
         });
 
-        followers_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ShowUser.this,FollowerActivity.class);
-                intent.putExtra("u",userid);
-                startActivity(intent);
-            }
+        followers_tv.setOnClickListener(view -> {
+            Intent intent = new Intent(ShowUser.this,FollowerActivity.class);
+            intent.putExtra("u",userid);
+            startActivity(intent);
         });
     }
 
@@ -200,21 +204,30 @@ public class ShowUser extends AppCompatActivity {
         String currentUserId = user.getUid();
 
         documentReference.get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                .addOnCompleteListener(task -> {
 
-                        if (task.getResult().exists()){
-                            String name_result = task.getResult().getString("name");
-                            String age_result = task.getResult().getString("prof");
-                            String bio_result = task.getResult().getString("bio");
-                            String email_result = task.getResult().getString("email");
-                            String web_result = task.getResult().getString("web");
-                            String Url = task.getResult().getString("url");
-                            p = task.getResult().getString("privacy");
+                    if (task.getResult().exists()){
+                        String name_result = task.getResult().getString("name");
+                        String age_result = task.getResult().getString("prof");
+                        String bio_result = task.getResult().getString("bio");
+                        String email_result = task.getResult().getString("email");
+                        String web_result = task.getResult().getString("web");
+                        String Url = task.getResult().getString("url");
+                        p = task.getResult().getString("privacy");
 
 
-                            if (p.equals("Public")){
+                        if (p.equals("Public")){
+                            professiontv.setText(bio_result);
+                            nametv.setText(name_result);
+                            biotv.setText(age_result);
+                            emailtv.setText(email_result);
+                            websitetv.setText(web_result);
+                            Picasso.get().load(Url).into(imageView);
+                            requesttv.setVisibility(View.GONE);
+                        }else {
+
+                            String u = button.getText().toString();
+                            if (u.equals("Following")){
                                 professiontv.setText(bio_result);
                                 nametv.setText(name_result);
                                 biotv.setText(age_result);
@@ -223,35 +236,23 @@ public class ShowUser extends AppCompatActivity {
                                 Picasso.get().load(Url).into(imageView);
                                 requesttv.setVisibility(View.GONE);
                             }else {
-
-                                String u = button.getText().toString();
-                                if (u.equals("Following")){
-                                    professiontv.setText(bio_result);
-                                    nametv.setText(name_result);
-                                    biotv.setText(age_result);
-                                    emailtv.setText(email_result);
-                                    websitetv.setText(web_result);
-                                    Picasso.get().load(Url).into(imageView);
-                                    requesttv.setVisibility(View.GONE);
-                                }else {
-                                    professiontv.setText("*****************");
-                                    nametv.setText(name_result);
-                                    biotv.setText("*****************");
-                                    emailtv.setText("*****************");
-                                    websitetv.setText("*****************");
-                                    Picasso.get().load(Url).into(imageView);
-                                    requesttv.setVisibility(View.VISIBLE);
-                                }
-
+                                professiontv.setText("*****************");
+                                nametv.setText(name_result);
+                                biotv.setText("*****************");
+                                emailtv.setText("*****************");
+                                websitetv.setText("*****************");
+                                Picasso.get().load(Url).into(imageView);
+                                requesttv.setVisibility(View.VISIBLE);
                             }
 
-
-
-
-
-                        }else {
-                            Toast.makeText(ShowUser.this, "No Profile exist", Toast.LENGTH_SHORT).show();
                         }
+
+
+
+
+
+                    }else {
+                        Toast.makeText(ShowUser.this, "No Profile exist", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -262,26 +263,19 @@ public class ShowUser extends AppCompatActivity {
                 });
 
         documentReference1.get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                .addOnCompleteListener(task -> {
 
-                        if (task.getResult().exists()){
-                            namereq = task.getResult().getString("name");
-                            professionreq = task.getResult().getString("age");
-                            urlreq = task.getResult().getString("url");
+                    if (task.getResult().exists()){
+                        namereq = task.getResult().getString("name");
+                        professionreq = task.getResult().getString("age");
+                        urlreq = task.getResult().getString("url");
 
-
-                        }else {
-                             Toast.makeText(ShowUser.this, "No Profile exist", Toast.LENGTH_SHORT).show();
-                        }
+                    }else {
+                         Toast.makeText(ShowUser.this, "No Profile exist", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                .addOnFailureListener(e -> {
 
-                    }
                 });
 
         db1.addValueEventListener(new ValueEventListener() {
@@ -427,11 +421,8 @@ public class ShowUser extends AppCompatActivity {
                         Toast.makeText(ShowUser.this, "Unfollowed", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                .setNegativeButton("No", (dialogInterface, i) -> {
 
-                    }
                 });
         builder.create();
         builder.show();
@@ -454,22 +445,19 @@ public class ShowUser extends AppCompatActivity {
         });
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                String say="";
-                if(key.equals("sf")){
-                    say = "Started Following you";
-                }else if(key.equals("sr")){
-                    say = "Sent You Follow request";
-                }
-                FcmNotificationSender notificationsSender =
-                        new FcmNotificationSender(usertoken,"Social Media",name_result+say,
-                                getApplicationContext(),ShowUser.this);
-
-                notificationsSender.SendNotifications();
-
+        handler.postDelayed(() -> {
+            String say="";
+            if(key.equals("sf")){
+                say = "Started Following you";
+            }else if(key.equals("sr")){
+                say = "Sent You Follow request";
             }
+            FcmNotificationSender notificationsSender =
+                    new FcmNotificationSender(usertoken,"Social Media",name_result+say,
+                            getApplicationContext(),ShowUser.this);
+
+            notificationsSender.SendNotifications();
+
         },3000);
 
     }

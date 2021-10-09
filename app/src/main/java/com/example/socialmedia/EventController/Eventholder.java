@@ -15,6 +15,7 @@ public class Eventholder extends RecyclerView.ViewHolder {
 
     ImageView iv;
     TextView desctxt,titletxt;
+    public TextView EventView;
 
     public Eventholder(@NonNull View itemView) {
         super(itemView);
@@ -25,6 +26,7 @@ public class Eventholder extends RecyclerView.ViewHolder {
         iv = itemView.findViewById(R.id.fecd_iv_item);
         desctxt = itemView.findViewById(R.id.fecd_desc_item);
         titletxt = itemView.findViewById(R.id.fecd_title_item);
+        EventView = itemView.findViewById(R.id.fecd_vm_item);
 
 
         if(type != null){

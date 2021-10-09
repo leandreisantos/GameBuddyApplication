@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/secondary_background"
+    tools:context=".VideoCallOutgoing">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_og"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="150dp"
+        android:elevation="8dp"
+        app:cardElevation="8dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/iv_og_vc"
+            android:background="@drawable/ic_baseline_person_24"
+            android:clickable="true"
+            android:scaleType="fitCenter"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        app:layout_constraintRight_toLeftOf="@id/cv_og"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="70dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/name_vc_og"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/white"
+        android:textSize="30sp"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/name_vc_og"
+        app:layout_constraintRight_toLeftOf="@id/cv_og"
+        android:layout_marginEnd="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profession"
+        android:textSize="20sp"
+        android:textColor="@color/grey"
+        android:id="@+id/prof_og_vc"/>
+
+    <ImageView
+        android:id="@+id/icon_vc_og"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/videocall_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/icon_vc_og"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Incomming Video Call"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif"
+        android:textSize="25sp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:src="@drawable/ic_round_close_24"
+        android:id="@+id/decline_vc_og"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="150dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Decline"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        app:layout_constraintTop_toBottomOf="@id/decline_vc_og"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

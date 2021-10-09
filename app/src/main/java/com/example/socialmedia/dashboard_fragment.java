@@ -88,7 +88,27 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
 
                         holder.setEvent(getActivity(),model.getName(),model.getUrl(),model.getPostUri(),model.getTime(),model.getUid(),
                                 model.getType(),model.getDesc(),model.getTitle());
+
                         name = getItem(position).getName();
+                        String title = getItem(position).getTitle();
+                        String uri = getItem(position).getPostUri();
+                        String time = getItem(position).getTime();
+                        String name = getItem(position).getName();
+                        String desc = getItem(position).getDesc();
+                        String uid = getItem(position).getUid();
+
+                        holder.EventView.setOnClickListener(v -> {
+                            Intent intent = new Intent(getActivity(),EventSelectedActivity.class);
+                            intent.putExtra("t",title);
+                            intent.putExtra("uri",uri);
+                            intent.putExtra("ti",time);
+                            intent.putExtra("n",name);
+                            intent.putExtra("d",desc);
+                            intent.putExtra("i",uid);
+                            startActivity(intent);
+                        });
+
+
 
                     }
 

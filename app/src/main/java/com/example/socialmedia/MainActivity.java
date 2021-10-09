@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference ntRef;
+    String uid;
 
 
     @Override
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
+        uid = user.getUid();
 
         ntRef = database.getReference("notification").child(uid);
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // Get new FCM registration token
                     String token = task.getResult();
                     databaseReference dbr = new databaseReference();
-                    FirebaseDatabase.getInstance(dbr.keyDb()).getReference().child(uid).child("token").setValue(token);
+                    FirebaseDatabase.getInstance(dbr.keyDb()).getReference("Token").child(uid).child("token").setValue(token);
 
                     // Log and toast
                     //String msg = getString(R.string.msg_token_fmt, token);
@@ -263,6 +264,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setMessage("Are you sure to logout?")
                 .setPositiveButton("Logout", (dialog, which) -> {
                     mAuth.signOut();
+                    FirebaseDatabase.getInstance(dbr.keyDb()).getReference("Token").child(uid).child("token").removeValue();
                     startActivity(new Intent(MainActivity.this,LoginActivity.class));
                 })
                 .setNegativeButton("No", (dialog, which) -> {

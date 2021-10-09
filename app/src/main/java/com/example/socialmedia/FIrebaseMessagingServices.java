@@ -104,10 +104,10 @@ public class FIrebaseMessagingServices extends com.google.firebase.messaging.Fir
 
     private void startCall(String body) {
 
-//        Intent intent = new Intent(this,VideoCallinComing.class);
-//        intent.putExtra("uid",body);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
+        Intent intent = new Intent(this,VideoCallinComing.class);
+        intent.putExtra("uid",body);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
     }
 }

@@ -64,8 +64,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/iv_cp"
-                        android:background="@drawable/ic_baseline_person_24"
+                        android:id="@+id/iv_up"
+                        android:background="@color/secondary_background"
                         android:clickable="true"
                         android:scaleType="fitCenter"/>
 
@@ -327,6 +327,21 @@
                     android:layout_margin="10dp"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/icon"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    />
+                <Button
+                    app:layout_constraintTop_toBottomOf="@id/btn_up"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_del"
+                    android:text="Delete Profile"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/red"
                     android:textColor="@android:color/white"
                     android:textSize="15sp"
                     />

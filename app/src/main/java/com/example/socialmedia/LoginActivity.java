@@ -1,10 +1,8 @@
 package com.example.socialmedia;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,32 +11,22 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText emailEt,passEt;
     Button login_btn;
-    CheckBox checkBox;
+    CheckBox showPass;
     ProgressBar progressBar;
     FirebaseAuth mAuth;
     ImageView back_btn;
@@ -56,97 +44,48 @@ public class LoginActivity extends AppCompatActivity {
         passEt = findViewById(R.id.login_password_et);
         back_btn = findViewById(R.id.back);
         login_btn = findViewById(R.id.button_login);
-        //checkBox = findViewById(R.id.login_checkbox);
+        showPass = findViewById(R.id.showpass_la);
         progressBar = findViewById(R.id.progressbar_login);
         mAuth = FirebaseAuth.getInstance();
 
-//        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked){
-//                    passEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//
-//                }else{
-//                    passEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//                }
-//            }
-//        });
-
-
-
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,WaitingActivity.class);
-                startActivity(intent);
-            }
+        showPass.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) passEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            else passEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
         });
 
-        login_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String email = emailEt.getText().toString();
-                String pass = passEt.getText().toString();
-
-                if(!TextUtils.isEmpty(email)||!TextUtils.isEmpty(pass)){
-                    progressBar.setVisibility(View.VISIBLE);
-                    mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-
-                            if(task.isSuccessful()){
-                                sendtoMain();
-                            }else{
-                                String error = task.getException().getMessage();
-                                Toast.makeText(LoginActivity.this, "Error:"+error, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }else{
-                    Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
-                }
-            }
+        back_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this,WaitingActivity.class);
+            startActivity(intent);
         });
 
-        forgotpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        login_btn.setOnClickListener(v -> {
+            String email = emailEt.getText().toString();
+            String pass = passEt.getText().toString();
 
-                String email = emailEt.getText().toString();
+            if(!TextUtils.isEmpty(email)||!TextUtils.isEmpty(pass)){
+                progressBar.setVisibility(View.VISIBLE);
+                mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) sendtoMain();
+                    else Toast.makeText(LoginActivity.this, "Error:"+ Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }else Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+        });
+
+        forgotpass.setOnClickListener(v -> {
+            String email = emailEt.getText().toString();
+            if(emailEt.getText().toString().trim().equals("")) Toast.makeText(LoginActivity.this, "Input Email first", Toast.LENGTH_SHORT).show();
+            else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                 builder.setTitle("Reset Password")
                         .setMessage("Are you sure to reset password?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                mAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(LoginActivity.this, "Reset Link sent", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(LoginActivity.this, "Error"+ e, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
+                        .setPositiveButton("Yes", (dialog, which) -> mAuth.sendPasswordResetEmail(email).addOnSuccessListener(aVoid -> Toast.makeText(LoginActivity.this, "Reset Link sent", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(LoginActivity.this, "Error"+ e, Toast.LENGTH_SHORT).show()))
+                        .setNegativeButton("No", (dialog, which) -> {
                         });
 
                 builder.create();
                 builder.show();
-
-
-    }
-        });
+            }
+});
     }
 
     private void sendtoMain() {
@@ -160,7 +99,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         if(user!=null){
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
