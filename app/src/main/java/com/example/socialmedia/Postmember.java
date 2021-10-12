@@ -2,7 +2,7 @@ package com.example.socialmedia;
 
 public class Postmember {
 
-    String name,url,postUri,time,uid,type,desc,height;
+    String name,url,postUri,time,uid,type,desc;
 
     public Postmember(){
 

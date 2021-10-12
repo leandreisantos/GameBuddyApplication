@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -32,10 +34,22 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     ImageView back_btn;
 
+    databaseReference dbr = new databaseReference();
+    FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
+    DatabaseReference databaseReference;
+    Postmember postmember;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String currentuid = user.getUid();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        postmember = new Postmember();
+
+        databaseReference = database.getReference("newKey");
 
         emailEt = findViewById(R.id.register_email_et);
         passEt = findViewById(R.id.register_password_et);
@@ -84,6 +98,8 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
+                                    postmember.setUid(currentuid);
+                                    databaseReference.child(currentuid).setValue(currentuid);
                                     sendtoMain();
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }else{

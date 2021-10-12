@@ -43,6 +43,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -52,10 +55,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import static android.app.Activity.RESULT_OK;
 
 public class Fragment4 extends Fragment implements View.OnClickListener{
+
+    SwipeRefreshLayout sp;
 
     TextView button,logoref;
     RecyclerView recyclerView;
@@ -102,6 +108,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         storyRef = database.getReference("All story");
         referenceDel = database.getReference("story");
         documentReference = db.collection("user").document(currentuid);
+        sp = getActivity().findViewById(R.id.swipe_post);
         recyclerView = getActivity().findViewById(R.id.rv_post);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -131,17 +138,9 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         userMember = new AllUserMember();
 
         checkStory(currentuid);
+        sp.setOnRefreshListener(() -> sp.setRefreshing(false));
 
-//        logoref.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.drawer_layout_f4);
-//                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//                fragmentTransaction.detach(currentFragment);
-//                fragmentTransaction.attach(currentFragment);
-//                fragmentTransaction.commit();
-//            }
-//        });
+        logoref.setOnClickListener(v -> sp.setRefreshing(false));
 
     }
 
@@ -254,7 +253,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         //String uri  = getItem(position).getPostUri();
                         String name = getItem(position).getName();
                         String url = getItem(position).getPostUri();
-                        final String time = getItem(position).getTime();
+                        String time = getItem(position).getTime();
                         String type = getItem(position).getType();
                         String userid = getItem(position).getUid();
 
@@ -337,12 +336,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                             intent.putExtra("uid",userid);
                             startActivity(intent);
                         });
-                        holder.iv_post.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ShowPost(url);
-                            }
-                        });
+                        holder.iv_post.setOnClickListener(v -> ShowPost(url,userid));
 
                     }
 
@@ -408,7 +402,11 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
     }
 
-    private void ShowPost(String url) {
+    private void ShowPost(String url,String uid) {
+        Intent intent = new Intent(getActivity(),ViewImage.class);
+        intent.putExtra("i",uid);
+        intent.putExtra("iv",url);
+        startActivity(intent);
     }
 
     void showDialog(String name,String url,String time,String userid,String type){
@@ -419,6 +417,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         TextView share = view.findViewById(R.id.share_tv_post);
         TextView delete = view.findViewById(R.id.delete_tv_post);
         TextView copyurl = view.findViewById(R.id.copyurl_tv_post);
+
 
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
                 .setView(view)

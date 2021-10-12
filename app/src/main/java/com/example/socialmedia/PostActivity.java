@@ -110,8 +110,6 @@ public class PostActivity extends AppCompatActivity {
 
        });
 
-
-
     }
 
     private void chooseImage() {

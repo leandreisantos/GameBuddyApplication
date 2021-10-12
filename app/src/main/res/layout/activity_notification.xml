@@ -32,7 +32,25 @@
         android:layout_marginTop="35dp"
         android:layout_marginLeft="10dp"/>
 
+    <EditText
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/notilottie"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="320dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        android:id="@+id/search_et_an"
+        android:background="@drawable/search_back"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:paddingStart="10dp"
+        android:layout_marginTop="35dp"
+        android:drawablePadding="10dp"
+        android:textColor="@color/black"
+        android:padding="10dp"/>
+
     <ImageView
+        android:id="@+id/search_btn_an"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:src="@drawable/search_noti"

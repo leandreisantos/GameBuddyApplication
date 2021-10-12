@@ -96,8 +96,10 @@ public class groupFragment extends Fragment {
     }
 
     private void search_info() {
-        String query = search.getText().toString().toUpperCase();
+        String query = search.getText().toString();
         Query search = databaseReference.orderByChild("name").startAt(query).endAt(query+"\uf0ff");
+
+
     }
 
     @Override

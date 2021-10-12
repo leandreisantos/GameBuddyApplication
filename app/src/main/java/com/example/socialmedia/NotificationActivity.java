@@ -11,11 +11,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +37,10 @@ import com.squareup.picasso.Picasso;
 public class NotificationActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    ImageView search;
+    EditText search_et;
+    TextView lbl;
+
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
@@ -51,66 +58,48 @@ public class NotificationActivity extends AppCompatActivity {
         userid = user.getUid();
         df = FirebaseDatabase.getInstance().getReference("notification");
 
+
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView = findViewById(R.id.rv_new);
+        search= findViewById(R.id.search_btn_an);
+        search_et = findViewById(R.id.search_et_an);
+        lbl = findViewById(R.id.tv_lbl);
 
         ntRef = database.getReference("notification").child(userid);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         ntRef.keepSynced(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+
+        search.setOnClickListener(v -> {
+            search.setVisibility(View.GONE);
+            lbl.setVisibility(View.GONE);
+            search_et.setVisibility(View.VISIBLE);
+        });
+
+        search_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                showRec("s");
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        FirebaseRecyclerOptions<NewMember> options1 =
-                new FirebaseRecyclerOptions.Builder<NewMember>()
-                        .setQuery(ntRef,NewMember.class)
-                        .build();
-
-        FirebaseRecyclerAdapter<NewMember,NewViewHolder> firebaseRecyclerAdapter1 =
-                new FirebaseRecyclerAdapter<NewMember, NewViewHolder>(options1) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull NewViewHolder holder, int position, @NonNull NewMember model) {
-
-                        holder.setNt(getApplication(),model.getUrl(),model.getName(),model.getText(),model.getUid(),model.getSeen(),model.getAction());
-                        String name = getItem(position).getName();
-                        String uid = getItem(position).getUid();
-                        String url = getItem(position).getUid();
-                        image = getItem(position).getUrl();
-
-                        holder.nametv.setOnClickListener(v -> {
-                            if (userid.equals(uid)) {
-                                Intent intent = new Intent(NotificationActivity.this,MyProfileActivity.class);
-                                startActivity(intent);
-
-                            }else {
-                                Intent intent = new Intent(NotificationActivity.this,ShowUser.class);
-                                intent.putExtra("n",name);
-                                intent.putExtra("u",url);
-                                intent.putExtra("uid",uid);
-                                startActivity(intent);
-                            }
-                        });
-                        holder.more.setOnClickListener(v -> showBottomSheet());
-                    }
-
-                    @NonNull
-                    @Override
-                    public NewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext())
-                                .inflate(R.layout.new_layout,parent,false);
-
-                        return new NewViewHolder(view);
-                    }
-                };
-
-
-        firebaseRecyclerAdapter1.startListening();
-
-        recyclerView.setAdapter(firebaseRecyclerAdapter1);
+        showRec("n");
     }
 
     private void showBottomSheet() {
@@ -154,5 +143,65 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showRec(String id){
+        FirebaseRecyclerOptions<NewMember> options1 = null;
+        if(id.equals("n")){
+                    options1 =
+                    new FirebaseRecyclerOptions.Builder<NewMember>()
+                            .setQuery(ntRef,NewMember.class)
+                            .build();
+        }else if(id.equals("s")){
+
+            String query = search_et.getText().toString();
+            Query search = ntRef.orderByChild("name").startAt(query).endAt(query+"\uf0ff");
+                    options1 =
+                    new FirebaseRecyclerOptions.Builder<NewMember>()
+                            .setQuery(search,NewMember.class)
+                            .build();
+        }
+
+        FirebaseRecyclerAdapter<NewMember,NewViewHolder> firebaseRecyclerAdapter1 =
+                new FirebaseRecyclerAdapter<NewMember, NewViewHolder>(options1) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull NewViewHolder holder, int position, @NonNull NewMember model) {
+
+                        holder.setNt(getApplication(),model.getUrl(),model.getName(),model.getText(),model.getUid(),model.getSeen(),model.getAction());
+                        String name = getItem(position).getName();
+                        String uid = getItem(position).getUid();
+                        String url = getItem(position).getUid();
+                        image = getItem(position).getUrl();
+
+                        holder.nametv.setOnClickListener(v -> {
+                            if (userid.equals(uid)) {
+                                Intent intent = new Intent(NotificationActivity.this,MyProfileActivity.class);
+                                startActivity(intent);
+
+                            }else {
+                                Intent intent = new Intent(NotificationActivity.this,ShowUser.class);
+                                intent.putExtra("n",name);
+                                intent.putExtra("u",url);
+                                intent.putExtra("uid",uid);
+                                startActivity(intent);
+                            }
+                        });
+                        holder.more.setOnClickListener(v -> showBottomSheet());
+                    }
+
+                    @NonNull
+                    @Override
+                    public NewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.new_layout,parent,false);
+
+                        return new NewViewHolder(view);
+                    }
+                };
+
+
+        firebaseRecyclerAdapter1.startListening();
+
+        recyclerView.setAdapter(firebaseRecyclerAdapter1);
     }
 }

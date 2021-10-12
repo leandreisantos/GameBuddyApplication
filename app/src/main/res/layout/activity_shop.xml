@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ShopActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/cl1">
+
+                <ImageView
+                    android:id="@+id/btn_sell_close"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_round_close_24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@id/btn_sell_close"
+                    android:textColor="@color/white"
+                    android:text="@string/sell_title"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/baloo"/>
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="45dp"
+                    android:text="@string/sell_publish"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/baloo"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/border_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:id="@+id/btn_publish_sell"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="20dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl3"
+                app:layout_constraintTop_toBottomOf="@id/cl1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="match_parent"
+                android:padding="20dp"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="25sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/iv_user_tv_sell"/>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/baloo"
+                    app:layout_constraintLeft_toRightOf="@id/cv1"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/shop_icon"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:padding="20dp"
+                android:id="@+id/cl2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cl3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/iv_sell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <TextView
+                    android:id="@+id/tv_iv_sell"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/border_input"
+                    android:fontFamily="@font/baloo"
+                    android:gravity="center"
+                    android:text="@string/sell_addPhoto"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    app:drawableTint="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/sell_tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_iv_sell"
+                    android:background="@drawable/border_input"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/sell_hintt"
+                    android:textColor="@color/white"
+                    android:padding="10dp"
+                    android:inputType="text"
+                    android:textColorHint="@color/grey"/>
+
+                <EditText
+                    android:id="@+id/sell_tv_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:layout_constraintTop_toBottomOf="@id/sell_tv_title"
+                    android:background="@drawable/border_input"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/sell_hintp"
+                    android:textColor="@color/white"
+                    android:padding="10dp"
+                    android:inputType="text"
+                    android:textColorHint="@color/grey"/>
+
+                <EditText
+                    android:id="@+id/sell_tv_cat"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:layout_constraintTop_toBottomOf="@id/sell_tv_price"
+                    android:background="@drawable/border_input"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/sell_hintc"
+                    android:textColor="@color/white"
+                    android:padding="10dp"
+                    android:inputType="text"
+                    android:textColorHint="@color/grey"/>
+
+                <EditText
+                    android:id="@+id/sell_tv_con"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:layout_constraintTop_toBottomOf="@id/sell_tv_cat"
+                    android:background="@drawable/border_input"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/sell_hintco"
+                    android:textColor="@color/white"
+                    android:padding="10dp"
+                    android:inputType="text"
+                    android:textColorHint="@color/grey"/>
+
+                <EditText
+                    android:id="@+id/sell_tv_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:layout_constraintTop_toBottomOf="@id/sell_tv_con"
+                    android:background="@drawable/border_input"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/sell_hintd"
+                    android:textColor="@color/white"
+                    android:padding="10dp"
+                    android:inputType="text"
+                    android:textColorHint="@color/grey"/>
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

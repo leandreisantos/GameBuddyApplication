@@ -215,7 +215,6 @@ public class ShowUser extends AppCompatActivity {
                         String Url = task.getResult().getString("url");
                         p = task.getResult().getString("privacy");
 
-
                         if (p.equals("Public")){
                             professiontv.setText(bio_result);
                             nametv.setText(name_result);

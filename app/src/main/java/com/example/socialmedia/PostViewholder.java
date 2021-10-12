@@ -138,12 +138,12 @@ public class PostViewholder extends RecyclerView.ViewHolder {
                 if(snapshot.child(postKey).hasChild(uid)){
                     likebtn.setImageResource(R.drawable.ic_baseline_favorite_24);
                     likescount = (int)snapshot.child(postKey).getChildrenCount();
-                    tv_likes.setText(Integer.toString(likescount)+" likes");
+                    tv_likes.setText(Integer.toString(likescount));
 
                 }else{
                     likebtn.setImageResource(R.drawable.ic_baseline_dislike_24);
                     likescount = (int)snapshot.child(postKey).getChildrenCount();
-                    tv_likes.setText(Integer.toString(likescount)+" likes");
+                    tv_likes.setText(Integer.toString(likescount));
                 }
             }
 

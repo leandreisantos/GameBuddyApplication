@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 public class EventSelectedActivity extends AppCompatActivity {
 
     String uri,title,time,name,desc,uid,url;
-    TextView title_tv,back,tv_name,tv_time,tv_desc,tv_more;
+    TextView title_tv,back,tv_name,tv_time,tv_desc,tv_more,gProfile;
     ImageView iv_event,iv;
 
     //databse stuff
@@ -59,12 +59,30 @@ public class EventSelectedActivity extends AppCompatActivity {
         tv_desc = findViewById(R.id.caption_lbl);
         iv = findViewById(R.id.iv_aes);
         tv_more = findViewById(R.id.more_aes);
+        gProfile = findViewById(R.id.tv_aes_goToProfile);
+
 
         back.setOnClickListener(v -> {
             Intent intent = new Intent(EventSelectedActivity.this,MainActivity.class);
             startActivity(intent);
         });
         tv_more.setOnClickListener(v -> showDialog());
+        gProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentid.equals(uid)) {
+                    Intent intent = new Intent(EventSelectedActivity.this,MyProfileActivity.class);
+                    startActivity(intent);
+
+                }else {
+                    Intent intent = new Intent(EventSelectedActivity.this,ShowUser.class);
+                    intent.putExtra("n",name);
+                    intent.putExtra("u",url);
+                    intent.putExtra("uid",uid);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void showDialog() {

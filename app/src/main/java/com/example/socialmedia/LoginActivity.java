@@ -61,14 +61,18 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setOnClickListener(v -> {
             String email = emailEt.getText().toString();
             String pass = passEt.getText().toString();
-
+            process(true);
             if(!TextUtils.isEmpty(email)||!TextUtils.isEmpty(pass)){
-                progressBar.setVisibility(View.VISIBLE);
                 mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(task -> {
                     if(task.isSuccessful()) sendtoMain();
-                    else Toast.makeText(LoginActivity.this, "Error:"+ Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                    else {
+                        Toast.makeText(LoginActivity.this, "Error:" + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                        process(false);
+                    }
                 });
-            }else Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            }
         });
 
         forgotpass.setOnClickListener(v -> {
@@ -86,6 +90,26 @@ public class LoginActivity extends AppCompatActivity {
                 builder.show();
             }
 });
+    }
+
+    private void process(Boolean what){
+        if(what==true) {
+            progressBar.setVisibility(View.VISIBLE);
+            emailEt.setEnabled(false);
+            passEt.setEnabled(false);
+            forgotpass.setEnabled(false);
+            login_btn.setEnabled(false);
+            showPass.setEnabled(false);
+            back_btn.setEnabled(false);
+        }else{
+            progressBar.setVisibility(View.GONE);
+            emailEt.setEnabled(true);
+            passEt.setEnabled(true);
+            forgotpass.setEnabled(true);
+            login_btn.setEnabled(true);
+            showPass.setEnabled(true);
+            back_btn.setEnabled(true);
+        }
     }
 
     private void sendtoMain() {

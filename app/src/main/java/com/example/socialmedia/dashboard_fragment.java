@@ -1,11 +1,15 @@
 package com.example.socialmedia;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.example.socialmedia.Config.Config;
 import com.example.socialmedia.EventController.EventActivity;
 import com.example.socialmedia.EventController.EventMember;
 import com.example.socialmedia.EventController.Eventholder;
@@ -15,13 +19,32 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
+
+import org.json.JSONException;
+
+import java.math.BigDecimal;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static android.app.Activity.RESULT_OK;
+
 public class dashboard_fragment extends Fragment implements View.OnClickListener{
+
+    public static final int PAYPAL_REQUEST_CODE = 7171;
+
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX) // use sandbox for test
+            .clientId(Config.PAYPAL_CLIENT_ID);
+
 
     RecyclerView featuredEvents;
     ImageView addevent;
@@ -39,10 +62,21 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     }
 
     @Override
+    public void onDestroy() {
+        getActivity().stopService(new Intent(getActivity(),PayPalService.class));
+        super.onDestroy();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentuid = user.getUid();
+
+        //Start paypal services
+        Intent intent = new Intent(getActivity(),PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
+        getActivity().startService(intent);
 
         featuredEvents = getActivity().findViewById(R.id.df_event_rv);
         addevent = getActivity().findViewById(R.id.df_add_event);
@@ -66,9 +100,47 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.df_add_event:
-                Intent intent = new Intent(getActivity(), EventActivity.class);
-                startActivity(intent);
-                break;
+                processPayment();
+//                Intent intent = new Intent(getActivity(), EventActivity.class);
+//                startActivity(intent);
+//                break;
+        }
+    }
+
+    private void processPayment() {
+        String amout = "100";
+        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(amout)), "USD",
+        "Donate for GameBuddyDevelopers",PayPalPayment.PAYMENT_INTENT_SALE);
+
+        Intent intent = new Intent(getActivity(), PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
+        startActivityForResult(intent,PAYPAL_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == PAYPAL_REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+                PaymentConfirmation confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                if(confirmation != null){
+                    try{
+                        String paymentDetails = confirmation.toJSONObject().toString(4);
+
+                        //startActivity(new Intent(getActivity(),PaymentDetails.class))
+                        Toast.makeText(getActivity(), "Payment Completed", Toast.LENGTH_SHORT).show();
+
+                    }catch(JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }else if(resultCode == Activity.RESULT_CANCELED){
+                Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_SHORT).show();
+            }
+
+        }else if(requestCode == PaymentActivity.RESULT_EXTRAS_INVALID){
+            Toast.makeText(getActivity(), "Invalid", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -17,6 +17,8 @@
 
     //secondarybg
     <color name="secondary_background">#2B2B2B</color>
+    <color name="light_secondary_background">#423F3E</color>
+
 
 
     //status color
@@ -37,6 +39,7 @@
     <color name="complete_profile">#33bff0</color>
     <color name="send_message">#6ECB63</color>
     <color name="edit_profile">#FD5E53</color>
+    <color name="yellow">#FFE268</color>
 
 
 

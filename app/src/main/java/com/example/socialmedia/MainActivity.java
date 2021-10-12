@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             selected = new groupFragment();
         }
         if(item.getItemId() == R.id.ask_bottom){
-            selected = new Fragment2();
+            selected = new Shop_Fragment();
         }
         if(item.getItemId() == R.id.queue_bottom){
             selected = new Fragment3();
@@ -184,28 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(item.getItemId() == R.id.home_bottom){
             selected = new Fragment4();
         }
-
-//        switch(item.getItemId()){
-//
-//            case R.id.dashboard_bottom:
-//                selected = new dashboard_fragment();
-//                break;
-//            case R.id.profile_bottom:
-//                selected = new Fragment1();
-//                break;
-//            case R.id.ask_bottom:
-//                selected = new Fragment2();
-//                break;
-//            case R.id.queue_bottom:
-//                selected = new Fragment3();
-//                break;
-//            case R.id.home_bottom:
-//                selected = new Fragment4();
-//                break;
-//
-//        }
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,selected).commit();
-
 
 
         return true;
@@ -230,6 +210,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent3 = new Intent(MainActivity.this,NotificationActivity.class);
             startActivity(intent3);
             changeSeen();
+        }if(item.getItemId()== R.id.nav_home){
+            Intent intent = new Intent(MainActivity.this,MainActivity.class);
+            startActivity(intent);
+        }if(item.getItemId()== R.id.nav_search){
+            Intent intent = new Intent(MainActivity.this,SearchActivity.class);
+            startActivity(intent);
+        }if(item.getItemId()== R.id.nav_friends){
+            Intent intent = new Intent(MainActivity.this,ChatActivity.class);
+            startActivity(intent);
         }
         //drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -259,19 +248,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void logout() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Logout")
-                .setMessage("Are you sure to logout?")
-                .setPositiveButton("Logout", (dialog, which) -> {
-                    mAuth.signOut();
-                    FirebaseDatabase.getInstance(dbr.keyDb()).getReference("Token").child(uid).child("token").removeValue();
-                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
-                })
-                .setNegativeButton("No", (dialog, which) -> {
 
-                });
-        builder.create();
-        builder.show();
+        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        View view = inflater.inflate(R.layout.logout_layout,null);
+        TextView logout_tv = view.findViewById(R.id.logout_tv_ll);
+        TextView cancel_tv = view.findViewById(R.id.cancel_tv_ll);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                .setView(view)
+                .create();
+        alertDialog.show();
+        logout_tv.setOnClickListener(v -> {
+            mAuth.signOut();
+            FirebaseDatabase.getInstance(dbr.keyDb()).getReference("Token").child(uid).child("token").removeValue();
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        });
+        cancel_tv.setOnClickListener(v -> alertDialog.dismiss());
     }
 
     @Override

@@ -80,6 +80,16 @@
                     android:id="@+id/tv_time_post"
                     android:paddingStart="5dp"/>
 
+            <ImageButton
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/more_vertical_icon"
+                android:background="@android:color/transparent"
+                android:padding="5dp"
+                android:id="@+id/morebutton_posts" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -128,64 +138,142 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            android:layout_height="wrap_content">
 
             <ImageButton
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_dislike_24"
                 android:background="@android:color/transparent"
-                android:padding="5dp"
                 android:id="@+id/likebutton_posts"
                 android:layout_marginLeft="10dp"/>
 
+            <TextView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/likebutton_posts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:layout_marginStart="5dp"
+                android:textSize="15sp"
+                android:text="0"
+                android:id="@+id/tv_likes_post" />
+
             <ImageButton
+                app:layout_constraintLeft_toRightOf="@id/tv_likes_post"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_comment_24"
                 android:background="@android:color/transparent"
-                android:padding="5dp"
                 android:id="@+id/commentbutton_posts"
                 android:layout_marginLeft="10dp"/>
 
-            <ImageButton
+            <TextView
+                android:layout_marginStart="5dp"
+                app:layout_constraintLeft_toRightOf="@id/commentbutton_posts"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_more_horiz_24"
+                android:textColor="@color/grey"
+                android:textSize="15sp"
+                android:text="0"
+                android:id="@+id/tv_comment_post" />
+
+            <ImageButton
+                app:layout_constraintLeft_toRightOf="@id/tv_comment_post"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/share_icon"
                 android:background="@android:color/transparent"
-                android:padding="5dp"
-                android:id="@+id/morebutton_posts"
+                android:id="@+id/sharebutton_posts"
                 android:layout_marginLeft="10dp"/>
 
-
-
-        </LinearLayout>
-
-
-
             <TextView
+                android:layout_marginStart="5dp"
+                app:layout_constraintLeft_toRightOf="@id/sharebutton_posts"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
-                android:text="Likes"
-                android:layout_marginStart="10dp"
-                android:id="@+id/tv_likes_post"
-                android:paddingStart="5dp"/>
+                android:text="0"
+                android:id="@+id/tv_share_post" />
 
-            <TextView
-                android:layout_marginStart="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:textSize="15sp"
-                android:text="comments"
-                android:id="@+id/tv_comment_post"
-                android:paddingStart="5dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+
+<!--            <ImageButton-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_baseline_dislike_24"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:padding="5dp"-->
+<!--                android:id="@+id/likebutton_posts"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+
+<!--            <ImageButton-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_baseline_comment_24"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:padding="5dp"-->
+<!--                android:id="@+id/commentbutton_posts"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+
+<!--            <ImageButton-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_baseline_more_horiz_24"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:padding="5dp"-->
+<!--                android:id="@+id/morebutton_posts"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+
+
+
+<!--        </LinearLayout>-->
+
+
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/grey"-->
+<!--                android:textSize="15sp"-->
+<!--                android:text="Likes"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:id="@+id/tv_likes_post"-->
+<!--                android:paddingStart="5dp"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/grey"-->
+<!--                android:textSize="15sp"-->
+<!--                android:text="comments"-->
+<!--                android:id="@+id/tv_comment_post"-->
+<!--                android:paddingStart="5dp"/>-->
 
 
 

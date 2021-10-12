@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialMedia">
-        <activity android:name=".EventSelectedActivity"></activity>
+        <activity android:name=".SelectedItemSellActivity"></activity>
+        <activity android:name=".ShopActivity" />
+        <activity android:name=".ViewImage" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".EventSelectedActivity" />
         <activity android:name=".VideoCallOutgoing" />
         <activity android:name=".VideoCallinComing" />
         <activity android:name=".MessageGroupActivity" />
@@ -84,6 +88,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@
     <string name="tab_text_1">Photos</string>
     <string name="tab_text_2">Videos</string>
     <string name="tab_text_3">Stories</string>
+    <string name="sample">Sample Text</string>
 
     <!--Strings for On Boarding Screen -->
     <string name="first_slide_title">Join to Game Events</string>
@@ -25,4 +26,31 @@
     <string name="third_slide_desc">Build a team with other players around the world</string>
     <string name="fourth_slide_desc">Now you can easily communicate with your team by a video chat or group chat</string>
     <string name="fifth_slide_desc">Upload your highlights and get more subcriber to become rank 1 in leaderboard</string>
+
+
+    <!--Shop Fragment-->
+    <string name="Title_shop">MarketPlace</string>
+    <string name="sell_shop">Sell</string>
+    <string name="hint_search_shop">Search</string>
+    <string name="popular">Popular</string>
+    <string name="desc_shop">Good day G-Buddy!Shop now to improve your game play and make your gaming setup beautiful.</string>
+
+    <!--Shop Activity-->
+    <string name="sell_publish">Publish</string>
+    <string name="sell_title">New Listing</string>
+    <string name="sell_addPhoto">Add Photo</string>
+    <string name="sell_hintt">Title</string>
+    <string name="sell_hintp">Price</string>
+    <string name="sell_hintc">Category</string>
+    <string name="sell_hintco">Condition</string>
+    <string name="sell_hintd">Description</string>
+
+    <!--SelectedItemSell-->
+    <string name="detail_lbl">Detail</string>
+    <string name="condition_lbl">Condition</string>
+    <string name="cat_lbl">Category</string>
+    <string name="desc_lbl">Description</string>
+    <string name="seller_lbl">Seller Information</string>
+    <string name="seller_view_lbl">View Profile</string>
+
 </resources>

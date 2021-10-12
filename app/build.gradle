@@ -79,6 +79,11 @@ dependencies {
 
     implementation 'com.github.shts:StoriesProgressView:3.0.0'
 
+    //paypal
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.15.3'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
 
     //lottie
     implementation 'com.airbnb.android:lottie:3.4.0'

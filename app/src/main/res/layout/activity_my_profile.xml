@@ -94,7 +94,8 @@
                     app:layout_constraintRight_toRightOf="parent"
                     android:textColor="@color/white"
                     android:textSize="35sp"
-                    android:fontFamily="sans-serif-black"/>
+                    android:textStyle="bold"
+                    android:fontFamily="@font/baloo"/>
 
                 <TextView
                     android:id="@+id/prof_mp"
@@ -106,7 +107,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     android:textColor="@color/grey"
                     android:textSize="30sp"
-                    android:fontFamily="sans-serif-black"/>
+                    android:fontFamily="@font/baloo"/>
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -137,16 +138,18 @@
                             android:text="Following"
                             android:textColor="@color/grey"
                             android:textSize="15sp"
-                            android:fontFamily="sans-serif-black"/>
+                            android:textStyle="bold"
+                            android:fontFamily="@font/baloo"/>
 
                         <TextView
+                            android:textStyle="bold"
                             android:id="@+id/tv_following"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="@color/white"
                             android:textSize="20sp"
-                            android:fontFamily="sans-serif-black"/>
+                            android:fontFamily="@font/baloo"/>
 
                     </LinearLayout>
                     <TableRow
@@ -175,16 +178,18 @@
                             android:text="Followers"
                             android:textColor="@color/grey"
                             android:textSize="15sp"
-                            android:fontFamily="sans-serif-black"/>
+                            android:textStyle="bold"
+                            android:fontFamily="@font/baloo"/>
 
                         <TextView
+                            android:textStyle="bold"
                             android:id="@+id/tv_followers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="@color/white"
                             android:textSize="20sp"
-                            android:fontFamily="sans-serif-black"/>
+                            android:fontFamily="@font/baloo"/>
 
                     </LinearLayout>
 
@@ -208,21 +213,23 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Post"
                             android:textColor="@color/grey"
                             android:textSize="15sp"
-                            android:fontFamily="sans-serif-black"/>
+                            android:fontFamily="@font/baloo"/>
 
                         <TextView
+                            android:textStyle="bold"
                             android:id="@+id/tv_post"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="@color/white"
                             android:textSize="20sp"
-                            android:fontFamily="sans-serif-black"/>
+                            android:fontFamily="@font/baloo"/>
 
                     </LinearLayout>
                     <TableRow
@@ -267,12 +274,13 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="10dp"
                     android:textColor="@color/icon"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/baloo"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/tv_ep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo"
                     app:layout_constraintLeft_toRightOf="@id/icon_cp"
                     android:layout_marginStart="10dp"
                     app:layout_constraintTop_toBottomOf="@id/lbl_cp"
@@ -322,7 +330,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="10dp"
                     android:textColor="@color/icon"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/baloo"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/tv_pp"
@@ -333,6 +341,7 @@
                     app:layout_constraintTop_toBottomOf="@id/lbl_pp"
                     android:text="Create post to update your friends!"
                     android:textColor="@color/grey"
+                    android:fontFamily="@font/baloo"
                     android:textSize="15sp"/>
 
                 <ImageView
@@ -376,7 +385,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="10dp"
                     android:textColor="@color/icon"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/baloo"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/tv_mp"
@@ -387,6 +396,7 @@
                     app:layout_constraintTop_toBottomOf="@id/lbl_mp"
                     android:text="Message your friends!"
                     android:textColor="@color/grey"
+                    android:fontFamily="@font/baloo"
                     android:textSize="15sp"/>
 
                 <ImageView
@@ -430,7 +440,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="10dp"
                     android:textColor="@color/icon"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/baloo"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/tv_np"
@@ -441,6 +451,7 @@
                     app:layout_constraintTop_toBottomOf="@id/lbl_np"
                     android:text="Show all notifications"
                     android:textColor="@color/grey"
+                    android:fontFamily="@font/baloo"
                     android:textSize="15sp"/>
 
                 <ImageView

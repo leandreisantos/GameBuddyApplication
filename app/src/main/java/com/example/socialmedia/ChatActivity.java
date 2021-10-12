@@ -18,6 +18,8 @@ import android.widget.EditText;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -34,17 +36,21 @@ public class ChatActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     RecyclerView recyclerView;
     EditText searchEt;
+    String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        userid = user.getUid();
         
         searchEt = findViewById(R.id.search_userch);
         recyclerView = findViewById(R.id.rv_ch);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ChatActivity.this));
-        profileRef = database.getReference("All users");
+        profileRef = database.getReference("followers").child(userid);
 
         searchEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -60,9 +66,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                String query = searchEt.getText().toString().toUpperCase();
+                String query = searchEt.getText().toString();
                 Query search = profileRef.orderByChild("name").startAt(query).endAt(query+"\uf0ff");
-
 
                 FirebaseRecyclerOptions<AllUserMember> options1 =
                         new FirebaseRecyclerOptions.Builder<AllUserMember>()
