@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void process(Boolean what){
-        if(what==true) {
+        if(what) {
             progressBar.setVisibility(View.VISIBLE);
             emailEt.setEnabled(false);
             passEt.setEnabled(false);

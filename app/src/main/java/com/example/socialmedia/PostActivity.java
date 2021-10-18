@@ -3,15 +3,23 @@ package com.example.socialmedia;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,6 +51,7 @@ public class PostActivity extends AppCompatActivity {
     String value="";
 
     TextView cansee;
+    CardView closePanel;
 
     ImageView imageView,iv_profile_p,btn_p_close;
     ProgressBar progressBar;
@@ -50,13 +59,14 @@ public class PostActivity extends AppCompatActivity {
     private static final int PICK_FILE = 1;
     UploadTask uploadTask;
     EditText etdesc;
-    TextView btnchoosefile,btnuploadfile;
+    TextView btnchoosefile,btnuploadfile,closeImage;
     VideoView videoView;
     String url,name;
     StorageReference storageReference;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference db1,db2,db3;
+    String privacy_post= "p";
 
     MediaController mediaController;
     String type;
@@ -82,6 +92,8 @@ public class PostActivity extends AppCompatActivity {
         iv_profile_p = findViewById(R.id.iv_profile_post);
         btn_p_close = findViewById(R.id.btn_post_close);
         cansee = findViewById(R.id.cansee_post);
+        closePanel = findViewById(R.id.cl_parentclose_ap);
+        closeImage = findViewById(R.id.tv_close_iv_ap);
 
         storageReference = FirebaseStorage.getInstance().getReference("User posts");
 
@@ -105,11 +117,61 @@ public class PostActivity extends AppCompatActivity {
            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
            fragmentTransaction.replace(R.id.container,new Fragment4()).commit();
        });
-
-       cansee.setOnClickListener(v -> {
-
+       closeImage.setOnClickListener(v -> {
+           imageView.setVisibility(View.GONE);
+           videoView.setVisibility(View.GONE);
+           selectedUri= null;
+           closePanel.setVisibility(View.GONE);
        });
 
+       cansee.setOnClickListener(v -> {
+           showBottomsheet();
+       });
+
+    }
+
+    private void showBottomsheet() {
+
+        final Dialog dialog = new Dialog(PostActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottom_menu_public_post);
+        ConstraintLayout public_tv = dialog.findViewById(R.id.cl2);
+        ConstraintLayout private_tv = dialog.findViewById(R.id.cl3);
+        ImageView active_p = dialog.findViewById(R.id.iv_sta_p_bmp);
+        ImageView active_pr = dialog.findViewById(R.id.iv_sta_pr_bmp);
+
+        if(privacy_post.equals("p")){
+            active_p.setVisibility(View.VISIBLE);
+            active_pr.setVisibility(View.GONE);
+        }else{
+            active_p.setVisibility(View.GONE);
+            active_pr.setVisibility(View.VISIBLE);
+        }
+
+        public_tv.setOnClickListener(v -> {
+            active_p.setVisibility(View.VISIBLE);
+            active_pr.setVisibility(View.GONE);
+            privacy_post ="p";
+            cansee.setText("Everyone can comment and see your post");
+            cansee.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_round_public_24, 0, 0, 0);
+
+        });
+        private_tv.setOnClickListener(v -> {
+            active_p.setVisibility(View.GONE);
+            active_pr.setVisibility(View.VISIBLE);
+            privacy_post ="pr";
+            cansee.setText("Only your friends can comment and see your post");
+            cansee.setCompoundDrawablesWithIntrinsicBounds(R.drawable.privacy_icon, 0, 0, 0);
+
+        });
+
+
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.Bottomanim;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
     private void chooseImage() {
@@ -146,6 +208,7 @@ public class PostActivity extends AppCompatActivity {
                 imageView.setVisibility(View.VISIBLE);
                 videoView.setVisibility(View.INVISIBLE);
                 type = "iv";
+                closePanel.setVisibility(View.VISIBLE);
 //                   Toast.makeText(this, "height="+height, Toast.LENGTH_LONG).show();
 //                  Toast.makeText(this, "width="+width, Toast.LENGTH_LONG).show();
             }else if(selectedUri.toString().contains("video")) {
@@ -155,6 +218,7 @@ public class PostActivity extends AppCompatActivity {
                 videoView.setVideoURI(selectedUri);
                 videoView.start();
                 type = "vv";
+                closePanel.setVisibility(View.VISIBLE);
                      Toast.makeText(this, "height="+height, Toast.LENGTH_LONG).show();
                      Toast.makeText(this, "width="+width, Toast.LENGTH_LONG).show();
             }else{
@@ -245,6 +309,7 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setUid(currentuid);
                             postmember.setUrl(url);
                             postmember.setType("iv");
+                            postmember.setPrivacy(privacy_post);
 
                             //for image
                             String id = db1.push().getKey();
@@ -266,6 +331,7 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setUid(currentuid);
                             postmember.setUrl(url);
                             postmember.setType("vv");
+                            postmember.setPrivacy(privacy_post);
 
                             //for video
                             String id3 = db2.push().getKey();
@@ -308,6 +374,7 @@ public class PostActivity extends AppCompatActivity {
             postmember.setUid(currentuid);
             postmember.setUrl(url);
             postmember.setType("txt");
+            postmember.setPrivacy(privacy_post);
 
             //for image
             String id = db1.push().getKey();
@@ -341,15 +408,12 @@ public class PostActivity extends AppCompatActivity {
                 final StorageReference reference = storageReference.child(System.currentTimeMillis()+"."+getFileExt(selectedUri));
                 uploadTask = reference.putFile(selectedUri);
 
-                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if(!task.isSuccessful()){
-                            throw task.getException();
+                Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
+                    if(!task.isSuccessful()){
+                        throw task.getException();
 
-                        }
-                        return reference.getDownloadUrl();
                     }
+                    return reference.getDownloadUrl();
                 }).addOnCompleteListener(task -> {
 
                     if(task.isSuccessful()){
@@ -363,6 +427,7 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setUid(currentuid);
                             postmember.setUrl(url);
                             postmember.setType("iv");
+                            postmember.setPrivacy(privacy_post);
 
                             //for image
                             String id = db1.push().getKey();
@@ -384,6 +449,7 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setUid(currentuid);
                             postmember.setUrl(url);
                             postmember.setType("vv");
+                            postmember.setPrivacy(privacy_post);
 
                             //for video
                             String id3 = db2.push().getKey();

@@ -22,7 +22,7 @@ public class GroupViewholder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void setGroupProfile(FragmentActivity fragmentActivity,String name, String uid,String url){
+    public void setGroupProfile(FragmentActivity fragmentActivity,String name, String uid,String url,String postkey){
 
         cardView = itemView.findViewById(R.id.cv_gl);
         textViewName = itemView.findViewById(R.id.group_name_tv);

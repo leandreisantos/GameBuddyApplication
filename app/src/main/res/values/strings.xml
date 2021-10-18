@@ -7,6 +7,18 @@
     <string name="tab_text_3">Stories</string>
     <string name="sample">Sample Text</string>
 
+    <!--Login Activity-->
+    <string name="great_la">Welcome back!</string>
+    <string name="great_desc_la">We\'re so excited to see you again</string>
+    <string name="emaiLbl_la">Email</string>
+    <string name="hintEmail_la">samp@gmail.com</string>
+    <string name="passLbl_la">Password</string>
+    <string name="hintPass_la">*****</string>
+    <string name="showpass_la">Show Password</string>
+    <string name="sigin_la">SIGN IN</string>
+    <string name="forgotpass_la">Forget your password?</string>
+
+
     <!--Strings for On Boarding Screen -->
     <string name="first_slide_title">Join to Game Events</string>
     <string name="second_slide_title">Search your favorite Game</string>
@@ -52,5 +64,41 @@
     <string name="desc_lbl">Description</string>
     <string name="seller_lbl">Seller Information</string>
     <string name="seller_view_lbl">View Profile</string>
+
+    <!--Create Group-->
+    <string name="title_createGroup">CREATE GROUP</string>
+    <string name="title_desc_createGroup">Your group is where you and your friends hang out. Make yours and start talking.</string>
+    <string name="upload_createGroup">UPLOAD</string>
+    <string name="hint_et_createGroup">Group Name</string>
+    <string name="create_createGroup">Create Group</string>
+    <string name="agree_createGroup">By Creating a group,you agree to Game Buddy Community Guidlines.</string>
+
+    <!--Community fragment-->
+    <string name="title_comFragment">Community</string>
+    <string name="grouplbl_comFragment">Group</string>
+    <string name="searchet_hint_comFragment">Search user/Group</string>
+
+
+    <!--invite people group-->
+    <string name="title_aip">Invite People</string>
+    <string name="hintSearch_aip">Search</string>
+
+
+    <!--Group Menu-->
+    <string name="gm_groupMembers">Group Members</string>
+    <string name="gm_viewPhoto">View Photo and Video</string>
+    <string name="gm_changePhoto">Change Group Photo</string>
+    <string name="gm_changeName">Change Name</string>
+    <string name="gm_deleteConvo">Delete Conversation</string>
+    <string name="gm_blockMember">Block Member</string>
+    <string name="gm_leaveGroup">Leave Group</string>
+    <string name="gm_report">Report Problem</string>
+
+    <!--Invite people layout-->
+    <string name="ipl_invite">Invite</string>
+
+    <!--Post_layout-->
+
+
 
 </resources>

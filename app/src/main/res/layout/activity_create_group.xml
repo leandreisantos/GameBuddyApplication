@@ -37,7 +37,7 @@
                 android:layout_marginTop="80dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CREATE GROUP"
+                android:text="@string/title_createGroup"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:fontFamily="sans-serif"/>
@@ -46,7 +46,7 @@
                 android:id="@+id/lbl_cg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your group is where you and your friends hang out. Make yours and start talking."
+                android:text="@string/title_desc_createGroup"
                 android:textColor="@color/grey"
                 android:textSize="12sp"
                 android:textAlignment="center"
@@ -116,7 +116,7 @@
                 android:drawableTint="@color/white"
                 android:drawablePadding="10dp"
                 android:padding="10dp"
-                android:hint="Group Name"
+                android:hint="@string/hint_et_createGroup"
                 android:textColor="@color/white"
                 android:textColorHint="@color/grey"
                 android:layout_marginStart="20dp"
@@ -130,7 +130,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Create Group"
+                android:text="@string/create_createGroup"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -148,9 +148,16 @@
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true" />
 
-
-
-
+            <TextView
+                android:layout_marginTop="80dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/agree_createGroup"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/loginlot"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:textAlignment="center"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

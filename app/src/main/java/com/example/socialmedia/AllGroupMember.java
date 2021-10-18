@@ -2,7 +2,10 @@ package com.example.socialmedia;
 
 public class AllGroupMember {
 
-    String name,uid,url;
+    String name;
+    String uid;
+    String url;
+    String postkey;
 
     public AllGroupMember(){
 
@@ -32,4 +35,11 @@ public class AllGroupMember {
         this.url = url;
     }
 
+    public String getPostkey() {
+        return postkey;
+    }
+
+    public void setPostkey(String postkey) {
+        this.postkey = postkey;
+    }
 }

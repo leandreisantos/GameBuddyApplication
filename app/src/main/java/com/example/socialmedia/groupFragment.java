@@ -50,10 +50,6 @@ public class groupFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-//        groupFragment moreFragment = new groupFragment();
-//        FragmentManager manager = getSupportFragmentManager();
-//        manager.beginTransaction().replace(R.id.content, moreFragment).addToBackStack("more").commit();
-
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         userid = user.getUid();
 
@@ -100,24 +96,24 @@ public class groupFragment extends Fragment {
         Query search = databaseReference.orderByChild("name").startAt(query).endAt(query+"\uf0ff");
 
 
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                recyclerView.setVisibility(View.VISIBLE);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                recyclerView.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
         FirebaseRecyclerOptions<AllUserMember> options1 =
                 new FirebaseRecyclerOptions.Builder<AllUserMember>()
@@ -186,14 +182,13 @@ public class groupFragment extends Fragment {
                     protected void onBindViewHolder(@NonNull GroupViewholder holder, int position, @NonNull AllGroupMember model) {
 
 
-                        holder.setGroupProfile(getActivity(),model.getName(),model.getUid(),model.getUrl());
+                        holder.setGroupProfile(getActivity(),model.getName(),model.getUid(),model.getUrl(),model.getPostkey());
 
-                        String  name = getItem(position).getName();
-                        String  url = getItem(position).getUrl();
-                        String uid = getItem(position).getUid();
+                        String postkey = getItem(position).getPostkey();
 
                         holder.btn.setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(),MessageGroupActivity.class);
+                            intent.putExtra("p",postkey);
                             startActivity(intent);
                         });
 
@@ -211,11 +206,7 @@ public class groupFragment extends Fragment {
 
 
         firebaseRecyclerAdapter2.startListening();
-//
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false);
-        recyclerView2.setLayoutManager(gridLayoutManager);
         recyclerView2.setAdapter(firebaseRecyclerAdapter2);
-
 
     }
 }

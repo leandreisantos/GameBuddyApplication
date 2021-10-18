@@ -7,108 +7,114 @@
     android:id="@+id/drawer_layout_f4">
 
 
-    <LinearLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/f4_l1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/aname_f4"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/logo"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
-
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="25dp"
-                   android:layout_marginRight="20dp"
-                    android:backgroundTint="@color/white"
-                    android:background="@drawable/ic_round_add_circle_24"
-                    android:id="@+id/createpost_f4"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/f4_l2"
-                app:layout_constraintTop_toBottomOf="@id/f4_l1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_width="match_parent"
-                android:layout_height="120dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_storyf4"
-                    android:layout_width="match_parent"
-                    android:padding="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/background"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                </androidx.recyclerview.widget.RecyclerView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/f4_l3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="180dp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/f4_l2"
-                app:layout_constraintLeft_toLeftOf="parent">
+                android:background="@color/background">
 
-                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                    android:id="@+id/swipe_post"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/f4_l1"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/aname_f4"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/logo"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="20dp"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/ic_round_add_circle_24"
+                        android:id="@+id/createpost_f4"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:visibility="gone"
+                    android:id="@+id/f4_l2"
+                    app:layout_constraintTop_toBottomOf="@id/f4_l1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_storyf4"
                         android:layout_width="match_parent"
+                        android:padding="20dp"
                         android:layout_height="match_parent"
                         android:background="@color/background"
-                        android:id="@+id/rv_post">
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
                     </androidx.recyclerview.widget.RecyclerView>
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/f4_l3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="80dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/f4_l2"
+                    app:layout_constraintLeft_toLeftOf="parent">
+
+                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/swipe_post"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/background"
+                            android:id="@+id/rv_post">
+                        </androidx.recyclerview.widget.RecyclerView>
+
+
+                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
 
 
-    </LinearLayout>
+
+
 
 
 

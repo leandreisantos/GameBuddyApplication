@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/gm_groupMembers"
+            android:title="@string/gm_groupMembers" />
+        <item
+            android:id="@+id/gm_viewPhoto"
+            android:title="@string/gm_viewPhoto"
+            android:icon="@drawable/ic_outline_image_24"/>
+        <item
+            android:id="@+id/gm_changeP"
+            android:title="@string/gm_changePhoto" />
+        <item
+            android:id="@+id/gm_changeN"
+            android:title="@string/gm_changeName"/>
+        <item
+            android:id="@+id/gm_delete"
+            android:title="@string/gm_deleteConvo"/>
+        <item
+            android:id="@+id/gm_block"
+            android:title="@string/gm_blockMember"
+            android:icon="@drawable/block_icon"/>
+        <item
+            android:id="@+id/gm_leave"
+            android:title="@string/gm_leaveGroup"
+            android:icon="@drawable/exit_icon"/>
+        <item
+            android:id="@+id/gm_report"
+            android:title="@string/gm_report"
+            android:icon="@drawable/ic_baseline_info_24" />
+
+    </group>
+
+</menu>

@@ -53,7 +53,6 @@
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:fontFamily="sans-serif-black"
-                    android:hint="name"
                     android:textSize="15sp"
                     android:id="@+id/tv_name_post"
                     android:paddingStart="5dp"
@@ -75,7 +74,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
                     android:textColor="@color/grey"
-                    android:hint="time"
                     android:textSize="15sp"
                     android:id="@+id/tv_time_post"
                     android:paddingStart="5dp"/>
@@ -153,7 +151,7 @@
                 android:src="@drawable/ic_baseline_dislike_24"
                 android:background="@android:color/transparent"
                 android:id="@+id/likebutton_posts"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginStart="10dp"/>
 
             <TextView
                 app:layout_constraintTop_toTopOf="parent"
@@ -164,7 +162,6 @@
                 android:textColor="@color/grey"
                 android:layout_marginStart="5dp"
                 android:textSize="15sp"
-                android:text="0"
                 android:id="@+id/tv_likes_post" />
 
             <ImageButton
@@ -187,7 +184,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
-                android:text="0"
                 android:id="@+id/tv_comment_post" />
 
             <ImageButton
@@ -199,7 +195,7 @@
                 android:src="@drawable/share_icon"
                 android:background="@android:color/transparent"
                 android:id="@+id/sharebutton_posts"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginStart="10dp" />
 
             <TextView
                 android:layout_marginStart="5dp"
@@ -210,7 +206,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
-                android:text="0"
                 android:id="@+id/tv_share_post" />
 
 

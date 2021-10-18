@@ -13,8 +13,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 public class SelectedItemSellActivity extends AppCompatActivity {
@@ -26,8 +24,6 @@ public class SelectedItemSellActivity extends AppCompatActivity {
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference reference;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference documentReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +69,7 @@ public class SelectedItemSellActivity extends AppCompatActivity {
                    String image = snapshot.child("postUri").getValue(String.class);
 
                    tv_title.setText(title);
-                   tv_price.setText(price);
+                   tv_price.setText("₱"+price);
                    tv_cat.setText(cat);
                    tv_con.setText(con);
                    tv_desc.setText(desc);

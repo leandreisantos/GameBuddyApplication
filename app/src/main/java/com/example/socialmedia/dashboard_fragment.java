@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,11 +47,11 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
             .clientId(Config.PAYPAL_CLIENT_ID);
 
 
-    RecyclerView featuredEvents;
+    RecyclerView featuredEvents,rvGameDeveloper;
     ImageView addevent;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference,db1,db2,db3;
+    DatabaseReference reference,db1,db2,db3,profileRef,referenceDeveloper;
     //reference
     String name;
 
@@ -82,9 +83,16 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         addevent = getActivity().findViewById(R.id.df_add_event);
 
         reference = database.getReference("All post events");
+        referenceDeveloper = database.getReference("All users");
         featuredEvents = getActivity().findViewById(R.id.df_event_rv);
         featuredEvents.setHasFixedSize(true);
         featuredEvents.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
+        rvGameDeveloper = getActivity().findViewById(R.id.rv_developer_dash);
+        rvGameDeveloper.setHasFixedSize(true);
+        rvGameDeveloper.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
+        profileRef = database.getReference("All users");
 
         //REFERENCE TO REALTIME DATABASE IN FIREBASE
         db1 = database.getReference("All images").child(currentuid);
@@ -100,10 +108,10 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.df_add_event:
-                processPayment();
-//                Intent intent = new Intent(getActivity(), EventActivity.class);
-//                startActivity(intent);
-//                break;
+                //processPayment();
+                Intent intent = new Intent(getActivity(), EventActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -198,6 +206,48 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         firebaseRecyclerAdapter.startListening();
 
         featuredEvents.setAdapter(firebaseRecyclerAdapter);
+
+
+
+        FirebaseRecyclerOptions<AllUserMember> options1 =
+                new FirebaseRecyclerOptions.Builder<AllUserMember>()
+                        .setQuery(referenceDeveloper,AllUserMember.class)
+                        .build();
+
+        FirebaseRecyclerAdapter<AllUserMember,ProfileViewholder> firebaseRecyclerAdapter1 =
+                new FirebaseRecyclerAdapter<AllUserMember, ProfileViewholder>(options1) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull ProfileViewholder holder, int position, @NonNull AllUserMember model) {
+
+                        holder.setGameDeveloper(getActivity(),model.getName(),model.getUid(),model.getProf(),model.getUrl(),model.getAbout());
+
+                        String  name = getItem(position).getName();
+                        String  url = getItem(position).getUrl();
+                        String uid = getItem(position).getUid();
+
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public ProfileViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.developer_layout,parent,false);
+
+                        return new ProfileViewholder(view);
+                    }
+                };
+
+
+        firebaseRecyclerAdapter1.startListening();
+//
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2,GridLayoutManager.HORIZONTAL,false);
+        rvGameDeveloper.setLayoutManager(gridLayoutManager);
+        rvGameDeveloper.setAdapter(firebaseRecyclerAdapter1);
+
+
+
+
 
     }
 

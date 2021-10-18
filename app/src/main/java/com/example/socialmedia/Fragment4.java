@@ -25,9 +25,6 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,21 +34,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -149,7 +142,8 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.createpost_f4) {
-            showBottomsheet();
+            Intent intent = new Intent(getActivity(),PostActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -242,15 +236,8 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
                         final String postkey = getRef(position).getKey();
 
-                        //name,url,postUri,time,uid,type,desc
                         holder.SetPost(getActivity(),model.getName(),model.getUrl(),model.getPostUri(),model.getTime(),model.getUid(),
-                                model.getType(),model.getDesc());
-
-
-
-//                        String que = getItem(position).getQuestion();
-
-                        //String uri  = getItem(position).getPostUri();
+                                model.getType(),model.getDesc(),model.getPrivacy());
                         String name = getItem(position).getName();
                         String url = getItem(position).getPostUri();
                         String time = getItem(position).getTime();
@@ -281,7 +268,6 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                             likesref.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                                     if(likechecker.equals(true)){
                                         if(snapshot.child(postkey).hasChild(currentUserid)){
                                             likesref.child(postkey).child(currentUserid).removeValue();

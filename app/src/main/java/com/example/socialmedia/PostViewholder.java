@@ -42,7 +42,7 @@ public class PostViewholder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void SetPost(FragmentActivity activity, String name,String url,String postUri,String time,String uid,String type,String desc){
+    public void SetPost(FragmentActivity activity, String name,String url,String postUri,String time,String uid,String type,String desc,String postprivacy){
 
         imageViewprofile = itemView.findViewById(R.id.iv_profile_item_post);
         iv_post = itemView.findViewById(R.id.iv_post_item);

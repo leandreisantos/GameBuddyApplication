@@ -2,17 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/bottomSheetContainer"
+    android:background="@drawable/bottom_sheet_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:orientation="vertical"
-        style="@style/CustomCardCorners"
-        android:layout_width="match_parent"
-        android:layout_height="250dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -20,8 +13,9 @@
             android:padding="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
@@ -33,17 +27,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Who can see your post?"
-                    android:textColor="@color/black"
-                    android:fontFamily="sans-serif-black"
-                    android:textSize="15sp"/>
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/baloo"
+                    android:textSize="18sp"/>
 
                 <TextView
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bmp_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/secondary_background"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-light"
                     android:text="Pick who can allow to comment and see your Post."/>
 
 
@@ -51,10 +46,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/cl2"
+                app:layout_constraintTop_toBottomOf="@id/cl1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginBottom="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -62,8 +59,9 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:id="@+id/iv_p_bmp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:src="@drawable/ic_round_public_24"/>
 
                 <androidx.cardview.widget.CardView
@@ -85,16 +83,95 @@
 
 
                 <TextView
+                    android:id="@+id/tv_public_lbl"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/iv_p_bmp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="Public"
+                    android:fontFamily="@font/baloo"
+                    android:layout_marginStart="20dp"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    app:layout_constraintBottom_toTopOf="@id/tv_publicdesc_lbl"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/tv_publicdesc_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All people can comment and like your post"
+                    android:textColor="@color/grey"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_public_lbl"
+                    app:layout_constraintLeft_toRightOf="@id/iv_p_bmp"/>
 
 
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl3"
+                app:layout_constraintTop_toBottomOf="@id/cl2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/iv_pr_bmp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/privacy_icon"/>
+
+                <androidx.cardview.widget.CardView
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="29dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp">
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/iv_sta_pr_bmp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@color/active"/>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <TextView
+                    android:id="@+id/tv_pr_lbl"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/iv_pr_bmp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/tv_prdesc_lbl"
+                    android:text="Private"
+                    android:fontFamily="@font/baloo"
+                    android:layout_marginStart="20dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/tv_prdesc_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Only your friends can comment and like your post"
+                    android:textColor="@color/grey"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_pr_lbl"
+                    app:layout_constraintLeft_toRightOf="@id/iv_pr_bmp"/>
 
 
 
@@ -102,13 +179,10 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-    </androidx.cardview.widget.CardView>
 
 
 

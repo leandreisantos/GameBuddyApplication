@@ -2,7 +2,11 @@ package com.example.socialmedia;
 
 public class AllUserMember {
 
-    String name,uid,prof,url;
+    String name;
+    String uid;
+    String prof;
+    String url;
+    String about;
 
     public AllUserMember(){
 
@@ -37,6 +41,14 @@ public class AllUserMember {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
 

@@ -131,7 +131,32 @@
                         android:layout_height="350dp"
                         android:background="@drawable/iv_border"
                         android:scaleType="centerCrop"
-                        android:visibility="invisible" />
+                        android:visibility="visible" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content">
+
+                        <androidx.cardview.widget.CardView
+                            android:visibility="gone"
+                            android:id="@+id/cl_parentclose_ap"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:cardCornerRadius="15dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginTop="10dp"
+                            app:cardBackgroundColor="@color/secondary_background">
+
+                            <TextView
+                                android:id="@+id/tv_close_iv_ap"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_round_close_24"/>
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -188,7 +213,7 @@
             android:fontFamily="sans-serif"
             android:background="@color/black"
             android:textSize="15sp"
-            android:textColor="@color/btn"
+            android:textColor="@color/white"
             android:drawablePadding="10dp"
             android:drawableStart="@drawable/ic_round_public_24"
             android:padding="20dp"
@@ -255,8 +280,8 @@
 
         <TextView
             android:id="@+id/cam_post"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/ic_outline_camera_alt_24"
             app:layout_constraintTop_toTopOf="parent"
@@ -265,8 +290,8 @@
 
         <TextView
             android:id="@+id/btn_choosefile_post"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@drawable/ic_outline_image_24"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginLeft="20dp"

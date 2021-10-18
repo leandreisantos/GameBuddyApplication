@@ -1,6 +1,5 @@
 package com.example.socialmedia;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,45 +10,36 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
     EditText emailEt,passEt,confirm_pass;
-    Button register_btn,login_btn;
+    Button register_btn;
     CheckBox checkBox;
     ProgressBar progressBar;
     FirebaseAuth mAuth;
     ImageView back_btn;
 
-    databaseReference dbr = new databaseReference();
-    FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference databaseReference;
-    Postmember postmember;
-
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String currentuid = user.getUid();
+//    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//    String currentuid = user.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        postmember = new Postmember();
+        //postmember = new Postmember();
 
-        databaseReference = database.getReference("newKey");
+        //databaseReference = database.getReference("newKey");
 
         emailEt = findViewById(R.id.register_email_et);
         passEt = findViewById(R.id.register_password_et);
@@ -61,61 +51,48 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressbar_register);
         mAuth = FirebaseAuth.getInstance();
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    passEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    confirm_pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                passEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                confirm_pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
-                }else{
-                    passEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    confirm_pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
+            }else{
+                passEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                confirm_pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
         });
 
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this,WaitingActivity.class);
-                startActivity(intent);
-            }
+        back_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(RegisterActivity.this,WaitingActivity.class);
+            startActivity(intent);
         });
 
-        register_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        register_btn.setOnClickListener(v -> {
+            String email = emailEt.getText().toString();
+            String pass = passEt.getText().toString();
+            String confirm_password = confirm_pass.getText().toString();
 
-                String email = emailEt.getText().toString();
-                String pass = passEt.getText().toString();
-                String confirm_password = confirm_pass.getText().toString();
-
-                if(!TextUtils.isEmpty(email) || !TextUtils.isEmpty(pass) || !TextUtils.isEmpty(confirm_password)){
-                    if(pass.equals(confirm_password)){
-                        progressBar.setVisibility(View.VISIBLE);
-                        mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    postmember.setUid(currentuid);
-                                    databaseReference.child(currentuid).setValue(currentuid);
-                                    sendtoMain();
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                }else{
-                                    String error = task.getException().getMessage();
-                                    Toast.makeText(RegisterActivity.this, "Error:"+error, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }else{
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(RegisterActivity.this, "password and confirm password is not matching", Toast.LENGTH_SHORT).show();
-                    }
+            if(!TextUtils.isEmpty(email) || !TextUtils.isEmpty(pass) || !TextUtils.isEmpty(confirm_password)){
+                if(pass.equals(confirm_password)){
+                    progressBar.setVisibility(View.VISIBLE);
+                    mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+//                                    postmember.setUid(currentuid);
+//                                    databaseReference.child(currentuid).setValue(currentuid);
+                            sendtoMain();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }else{
+                            String error = Objects.requireNonNull(task.getException()).getMessage();
+                            Toast.makeText(RegisterActivity.this, "Error:"+error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }else{
-                    Toast.makeText(RegisterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
-
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(RegisterActivity.this, "password and confirm password is not matching", Toast.LENGTH_SHORT).show();
                 }
+            }else{
+                Toast.makeText(RegisterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+
             }
         });
 

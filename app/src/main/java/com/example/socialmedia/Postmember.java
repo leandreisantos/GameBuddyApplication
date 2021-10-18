@@ -2,7 +2,14 @@ package com.example.socialmedia;
 
 public class Postmember {
 
-    String name,url,postUri,time,uid,type,desc;
+    String name;
+    String url;
+    String postUri;
+    String time;
+    String uid;
+    String type;
+    String desc;
+    String privacy;
 
     public Postmember(){
 
@@ -63,5 +70,14 @@ public class Postmember {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
+
 
 }

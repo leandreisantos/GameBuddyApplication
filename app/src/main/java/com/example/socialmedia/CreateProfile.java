@@ -166,27 +166,25 @@ public class CreateProfile extends AppCompatActivity {
                         member.setProf(prof);
                         member.setUid(currentUserId);
                         member.setUrl(downloadUri.toString());
+                        member.setAbout(bio);
 
                         databaseReference.child(currentUserId).setValue(member);
 
                         documentReference.set(profile)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        Toast.makeText(CreateProfile.this, "Profile Created", Toast.LENGTH_SHORT).show();
+                                .addOnSuccessListener(aVoid -> {
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(CreateProfile.this, "Profile Created", Toast.LENGTH_SHORT).show();
 
 
-                                        Handler handler = new Handler();
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Intent intent = new Intent(CreateProfile.this,MainActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        },2000);
-                                    }
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(CreateProfile.this,MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    },2000);
                                 });
                     }
                 }
