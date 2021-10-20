@@ -357,7 +357,8 @@ public class PostActivity extends AppCompatActivity {
 //                Toast.makeText(this, "Please fill all Fields", Toast.LENGTH_SHORT).show();
 //            }
 
-        }else if(selectedUri == null&& !etdesc.getText().toString().trim().equals("")){
+        }
+        else if(selectedUri == null&& !etdesc.getText().toString().trim().equals("")){
             desc = etdesc.getText().toString();
 
             GetCurrentTime gc = new GetCurrentTime();
@@ -392,7 +393,8 @@ public class PostActivity extends AppCompatActivity {
             intent.putExtra("post",value);
             startActivity(intent);
 
-        }else if(etdesc.getText().toString().trim().equals("")&&selectedUri == null){
+        }
+        else if(etdesc.getText().toString().trim().equals("")&&selectedUri == null){
             Toast.makeText(this, "Add something to post", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -408,7 +410,7 @@ public class PostActivity extends AppCompatActivity {
                 final StorageReference reference = storageReference.child(System.currentTimeMillis()+"."+getFileExt(selectedUri));
                 uploadTask = reference.putFile(selectedUri);
 
-                Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
+                Task<Uri> urlTask = uploadTask.continueWithTask((Task<UploadTask.TaskSnapshot> task) -> {
                     if(!task.isSuccessful()){
                         throw task.getException();
 

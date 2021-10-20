@@ -1,12 +1,19 @@
 package com.example.socialmedia;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmedia.Config.Config;
@@ -40,18 +47,12 @@ import static android.app.Activity.RESULT_OK;
 
 public class dashboard_fragment extends Fragment implements View.OnClickListener{
 
-    public static final int PAYPAL_REQUEST_CODE = 7171;
-
-    private static PayPalConfiguration config = new PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX) // use sandbox for test
-            .clientId(Config.PAYPAL_CLIENT_ID);
-
-
     RecyclerView featuredEvents,rvGameDeveloper;
     ImageView addevent;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference reference,db1,db2,db3,profileRef,referenceDeveloper;
+    RelativeLayout sta,action,adventure,fps;
     //reference
     String name;
 
@@ -74,13 +75,12 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentuid = user.getUid();
 
-        //Start paypal services
-        Intent intent = new Intent(getActivity(),PayPalService.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
-        getActivity().startService(intent);
-
         featuredEvents = getActivity().findViewById(R.id.df_event_rv);
         addevent = getActivity().findViewById(R.id.df_add_event);
+        sta = getActivity().findViewById(R.id.rl_sta_dash);
+        action = getActivity().findViewById(R.id.rl_ac_dash);
+        adventure = getActivity().findViewById(R.id.rl_ad_dash);
+        fps = getActivity().findViewById(R.id.rl_fps_dash);
 
         reference = database.getReference("All post events");
         referenceDeveloper = database.getReference("All users");
@@ -102,6 +102,18 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
 
         addevent.setOnClickListener(this);
 
+        sta.setOnClickListener(v -> GotoSga("Strategy Game","All strategy"));
+        action.setOnClickListener(v -> GotoSga("Action Game","ac"));
+        adventure.setOnClickListener(v -> GotoSga("Adventure Game","ad"));
+        fps.setOnClickListener(v -> GotoSga("Fps Game","f"));
+
+    }
+
+    private void GotoSga(String title,String keyword) {
+        Intent intent = new Intent(getActivity(),SelectedGameActivity.class);
+        intent.putExtra("s",title);
+        intent.putExtra("k",keyword);
+        startActivity(intent);
     }
 
     @Override
@@ -109,48 +121,38 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         switch(v.getId()){
             case R.id.df_add_event:
                 //processPayment();
-                Intent intent = new Intent(getActivity(), EventActivity.class);
-                startActivity(intent);
-                break;
+            showBottomSheet();
         }
     }
 
-    private void processPayment() {
-        String amout = "100";
-        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(amout)), "USD",
-        "Donate for GameBuddyDevelopers",PayPalPayment.PAYMENT_INTENT_SALE);
+    private void showBottomSheet() {
 
-        Intent intent = new Intent(getActivity(), PaymentActivity.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
-        startActivityForResult(intent,PAYPAL_REQUEST_CODE);
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottom_event_payment);
+
+        TextView debit = dialog.findViewById(R.id.tv_debit_event);
+        TextView paypal = dialog.findViewById(R.id.tv_paypal_event);
+
+        debit.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(),DebitActivity.class);
+            startActivity(intent);
+        });
+        paypal.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(),paypalActivity.class);
+            startActivity(intent);
+        });
+
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.Bottomanim;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        if(requestCode == PAYPAL_REQUEST_CODE){
-            if(resultCode == RESULT_OK){
-                PaymentConfirmation confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-                if(confirmation != null){
-                    try{
-                        String paymentDetails = confirmation.toJSONObject().toString(4);
-
-                        //startActivity(new Intent(getActivity(),PaymentDetails.class))
-                        Toast.makeText(getActivity(), "Payment Completed", Toast.LENGTH_SHORT).show();
-
-                    }catch(JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }else if(resultCode == Activity.RESULT_CANCELED){
-                Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_SHORT).show();
-            }
-
-        }else if(requestCode == PaymentActivity.RESULT_EXTRAS_INVALID){
-            Toast.makeText(getActivity(), "Invalid", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     public void onStart() {

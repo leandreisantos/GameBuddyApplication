@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -34,7 +35,7 @@ import com.squareup.picasso.Picasso;
 public class UpdateProfile extends AppCompatActivity {
 
     EditText etname,etBio,etProfession,etEmail,etWeb;
-    Button button,button_del;
+    TextView button,button_del;
     ImageView iv;
 
     //database stuff
@@ -63,10 +64,10 @@ public class UpdateProfile extends AppCompatActivity {
         etWeb = findViewById(R.id.et_web_up);
         button = findViewById(R.id.btn_up);
         iv = findViewById(R.id.iv_up);
-        button_del = findViewById(R.id.btn_del);
+        //button_del = findViewById(R.id.btn_del);
 
         button.setOnClickListener(v -> updateProfile());
-        button_del.setOnClickListener(v -> deleteProf());
+        //button_del.setOnClickListener(v -> deleteProf());
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

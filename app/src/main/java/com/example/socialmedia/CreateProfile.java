@@ -52,6 +52,7 @@ public class CreateProfile extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference documentReference;
     private static final int PICK_IMAGE=1;
+    private static final int PICK_IMAGE1=1;
     AllUserMember member;
     String currentUserId;
 
@@ -93,6 +94,16 @@ public class CreateProfile extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent,PICK_IMAGE1);
+            }
+        });
+
+        bgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent,PICK_IMAGE);
             }
         });
@@ -108,6 +119,10 @@ public class CreateProfile extends AppCompatActivity {
             if(requestCode == PICK_IMAGE || resultCode == RESULT_OK||data != null||data.getData()!=null){
                 imageUri = data.getData();
                 Picasso.get().load(imageUri).into(imageView);
+            }
+            if(requestCode == PICK_IMAGE1 || resultCode == RESULT_OK||data != null||data.getData()!=null){
+                imageUri = data.getData();
+                Picasso.get().load(imageUri).into(bgProfile);
             }
 
         }catch (Exception e){

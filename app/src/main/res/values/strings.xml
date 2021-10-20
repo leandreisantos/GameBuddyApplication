@@ -30,7 +30,7 @@
     <string name="c1_df">Strategy Game</string>
     <string name="c2_df">Action Game</string>
     <string name="c3_df">Adventure Game</string>
-    <string name="c4_df">Skills Game</string>
+    <string name="c4_df">Fps Game</string>
 
     <!---Descriptopn-->
     <string name="first_slide_desc">You can see all up coming events in your favorite game</string>
@@ -98,7 +98,6 @@
     <string name="ipl_invite">Invite</string>
 
     <!--Post_layout-->
-
 
 
 </resources>

@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
     }
+
 
     public void navDrawer() {
         if(drawerLayout.isDrawerVisible(GravityCompat.START)){

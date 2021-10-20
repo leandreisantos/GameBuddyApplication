@@ -10,14 +10,22 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SocialMedia">
-        <activity android:name=".InvitePeopleGroupActivity"></activity>
+        android:theme="@style/Theme.SocialMedia"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".GameSelectedSelectedActivity"></activity>
+        <activity android:name=".AddGameActivity" />
+        <activity android:name=".SelectedGameActivity" />
+        <activity android:name=".paypalActivity" />
+        <activity android:name=".DebitActivity" />
+        <activity android:name=".ViewUserActivity" />
+        <activity android:name=".RegisterOptionActivity" />
+        <activity android:name=".EditProfile" />
+        <activity android:name=".InvitePeopleGroupActivity" />
         <activity android:name=".SelectedItemSellActivity" />
         <activity android:name=".ShopActivity" />
         <activity android:name=".ViewImage" />
@@ -90,12 +98,11 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".firebase.MessagingService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 

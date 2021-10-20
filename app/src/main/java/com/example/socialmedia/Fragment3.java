@@ -145,7 +145,7 @@ public class Fragment3 extends Fragment {
                                     startActivity(intent);
 
                                 }else {
-                                    Intent intent = new Intent(getActivity(),ShowUser.class);
+                                    Intent intent = new Intent(getActivity(),ViewUserActivity.class);
                                     intent.putExtra("n",name);
                                     intent.putExtra("u",url);
                                     intent.putExtra("uid",uid);
