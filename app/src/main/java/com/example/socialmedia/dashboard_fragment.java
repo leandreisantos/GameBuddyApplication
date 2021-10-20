@@ -103,9 +103,9 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         addevent.setOnClickListener(this);
 
         sta.setOnClickListener(v -> GotoSga("Strategy Game","All strategy"));
-        action.setOnClickListener(v -> GotoSga("Action Game","ac"));
-        adventure.setOnClickListener(v -> GotoSga("Adventure Game","ad"));
-        fps.setOnClickListener(v -> GotoSga("Fps Game","f"));
+        action.setOnClickListener(v -> GotoSga("Action Game","All action"));
+        adventure.setOnClickListener(v -> GotoSga("Adventure Game","All adventure"));
+        fps.setOnClickListener(v -> GotoSga("Fps Game","All fps"));
 
     }
 

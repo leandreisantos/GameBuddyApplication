@@ -71,7 +71,7 @@ public class AddGameActivity extends AppCompatActivity {
         desc = findViewById(R.id.et_desc_ag);
 
         storageReference = FirebaseStorage.getInstance().getReference("All game");
-        db3 = database.getReference("All strategy");
+        db3 = database.getReference(keyword);
 
 
         dp.setOnClickListener(v -> {

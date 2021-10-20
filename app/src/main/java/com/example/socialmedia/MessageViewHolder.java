@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -23,6 +24,42 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
     public MessageViewHolder(@NonNull View itemView) {
         super(itemView);
+    }
+
+    public void SetmessageCom(FragmentActivity activity,String message,String time,String date,String type,String senderuid,String
+            receiveruid,String sendername,String audio,String image) {
+
+        sendertv = itemView.findViewById(R.id.sender_tv);
+        receivertv = itemView.findViewById(R.id.receiver_tv);
+
+        iv_receiver = itemView.findViewById(R.id.iv_receiver);
+        iv_sender = itemView.findViewById(R.id.iv_sender);
+
+        LinearLayout llsender = itemView.findViewById(R.id.llsender);
+        LinearLayout llreceiver = itemView.findViewById(R.id.llreceiver);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUid = user.getUid();
+
+        if(currentUid.equals(senderuid)){
+            receivertv.setVisibility(View.GONE);
+            sendertv.setVisibility(View.VISIBLE);
+            sendertv.setText(message);
+            llreceiver.setVisibility(View.GONE);
+            llsender.setVisibility(View.GONE);
+            iv_sender.setVisibility(View.GONE);
+            iv_receiver.setVisibility(View.GONE);
+        }else{
+            receivertv.setVisibility(View.VISIBLE);
+            sendertv.setVisibility(View.GONE);
+            receivertv.setText(message);
+            llreceiver.setVisibility(View.GONE);
+            llsender.setVisibility(View.GONE);
+            iv_sender.setVisibility(View.GONE);
+            iv_receiver.setVisibility(View.GONE);
+
+        }
+
     }
 
     public void Setmessage(Application application,String message,String time,String date,String type,String senderuid,String
