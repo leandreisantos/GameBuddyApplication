@@ -12,13 +12,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MessageViewHolder extends RecyclerView.ViewHolder {
 
     TextView sendertv,receivertv;
-    ImageView iv_sender,iv_receiver;
+    public ImageView iv_sender,iv_receiver,iv_dp;
+    CardView cv;
 
     ImageButton playsender,playreceiver;
 
@@ -34,12 +36,15 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
         iv_receiver = itemView.findViewById(R.id.iv_receiver);
         iv_sender = itemView.findViewById(R.id.iv_sender);
+        iv_dp = itemView.findViewById(R.id.iv_dp_ml);
+        cv = itemView.findViewById(R.id.cv_iv);
 
         LinearLayout llsender = itemView.findViewById(R.id.llsender);
         LinearLayout llreceiver = itemView.findViewById(R.id.llreceiver);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUid = user.getUid();
+
 
         if(currentUid.equals(senderuid)){
             receivertv.setVisibility(View.GONE);
@@ -49,6 +54,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             llsender.setVisibility(View.GONE);
             iv_sender.setVisibility(View.GONE);
             iv_receiver.setVisibility(View.GONE);
+            cv.setVisibility(View.GONE);
         }else{
             receivertv.setVisibility(View.VISIBLE);
             sendertv.setVisibility(View.GONE);

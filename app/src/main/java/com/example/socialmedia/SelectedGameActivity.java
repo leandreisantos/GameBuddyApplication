@@ -56,7 +56,7 @@ public class SelectedGameActivity extends AppCompatActivity {
 
         add_game.setOnClickListener(v -> {
             Intent intent = new Intent(SelectedGameActivity.this,AddGameActivity.class);
-            intent.putExtra("k",title);
+            intent.putExtra("k",keyword);
             startActivity(intent);
         });
     }

@@ -238,11 +238,13 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
                         holder.SetPost(getActivity(),model.getName(),model.getUrl(),model.getPostUri(),model.getTime(),model.getUid(),
                                 model.getType(),model.getDesc(),model.getPrivacy());
+
                         String name = getItem(position).getName();
                         String url = getItem(position).getPostUri();
                         String time = getItem(position).getTime();
                         String type = getItem(position).getType();
                         String userid = getItem(position).getUid();
+                        String desc = getItem(position).getDesc();
 
                         holder.likechecker(postkey);
                         holder.commentchecker(postkey);
@@ -320,9 +322,10 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                             intent.putExtra("name",name);
                             intent.putExtra("url",url);
                             intent.putExtra("uid",userid);
+                            intent.putExtra("d",desc);
                             startActivity(intent);
                         });
-                        holder.iv_post.setOnClickListener(v -> ShowPost(url,userid));
+                        holder.iv_post.setOnClickListener(v -> ShowPost(url,userid,postkey,name));
 
                     }
 
@@ -388,10 +391,12 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
     }
 
-    private void ShowPost(String url,String uid) {
+    private void ShowPost(String url,String uid,String postkey,String name) {
         Intent intent = new Intent(getActivity(),ViewImage.class);
         intent.putExtra("i",uid);
         intent.putExtra("iv",url);
+        intent.putExtra("p",postkey);
+        intent.putExtra("n",name);
         startActivity(intent);
     }
 

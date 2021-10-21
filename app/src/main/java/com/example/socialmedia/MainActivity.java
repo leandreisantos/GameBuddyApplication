@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     TextView username;
-    ImageView imageView;
+    ImageView imageView,imageViewbg;
     LinearLayout contentView;
 
     ImageView menu_icon;
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         hView = navigationView.getHeaderView(0);
         username =hView.findViewById(R.id.mh_username);
         imageView = hView.findViewById(R.id.mh_iv);
+        imageViewbg = hView.findViewById(R.id.iv_bg_header);
 
         auth = FirebaseAuth.getInstance();
 
@@ -282,8 +283,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if(task.getResult().exists()){
                         String nameResult = task.getResult().getString("name");
                         String url = task.getResult().getString("url");
+                        String url2 = task.getResult().getString("url2");
 
                         Picasso.get().load(url).into(imageView);
+                        Picasso.get().load(url2).into(imageViewbg);
                         username.setText(nameResult);
 
                     }else{

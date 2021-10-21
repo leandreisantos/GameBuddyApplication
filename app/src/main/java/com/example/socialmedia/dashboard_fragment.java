@@ -47,11 +47,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class dashboard_fragment extends Fragment implements View.OnClickListener{
 
-    RecyclerView featuredEvents,rvGameDeveloper;
+    RecyclerView featuredEvents,rvGameDeveloper,rvBestGame;
     ImageView addevent;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference,db1,db2,db3,profileRef,referenceDeveloper;
+    DatabaseReference reference,db1,db2,db3,profileRef,referenceDeveloper,db4;
     RelativeLayout sta,action,adventure,fps;
     //reference
     String name;
@@ -92,6 +92,10 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         rvGameDeveloper.setHasFixedSize(true);
         rvGameDeveloper.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
+        rvBestGame = getActivity().findViewById(R.id.rv_mg_dash);
+        rvBestGame.setHasFixedSize(true);
+        rvBestGame.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
         profileRef = database.getReference("All users");
 
         //REFERENCE TO REALTIME DATABASE IN FIREBASE
@@ -99,6 +103,8 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         db2 = database.getReference("All videos").child(currentuid);
         db3 = database.getReference("All post events");
         db3.keepSynced(true);
+
+        db4 = database.getReference("All strategy");
 
         addevent.setOnClickListener(this);
 
@@ -246,6 +252,43 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2,GridLayoutManager.HORIZONTAL,false);
         rvGameDeveloper.setLayoutManager(gridLayoutManager);
         rvGameDeveloper.setAdapter(firebaseRecyclerAdapter1);
+
+
+        FirebaseRecyclerOptions<GameMember> options2 =
+                new FirebaseRecyclerOptions.Builder<GameMember>()
+                        .setQuery(db4,GameMember.class)
+                        .build();
+
+        FirebaseRecyclerAdapter<GameMember,GameViewHolder> firebaseRecyclerAdapter2 =
+                new FirebaseRecyclerAdapter<GameMember, GameViewHolder>(options2) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull GameViewHolder holder, int position, @NonNull GameMember model) {
+
+
+
+                        holder.SetBestGame(getActivity(),model.getTitle(),model.getDesc(),model.getPostkey(),model.getCat(),model.getPostUri1(),
+                                model.getPostUri2(),model.getTime(),model.getDate());
+
+                        String post_key = getItem(position).getPostkey();
+                        String title = getItem(position).getTitle();
+
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public GameViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                        View view = LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.best_game_layout,parent,false);
+
+                        return new GameViewHolder(view);
+                    }
+                };
+
+        firebaseRecyclerAdapter2.startListening();
+
+        rvBestGame.setAdapter(firebaseRecyclerAdapter2);
 
 
 

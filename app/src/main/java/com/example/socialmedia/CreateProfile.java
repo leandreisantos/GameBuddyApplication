@@ -34,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,8 +45,8 @@ public class CreateProfile extends AppCompatActivity {
     Button button;
     ImageView imageView,bgProfile;
     ProgressBar progressBar;
-    Uri imageUri;
-    UploadTask uploadTask;
+    Uri imageUridp,imageUribg,downloadUri2;
+    UploadTask uploadTask,uploadTask2;
     StorageReference storageReference;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
@@ -55,6 +57,7 @@ public class CreateProfile extends AppCompatActivity {
     private static final int PICK_IMAGE1=1;
     AllUserMember member;
     String currentUserId;
+    int picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,48 +84,41 @@ public class CreateProfile extends AppCompatActivity {
 
         databaseReference = database.getReference("All users");
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadData();
-            }
+        button.setOnClickListener(v -> uploadData());
+
+        imageView.setOnClickListener(v -> {
+            chooseImage();
+            picture = 1;
         });
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,PICK_IMAGE1);
-            }
+        bgProfile.setOnClickListener(v -> {
+            chooseImage();
+            picture = 2;
         });
 
-        bgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,PICK_IMAGE);
-            }
-        });
+    }
 
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,PICK_IMAGE1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         try {
             if(requestCode == PICK_IMAGE || resultCode == RESULT_OK||data != null||data.getData()!=null){
-                imageUri = data.getData();
-                Picasso.get().load(imageUri).into(imageView);
-            }
-            if(requestCode == PICK_IMAGE1 || resultCode == RESULT_OK||data != null||data.getData()!=null){
-                imageUri = data.getData();
-                Picasso.get().load(imageUri).into(bgProfile);
+                if(picture == 1){
+                    imageUridp = data.getData();
+                    Picasso.get().load(imageUridp).into(imageView);
+                }else if(picture == 2){
+                    imageUribg = data.getData();
+                    Picasso.get().load(imageUribg).into(bgProfile);
+                }else{
+                    Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+                }
             }
 
         }catch (Exception e){
@@ -137,6 +133,15 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     private void uploadData() {
+
+        Calendar cdate = Calendar.getInstance();
+        SimpleDateFormat currentdate = new SimpleDateFormat("dd-MMMM-yyy");
+        final String savedate = currentdate.format(cdate.getTime());
+
+        Calendar ctime = Calendar.getInstance();
+        SimpleDateFormat currenttime =new SimpleDateFormat("HH-mm-ss");
+        final String savetime = currenttime.format(ctime.getTime());
+
         String name = etname.getText().toString();
         String bio = etBio.getText().toString();
         String web = etWeb.getText().toString();
@@ -144,64 +149,75 @@ public class CreateProfile extends AppCompatActivity {
         String email = etEmail.getText().toString();
 
         if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(bio) && !TextUtils.isEmpty(web)
-                && !TextUtils.isEmpty(prof) && !TextUtils.isEmpty(email) && imageUri != null){
+                && !TextUtils.isEmpty(prof) && !TextUtils.isEmpty(email) && imageUridp != null && imageUribg != null){
 
             progressBar.setVisibility(View.VISIBLE);
-            final StorageReference reference = storageReference.child(System.currentTimeMillis()+"."+getFileExt(imageUri));
-            uploadTask = reference.putFile(imageUri);
+            final StorageReference reference = storageReference.child(System.currentTimeMillis()+"."+getFileExt(imageUridp));
+            final StorageReference reference2 = storageReference.child(System.currentTimeMillis()+"."+getFileExt(imageUribg));
+            uploadTask = reference.putFile(imageUridp);
+            uploadTask2 = reference2.putFile(imageUribg);
 
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        throw task.getException();
+            Task<Uri> urlTask2 = uploadTask2.continueWithTask((Task<UploadTask.TaskSnapshot> task2) -> {
+                if(!task2.isSuccessful()){
+                    throw task2.getException();
 
-                    }
-                    return reference.getDownloadUrl();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
+                return reference2.getDownloadUrl();
+            }).addOnCompleteListener(task2 -> {
+                if(task2.isSuccessful()){
+                    downloadUri2 = task2.getResult();
+                }
+            });
 
-                    if(task.isSuccessful()){
-                        Uri downloadUri = task.getResult();
+            Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
+                if(!task.isSuccessful()){
+                    throw task.getException();
+                }
+                return reference.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
 
-                        Map<String,String> profile = new HashMap<>();
-                        profile.put("name",name);
-                        profile.put("prof",prof);
-                        profile.put("url",downloadUri.toString());
-                        profile.put("email",email);
-                        profile.put("web",web);
-                        profile.put("bio",bio);
-                        profile.put("uid",currentUserId);
-                        profile.put("privacy","Public");
+                if(task.isSuccessful()){
+                    Uri downloadUri = task.getResult();
 
-
-                        member.setName(name.toUpperCase());
-                        member.setProf(prof);
-                        member.setUid(currentUserId);
-                        member.setUrl(downloadUri.toString());
-                        member.setAbout(bio);
-
-                        databaseReference.child(currentUserId).setValue(member);
-
-                        documentReference.set(profile)
-                                .addOnSuccessListener(aVoid -> {
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                    Toast.makeText(CreateProfile.this, "Profile Created", Toast.LENGTH_SHORT).show();
+                    Map<String,String> profile = new HashMap<>();
+                    profile.put("name",name);
+                    profile.put("prof",prof);
+                    profile.put("url",downloadUri.toString());
+                    profile.put("url2",downloadUri2.toString());
+                    profile.put("email",email);
+                    profile.put("web",web);
+                    profile.put("bio",bio);
+                    profile.put("uid",currentUserId);
+                    profile.put("privacy","Public");
 
 
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Intent intent = new Intent(CreateProfile.this,MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    },2000);
-                                });
-                    }
+                    member.setName(name.toUpperCase());
+                    member.setProf(prof);
+                    member.setUid(currentUserId);
+                    member.setUrl(downloadUri.toString());
+                    member.setAbout(bio);
+                    member.setUid2(downloadUri2.toString());
+                    member.setTime(savetime);
+                    member.setDate(savedate);
+
+                    databaseReference.child(currentUserId).setValue(member);
+
+                    documentReference.set(profile)
+                            .addOnSuccessListener(aVoid -> {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                Toast.makeText(CreateProfile.this, "Profile Created", Toast.LENGTH_SHORT).show();
+
+
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(CreateProfile.this,MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                },2000);
+                            });
                 }
             });
             

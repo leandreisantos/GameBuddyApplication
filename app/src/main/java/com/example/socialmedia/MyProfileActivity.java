@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 
 public class MyProfileActivity extends AppCompatActivity {
 
-    ImageView profilepic,createPost,notifi,sendMessage;
+    ImageView profilepic,profilebg,createPost,notifi,sendMessage;
     TextView nameEt,profEt,tv_followers,tvPost,tvEdit;
     int postiv,post2,post1;
 
@@ -42,6 +42,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         //pointer
         profilepic = findViewById(R.id.iv_mp);
+        profilebg = findViewById(R.id.iv_bg_mp);
         nameEt = findViewById(R.id.name_mp);
         profEt = findViewById(R.id.prof_mp);
         tv_followers = findViewById(R.id.tv_followers);
@@ -127,9 +128,11 @@ public class MyProfileActivity extends AppCompatActivity {
 
                         String nameResult = task.getResult().getString("name");
                         String url = task.getResult().getString("url");
+                        String url2 = task.getResult().getString("url2");
                         String profResult = task.getResult().getString("prof");
 
                         Picasso.get().load(url).into(profilepic);
+                        Picasso.get().load(url2).into(profilebg);
                         nameEt.setText(nameResult);
                         profEt.setText(profResult);
 

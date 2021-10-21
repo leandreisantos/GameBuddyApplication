@@ -45,6 +45,8 @@ public class ChatActivity extends AppCompatActivity {
 
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         userid = user.getUid();
+
+
         
         searchEt = findViewById(R.id.search_userch);
         recyclerView = findViewById(R.id.rv_ch);

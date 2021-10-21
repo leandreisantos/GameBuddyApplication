@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmedia.MainActivity;
 import com.example.socialmedia.MessageActivity;
 import com.example.socialmedia.MessageMember;
 import com.example.socialmedia.MessageViewHolder;
@@ -20,6 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -42,7 +46,7 @@ public class CommunityGss extends Fragment {
     DatabaseReference rootref1,rootref2,typingref;
     MessageMember messageMember;
 
-    String uid,keyword,post_key,title;
+    String uid,keyword,post_key,title,checkid=null;
 
     @Nullable
     @Override
@@ -118,6 +122,8 @@ public class CommunityGss extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+
         FirebaseRecyclerOptions<MessageMember> options1 =
                 new FirebaseRecyclerOptions.Builder<MessageMember>()
                         .setQuery(rootref1,MessageMember.class)
@@ -133,6 +139,25 @@ public class CommunityGss extends Fragment {
                         holder.SetmessageCom(getActivity(),model.getMessage(),model.getTime(),model.getDate(),
                                 model.getType(),model.getSenderuid(),model.getReceiveruid(),model.getSendername(),model.getAudio(),model.getImage());
 
+                        String uid = getItem(position).getSenderuid();
+
+
+                        DocumentReference referenceUser;
+                        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+                        referenceUser = firestore.collection("user").document(uid);
+                        referenceUser.get()
+                                .addOnCompleteListener(task -> {
+                                    if(task.getResult().exists()){
+                                        String nameResult = task.getResult().getString("name");
+                                        String url = task.getResult().getString("url");
+
+                                        Picasso.get().load(url).into(holder.iv_dp);
+
+                                    }else{
+                                        Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
 
 
                     }

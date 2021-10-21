@@ -17,7 +17,7 @@
 
     <item
         android:title="Community"
-        android:icon="@drawable/gc_icon"
+        android:icon="@drawable/ic_round_public_24"
         app:showAsAction="always"
         android:id="@+id/community_gss"/>
 

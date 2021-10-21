@@ -14,13 +14,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class GameViewHolder  extends RecyclerView.ViewHolder {
 
-    ImageView bg,dp;
-    TextView title_tv,desc_tv;
+    ImageView bg,dp,bestbg,bestdp;
+    TextView title_tv,desc_tv,besttitle,bestcat;
     ConstraintLayout cons;
 
 
     public GameViewHolder(@NonNull View itemView) {
         super(itemView);
+    }
+
+    public void SetBestGame(FragmentActivity fragmentActivity, String title, String desc, String postkey, String cat, String postUri1,
+                        String postUri2, String time, String date){
+
+        bestbg = itemView.findViewById(R.id.iv_bg_bgl);
+        bestdp = itemView.findViewById(R.id.iv_dp_bgl);
+        besttitle = itemView.findViewById(R.id.tv_title_bgl);
+        bestcat = itemView.findViewById(R.id.tv_cat_bgl);
+
+        besttitle.setText(title);
+        bestcat.setText(cat);
+        Picasso.get().load(postUri1).into(bestdp);
+        Picasso.get().load(postUri2).into(bestbg);
     }
 
     public void SetGame(Application application, String title, String desc, String postkey, String cat, String postUri1,

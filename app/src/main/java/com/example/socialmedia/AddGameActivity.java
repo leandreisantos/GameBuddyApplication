@@ -30,7 +30,7 @@ public class AddGameActivity extends AppCompatActivity {
 
     ImageView dp,bg;
     TextView add;
-    EditText title,desc;
+    EditText title,desc,about,email,address,owner;
 
     int picture;
 
@@ -69,6 +69,11 @@ public class AddGameActivity extends AppCompatActivity {
 
         title = findViewById(R.id.et_title_ag);
         desc = findViewById(R.id.et_desc_ag);
+        desc = findViewById(R.id.et_desc_ag);
+        about = findViewById(R.id.et_about_ag);
+        email = findViewById(R.id.et_email_ag);
+        address = findViewById(R.id.et_address_ag);
+        owner = findViewById(R.id.et_owner_ag);
 
         storageReference = FirebaseStorage.getInstance().getReference("All game");
         db3 = database.getReference(keyword);
@@ -132,6 +137,10 @@ public class AddGameActivity extends AppCompatActivity {
 
         String desc_et = desc.getText().toString();
         String title_et = title.getText().toString();
+        String about_et = about.getText().toString();
+        String email_et = email.getText().toString();
+        String address_et = address.getText().toString();
+        String owner_et = owner.getText().toString();
 
         if(!(TextUtils.isEmpty(desc_et)&&TextUtils.isEmpty(title_et))&&selectedUridp != null&&selectedUribg !=null) {
 
@@ -175,6 +184,10 @@ public class AddGameActivity extends AppCompatActivity {
                          gameMember.setPostUri2(downloadUri2.toString());
                          gameMember.setTime(savetime);
                          gameMember.setDate(savedate);
+                         gameMember.setAbout(about_et);
+                         gameMember.setEmail(email_et);
+                         gameMember.setAddress(address_et);
+                         gameMember.setOwner(owner_et);
 
 
                         db3.child(id).setValue(gameMember);

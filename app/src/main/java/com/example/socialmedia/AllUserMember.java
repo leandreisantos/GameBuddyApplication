@@ -7,6 +7,9 @@ public class AllUserMember {
     String prof;
     String url;
     String about;
+    String uid2;
+    String date;
+    String time;
 
     public AllUserMember(){
 
@@ -50,6 +53,30 @@ public class AllUserMember {
     public void setAbout(String about) {
         this.about = about;
     }
+    public String getUid2() {
+        return uid2;
+    }
+
+    public void setUid2(String uid2) {
+        this.uid2 = uid2;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
 
 
 

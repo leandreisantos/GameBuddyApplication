@@ -328,14 +328,13 @@
                         android:layout_marginTop="15dp"
                         android:id="@+id/rv_developer_dash"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"/>
+                        android:layout_height="250dp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="30dp"
                     android:padding="20dp">
 
                     <RelativeLayout
@@ -366,11 +365,9 @@
                     </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_mg_dash"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"/>
-
-
-
+                        android:layout_height="250dp"/>
 
                 </LinearLayout>
 
