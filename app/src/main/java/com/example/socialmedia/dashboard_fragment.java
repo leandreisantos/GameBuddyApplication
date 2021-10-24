@@ -26,11 +26,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
@@ -55,6 +58,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     RelativeLayout sta,action,adventure,fps;
     //reference
     String name;
+    String currentuid;
 
 
     @Nullable
@@ -73,7 +77,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String currentuid = user.getUid();
+        currentuid = user.getUid();
 
         featuredEvents = getActivity().findViewById(R.id.df_event_rv);
         addevent = getActivity().findViewById(R.id.df_add_event);
@@ -163,6 +167,19 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     @Override
     public void onStart() {
         super.onStart();
+
+        DocumentReference reference1;
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        reference1 = firestore.collection("user").document(currentuid);
+        reference1.get()
+                .addOnCompleteListener(task -> {
+                    if(!task.getResult().exists()){
+                        Intent intent = new Intent(getActivity(),CreateProfile.class);
+                        startActivity(intent);
+                    }
+                });
+
 
         FirebaseRecyclerOptions<EventMember> options =
                 new FirebaseRecyclerOptions.Builder<EventMember>()

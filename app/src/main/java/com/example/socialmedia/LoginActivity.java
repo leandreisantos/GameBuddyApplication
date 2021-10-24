@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             String email = emailEt.getText().toString();
             String pass = passEt.getText().toString();
             process(true);
-            if(!TextUtils.isEmpty(email)||!TextUtils.isEmpty(pass)){
+            if(!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(pass)){
                 mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(task -> {
                     if(task.isSuccessful()) sendtoMain();
                     else {
@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }else {
                 Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                process(false);
             }
         });
 

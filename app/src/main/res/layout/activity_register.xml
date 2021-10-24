@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context=".RegisterActivity">
+
     
     
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,11 +48,13 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/registerlot"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/intro"
             app:lottie_rawRes="@raw/registerlot"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginTop="10dp"
             app:lottie_loop="true"
             app:lottie_autoPlay="true" />
@@ -181,136 +184,16 @@
                             android:textSize="13sp">
                         </Button>
 
-
-                        <ProgressBar
-                            app:layout_constraintTop_toBottomOf="@id/button_register"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/progressbar_register"
-                            android:indeterminate="true"
-                            android:indeterminateTint="@android:color/white"
-                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                            android:visibility="invisible"
-                            android:layout_marginTop="20dp"/>
-
-
-
-
-
-
-
-
-
-        <!--        <androidx.cardview.widget.CardView-->
-<!--            android:id="@+id/cardSignIn"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="550dp"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            app:cardCornerRadius="20dp"-->
-<!--            android:backgroundTint="#242424"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/intro">-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="60dp"-->
-<!--                android:orientation="vertical"-->
-<!--                android:padding="4dp">-->
-
-<!--                <EditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="60dp"-->
-<!--                    android:hint="User Email"-->
-<!--                    android:layout_margin="10dp"-->
-<!--                    android:paddingStart="10dp"-->
-<!--                    android:textColor="@android:color/white"-->
-<!--                    android:drawableStart="@drawable/custom_email_input"-->
-<!--                    android:drawablePadding="10dp"-->
-<!--                    android:inputType="textEmailAddress"-->
-<!--                    android:textColorHint="@color/grey"-->
-<!--                    android:id="@+id/register_email_et"-->
-<!--                    android:background="@drawable/custom_input"/>-->
-
-<!--                <EditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="60dp"-->
-<!--                    android:hint="Password"-->
-<!--                    android:layout_margin="10dp"-->
-<!--                    android:paddingStart="10dp"-->
-<!--                    android:drawableStart="@drawable/ic_baseline_lock_24"-->
-<!--                    android:drawablePadding="10dp"-->
-<!--                    android:textColorHint="@color/grey"-->
-<!--                    android:id="@+id/register_password_et"-->
-<!--                    android:textColor="@android:color/white"-->
-<!--                    android:inputType="textPassword"-->
-<!--                    android:background="@drawable/custom_input"/>-->
-
-<!--                <EditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="60dp"-->
-<!--                    android:hint="Confirm Password"-->
-<!--                    android:layout_margin="10dp"-->
-<!--                    android:paddingStart="10dp"-->
-<!--                    android:drawableStart="@drawable/ic_baseline_lock_24"-->
-<!--                    android:drawablePadding="10dp"-->
-<!--                    android:textColor="@android:color/white"-->
-<!--                    android:textColorHint="@color/grey"-->
-<!--                    android:id="@+id/register_confirmpassword_et"-->
-<!--                    android:inputType="textPassword"-->
-<!--                    android:background="@drawable/custom_input"/>-->
-
-<!--                <CheckBox-->
-<!--                    android:layout_width="200dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Show Password"-->
-<!--                    android:buttonTint="@android:color/white"-->
-<!--                    android:textColor="@android:color/white"-->
-<!--                    android:layout_marginRight="70dp"-->
-<!--                    android:layout_marginTop="20dp"-->
-<!--                    android:layout_marginBottom="10dp"-->
-<!--                    android:id="@+id/register_checkbox"/>-->
-
-
-<!--                <Button-->
-<!--                    android:id="@+id/button_register"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="50dp"-->
-<!--                    app:cornerRadius="20dp"-->
-<!--                    android:layout_marginStart="20dp"-->
-<!--                    android:layout_marginTop="20dp"-->
-<!--                    android:layout_marginEnd="20dp"-->
-<!--                    android:backgroundTint="@color/btn"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:includeFontPadding="false"-->
-<!--                    android:text="Sign Up"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="13sp"-->
-<!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                </Button>-->
-
-
-<!--                <ProgressBar-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:id="@+id/progressbar_register"-->
-<!--                    android:indeterminate="true"-->
-<!--                    android:indeterminateTint="@android:color/white"-->
-<!--                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
-<!--                    android:visibility="invisible"-->
-<!--                    android:layout_marginTop="20dp"/>-->
-
-
-
-
-
-
-<!--            </LinearLayout>-->
-
-<!--        </androidx.cardview.widget.CardView>-->
-
+        <ProgressBar
+            android:id="@+id/progressbar_login"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="150dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
 

@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         back_btn = findViewById(R.id.back);
         //login_btn = findViewById(R.id.signup_to_login);
         checkBox = findViewById(R.id.register_checkbox);
-        progressBar = findViewById(R.id.progressbar_register);
+        progressBar = findViewById(R.id.progressbar_login);
         mAuth = FirebaseAuth.getInstance();
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -71,10 +71,10 @@ public class RegisterActivity extends AppCompatActivity {
             String email = emailEt.getText().toString();
             String pass = passEt.getText().toString();
             String confirm_password = confirm_pass.getText().toString();
-
-            if(!TextUtils.isEmpty(email) || !TextUtils.isEmpty(pass) || !TextUtils.isEmpty(confirm_password)){
+            process(true);
+            if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(confirm_password)){
                 if(pass.equals(confirm_password)){
-                    progressBar.setVisibility(View.VISIBLE);
+                    //progressBar.setVisibility(View.VISIBLE);
                     mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
 //                                    postmember.setUid(currentuid);
@@ -87,11 +87,13 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
                 }else{
-                    progressBar.setVisibility(View.INVISIBLE);
+                    //progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(RegisterActivity.this, "password and confirm password is not matching", Toast.LENGTH_SHORT).show();
+                    process(false);
                 }
             }else{
                 Toast.makeText(RegisterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                process(false);
 
             }
         });
@@ -110,6 +112,24 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void process(Boolean what){
+        if(what) {
+            progressBar.setVisibility(View.VISIBLE);
+            emailEt.setEnabled(false);
+            passEt.setEnabled(false);
+            register_btn.setEnabled(false);
+            checkBox.setEnabled(false);
+            back_btn.setEnabled(false);
+        }else{
+            progressBar.setVisibility(View.GONE);
+            emailEt.setEnabled(true);
+            passEt.setEnabled(true);
+            register_btn.setEnabled(true);
+            checkBox.setEnabled(true);
+            back_btn.setEnabled(true);
+        }
     }
 
     @Override

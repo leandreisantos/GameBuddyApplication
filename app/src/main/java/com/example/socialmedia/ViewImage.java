@@ -125,7 +125,7 @@ public class ViewImage extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 try {
-                    commentcount = (int)snapshot.child(postkey).getChildrenCount();
+                    commentcount = (int)snapshot.getChildrenCount();
                     ccomment.setText(Integer.toString(commentcount));
 
                 }catch(Exception e){
