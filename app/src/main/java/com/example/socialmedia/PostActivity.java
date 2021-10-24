@@ -44,6 +44,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -124,9 +126,7 @@ public class PostActivity extends AppCompatActivity {
            closePanel.setVisibility(View.GONE);
        });
 
-       cansee.setOnClickListener(v -> {
-           showBottomsheet();
-       });
+       cansee.setOnClickListener(v -> showBottomsheet());
 
     }
 
@@ -275,14 +275,22 @@ public class PostActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentuid = user.getUid();
 
+        Calendar cdate = Calendar.getInstance();
+        SimpleDateFormat currentdate = new SimpleDateFormat("dd-MMMM-yyy");
+        final String savedate = currentdate.format(cdate.getTime());
+
+        Calendar ctime = Calendar.getInstance();
+        SimpleDateFormat currenttime =new SimpleDateFormat("HH-mm-ss");
+        final String savetime = currenttime.format(ctime.getTime());
+
+
+        String time = savedate + ":" + savetime;
+
         //if post is picture only
         if(etdesc.getText().toString()==null && selectedUri !=null){
             desc ="";
 //          Toast.makeText(this, "No text just image only", Toast.LENGTH_SHORT).show();
             //desc = etdesc.getText().toString();
-
-            GetCurrentTime gc = new GetCurrentTime();
-            String time = gc.ctime();
 
 
 //            if(TextUtils.isEmpty(desc) || selectedUri != null){
@@ -305,11 +313,12 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setDesc(desc);
                             postmember.setName(name);
                             postmember.setPostUri(downloadUri.toString());
-                            postmember.setTime(time);
+                            postmember.setTime(savetime);
                             postmember.setUid(currentuid);
                             postmember.setUrl(url);
                             postmember.setType("iv");
                             postmember.setPrivacy(privacy_post);
+                            postmember.setDate(savedate);
 
                             //for image
                             String id = db1.push().getKey();
@@ -361,9 +370,6 @@ public class PostActivity extends AppCompatActivity {
         else if(selectedUri == null&& !etdesc.getText().toString().trim().equals("")){
             desc = etdesc.getText().toString();
 
-            GetCurrentTime gc = new GetCurrentTime();
-            String time = gc.ctime();
-
                 progressBar.setVisibility(View.VISIBLE);
                 //final StorageReference reference = storageReference.child(System.currentTimeMillis()+"."+getFileExt(selectedUri));
                 //uploadTask = reference.putFile(selectedUri);
@@ -371,11 +377,12 @@ public class PostActivity extends AppCompatActivity {
             postmember.setDesc(desc);
             postmember.setName(name);
 //          postmember.setPostUri(downloadUri.toString());
-            postmember.setTime(time);
+            postmember.setTime(savetime);
             postmember.setUid(currentuid);
             postmember.setUrl(url);
             postmember.setType("txt");
             postmember.setPrivacy(privacy_post);
+            postmember.setDate(savedate);
 
             //for image
             String id = db1.push().getKey();
@@ -400,9 +407,6 @@ public class PostActivity extends AppCompatActivity {
         else{
             desc = etdesc.getText().toString();
 
-            GetCurrentTime gc = new GetCurrentTime();
-            String time = gc.ctime();
-
 
 //            if(TextUtils.isEmpty(desc) || selectedUri != null){
 
@@ -425,11 +429,12 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setDesc(desc);
                             postmember.setName(name);
                             postmember.setPostUri(downloadUri.toString());
-                            postmember.setTime(time);
+                            postmember.setTime(savetime);
                             postmember.setUid(currentuid);
                             postmember.setUrl(url);
                             postmember.setType("iv");
                             postmember.setPrivacy(privacy_post);
+                            postmember.setDate(savedate);
 
                             //for image
                             String id = db1.push().getKey();
@@ -447,11 +452,12 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setDesc(desc);
                             postmember.setName(name);
                             postmember.setPostUri(downloadUri.toString());
-                            postmember.setTime(time);
+                            postmember.setTime(savetime);
                             postmember.setUid(currentuid);
                             postmember.setUrl(url);
                             postmember.setType("vv");
                             postmember.setPrivacy(privacy_post);
+                            postmember.setDate(savedate);
 
                             //for video
                             String id3 = db2.push().getKey();

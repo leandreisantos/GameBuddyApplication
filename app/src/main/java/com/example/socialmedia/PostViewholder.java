@@ -42,7 +42,7 @@ public class PostViewholder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void SetPost(FragmentActivity activity, String name,String url,String postUri,String time,String uid,String type,String desc,String postprivacy){
+    public void SetPost(FragmentActivity activity, String name,String url,String postUri,String time,String uid,String type,String desc,String postprivacy,String date){
 
         imageViewprofile = itemView.findViewById(R.id.iv_profile_item_post);
         iv_post = itemView.findViewById(R.id.iv_post_item);
@@ -156,7 +156,7 @@ public class PostViewholder extends RecyclerView.ViewHolder {
 
     public void commentchecker(String postKey) {
 
-        tv_comment = itemView.findViewById(R.id.tv_comment_item);
+        tv_comment = itemView.findViewById(R.id.tv_comment_post);
         commentref = database.getReference("All posts").child(postKey).child("Comments");
 
         commentref.addValueEventListener(new ValueEventListener() {
@@ -164,8 +164,8 @@ public class PostViewholder extends RecyclerView.ViewHolder {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 try {
-                    commentcount = (int)snapshot.child(postKey).getChildrenCount();
-                    tv_comment.setText(Integer.toString(commentcount)+" Comments");
+                    commentcount = (int)snapshot.getChildrenCount();
+                    tv_comment.setText(Integer.toString(commentcount));
 
                 }catch(Exception e){
 

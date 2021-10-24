@@ -237,7 +237,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         final String postkey = getRef(position).getKey();
 
                         holder.SetPost(getActivity(),model.getName(),model.getUrl(),model.getPostUri(),model.getTime(),model.getUid(),
-                                model.getType(),model.getDesc(),model.getPrivacy());
+                                model.getType(),model.getDesc(),model.getPrivacy(),model.getDate());
 
                         String name = getItem(position).getName();
                         String url = getItem(position).getPostUri();

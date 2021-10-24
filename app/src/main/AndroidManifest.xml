@@ -17,7 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialMedia"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GameSelectedSelectedActivity"></activity>
+        <activity
+            android:name=".ShareActivity"
+            android:exported="false" />
+        <activity android:name=".GameSelectedSelectedActivity" />
         <activity android:name=".AddGameActivity" />
         <activity android:name=".SelectedGameActivity" />
         <activity android:name=".paypalActivity" />

@@ -10,6 +10,7 @@ public class Postmember {
     String type;
     String desc;
     String privacy;
+    String date;
 
     public Postmember(){
 
@@ -77,6 +78,14 @@ public class Postmember {
 
     public void setPrivacy(String privacy) {
         this.privacy = privacy;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
 

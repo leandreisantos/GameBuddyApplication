@@ -34,7 +34,7 @@ import com.squareup.picasso.Picasso;
 public class CommentsActivity extends AppCompatActivity {
 
     ImageView usernameImageview;
-    TextView usernameTextview,descTextview;
+    TextView usernameTextview,descTextview,close;
     TextView commentsBtn;
     EditText commentsEdittext;
     String url,name,post_key,userid,bundleuid;
@@ -68,6 +68,7 @@ public class CommentsActivity extends AppCompatActivity {
         usernameTextview = findViewById(R.id.name_comments_tv);
         descTextview = findViewById(R.id.tv_desc_ac);
         commentsEdittext = findViewById(R.id.et_comments);
+        close = findViewById(R.id.tv_close_ac);
         Bundle extras = getIntent().getExtras();
 
 
@@ -91,6 +92,8 @@ public class CommentsActivity extends AppCompatActivity {
         ntref = database.getReference("notification").child(bundleuid);
 
         commentsBtn.setOnClickListener(view -> comment());
+
+        close.setOnClickListener(view -> onBackPressed());
     }
     @Override
     protected void onStart() {
