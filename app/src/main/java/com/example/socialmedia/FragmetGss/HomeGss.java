@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmedia.R;
@@ -26,6 +27,7 @@ public class HomeGss extends Fragment {
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference reference;
+    TextView tvabout;
 
     String keyword,post_key;
 
@@ -52,6 +54,7 @@ public class HomeGss extends Fragment {
 
         dp = getActivity().findViewById(R.id.iv_dp_hgss);
         bg = getActivity().findViewById(R.id.iv_bg_hgss);
+        tvabout = getActivity().findViewById(R.id.tv_about_gss);
 
         reference = database.getReference(keyword).child(post_key);
     }
@@ -65,9 +68,11 @@ public class HomeGss extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String dps = snapshot.child("postUri1").getValue(String.class);
                 String bgs = snapshot.child("postUri2").getValue(String.class);
+                String about = snapshot.child("about").getValue(String.class);
 
                 Picasso.get().load(dps).into(dp);
                 Picasso.get().load(bgs).into(bg);
+                tvabout.setText(about);
 
             }
 

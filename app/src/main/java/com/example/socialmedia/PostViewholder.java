@@ -26,13 +26,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PostViewholder extends RecyclerView.ViewHolder {
 
-    ImageView imageViewprofile,iv_post;
-    TextView tv_name,tv_desc,tv_likes,tv_comment,tv_time,tv_nameprofile;
-    ImageButton likebtn,menuoptions,commentbtn,sharebtn;
+    public ImageView imageViewprofile,iv_post;
+    public TextView tv_name,tv_desc,tv_likes,tv_comment,tv_time,tv_nameprofile;
+    public ImageButton likebtn,menuoptions,commentbtn,sharebtn;
     DatabaseReference likesref,commentref;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    int likescount,commentcount;
+    public int likescount,commentcount;
 
     GetCurrentTime gc = new GetCurrentTime();
     String utime = gc.ctime();

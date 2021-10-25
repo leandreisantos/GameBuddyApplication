@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,7 +30,7 @@ import java.util.Calendar;
 public class AddGameActivity extends AppCompatActivity {
 
     ImageView dp,bg;
-    TextView add;
+    TextView add,close;
     EditText title,desc,about,email,address,owner;
 
     int picture;
@@ -74,10 +75,12 @@ public class AddGameActivity extends AppCompatActivity {
         email = findViewById(R.id.et_email_ag);
         address = findViewById(R.id.et_address_ag);
         owner = findViewById(R.id.et_owner_ag);
+        close = findViewById(R.id.tv_close_ag);
 
         storageReference = FirebaseStorage.getInstance().getReference("All game");
         db3 = database.getReference(keyword);
 
+        close.setOnClickListener(v -> onBackPressed());
 
         dp.setOnClickListener(v -> {
             chooseImage();
@@ -120,6 +123,8 @@ public class AddGameActivity extends AppCompatActivity {
                 if(selectedUribg.toString().contains("image"))Picasso.get().load(selectedUribg).into(bg);
                 else Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }else Toast.makeText(this, "Error found no image", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -142,7 +147,8 @@ public class AddGameActivity extends AppCompatActivity {
         String address_et = address.getText().toString();
         String owner_et = owner.getText().toString();
 
-        if(!(TextUtils.isEmpty(desc_et)&&TextUtils.isEmpty(title_et))&&selectedUridp != null&&selectedUribg !=null) {
+        if(!(TextUtils.isEmpty(desc_et)&&TextUtils.isEmpty(title_et)&&TextUtils.isEmpty(about_et)&&TextUtils.isEmpty(email_et)&&TextUtils.isEmpty(address_et)
+                &&TextUtils.isEmpty(owner_et))&&selectedUridp != null&&selectedUribg !=null) {
 
             final StorageReference reference = storageReference.child(System.currentTimeMillis() + "." + getFileExt(selectedUridp));
             final StorageReference reference2 = storageReference.child(System.currentTimeMillis() + "." + getFileExt(selectedUribg));
