@@ -22,6 +22,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.socialmedia.GetCurrentTime;
+import com.example.socialmedia.MainActivity;
 import com.example.socialmedia.R;
 import com.example.socialmedia.databaseReference;
 import com.google.android.gms.tasks.Continuation;
@@ -29,8 +30,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -57,11 +61,14 @@ public class EventActivity extends AppCompatActivity {
     StorageReference storageReference;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference db1,db2,db3;
+    DatabaseReference db1,db2,db3,event;
 
     MediaController mediaController;
     String type;
     EventMember eventMember;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String currentuid = user.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,32 +92,19 @@ public class EventActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference("User posts events");
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String currentuid = user.getUid();
 
         db1 = database.getReference("All images").child(currentuid);
         db2 = database.getReference("All videos").child(currentuid);
         db3 = database.getReference("All post events");
+        event = database.getReference("Event Payment");
 
-        btnuploadfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dopost();
-            }
-        });
+        btnuploadfile.setOnClickListener(v -> Dopost());
 
-        btnchoosefile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImage();
-            }
-        });
+        btnchoosefile.setOnClickListener(v -> chooseImage());
 
-        closebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        closebtn.setOnClickListener(v -> {
+            Intent intent = new Intent(EventActivity.this, MainActivity.class);
+            startActivity(intent);
         });
 
     }
@@ -166,23 +160,20 @@ public class EventActivity extends AppCompatActivity {
         DocumentReference documentReference = db.collection("user").document(currentuid);
 
         documentReference.get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>(){
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task){
+                .addOnCompleteListener(task -> {
 
-                        if(task.getResult().exists()){
-                            name = task.getResult().getString("name");
-                            url = task.getResult().getString("url");
+                    if(task.getResult().exists()){
+                        name = task.getResult().getString("name");
+                        url = task.getResult().getString("url");
 
-                            Picasso.get().load(url).into(useriv);
+                        Picasso.get().load(url).into(useriv);
 
 
-                        }else{
-                            Toast.makeText(EventActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                        }
-
-
+                    }else{
+                        Toast.makeText(EventActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
+
+
                 });
     }
 
@@ -203,67 +194,62 @@ public class EventActivity extends AppCompatActivity {
             final StorageReference reference = storageReference.child(System.currentTimeMillis()+"."+getFileExt(selectedUri));
             uploadTask = reference.putFile(selectedUri);
 
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        throw task.getException();
+            Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
+                if(!task.isSuccessful()){
+                    throw task.getException();
 
-                    }
-                    return reference.getDownloadUrl();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
+                return reference.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
 
-                    if(task.isSuccessful()){
-                        Uri downloadUri = task.getResult();
+                if(task.isSuccessful()){
+                    Uri downloadUri = task.getResult();
 
-                        if(type.equals("iv")){
-                            eventMember.setTitle(title);
-                            eventMember.setDesc(desc);
-                            eventMember.setName(name);
-                            eventMember.setPostUri(downloadUri.toString());
-                            eventMember.setTime(time);
-                            eventMember.setUid(currentuid);
-                            eventMember.setUrl(url);
-                            eventMember.setType("iv");
+                    if(type.equals("iv")){
+                        eventMember.setTitle(title);
+                        eventMember.setDesc(desc);
+                        eventMember.setName(name);
+                        eventMember.setPostUri(downloadUri.toString());
+                        eventMember.setTime(time);
+                        eventMember.setUid(currentuid);
+                        eventMember.setUrl(url);
+                        eventMember.setType("iv");
 
-                            //for image
-                            String id = db1.push().getKey();
-                            db1.child(id).setValue(eventMember);
-                            //for both
-                            String id1 = db3.push().getKey();
-                            db3.child(id1).setValue(eventMember);
+                        //for image
+                        String id = db1.push().getKey();
+                        db1.child(id).setValue(eventMember);
+                        //for both
+                        String id1 = db3.push().getKey();
+                        db3.child(id1).setValue(eventMember);
 
-                            progressBar.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
 
-                            Toast.makeText(EventActivity.this, "post uploaded", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EventActivity.this, "post uploaded", Toast.LENGTH_SHORT).show();
+                        deletedb();
 
+                    }else if(type.equals("vv")){
+                        eventMember.setTitle(title);
+                        eventMember.setDesc(desc);
+                        eventMember.setName(name);
+                        eventMember.setPostUri(downloadUri.toString());
+                        eventMember.setTime(time);
+                        eventMember.setUid(currentuid);
+                        eventMember.setUrl(url);
+                        eventMember.setType("vv");
 
-                        }else if(type.equals("vv")){
-                            eventMember.setTitle(title);
-                            eventMember.setDesc(desc);
-                            eventMember.setName(name);
-                            eventMember.setPostUri(downloadUri.toString());
-                            eventMember.setTime(time);
-                            eventMember.setUid(currentuid);
-                            eventMember.setUrl(url);
-                            eventMember.setType("vv");
+                        //for image
+                        String id = db1.push().getKey();
+                        db1.child(id).setValue(eventMember);
+                        //for both
+                        String id1 = db3.push().getKey();
+                        db3.child(id1).setValue(eventMember);
 
-                            //for image
-                            String id = db1.push().getKey();
-                            db1.child(id).setValue(eventMember);
-                            //for both
-                            String id1 = db3.push().getKey();
-                            db3.child(id1).setValue(eventMember);
+                        progressBar.setVisibility(View.INVISIBLE);
 
-                            progressBar.setVisibility(View.INVISIBLE);
-
-                            Toast.makeText(EventActivity.this, "post uploaded", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(EventActivity.this, "error", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(EventActivity.this, "post uploaded", Toast.LENGTH_SHORT).show();
+                        deletedb();
+                    }else{
+                        Toast.makeText(EventActivity.this, "error", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -273,5 +259,22 @@ public class EventActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void deletedb(){
+        event.child(currentuid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.getRef().removeValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(EventActivity.this, "Data error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Intent intent = new Intent(EventActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 }

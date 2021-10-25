@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/secondary_background"
+    android:layout_width="wrap_content"
+    android:padding="20dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/logo_pl"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/check_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_lbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment Successfull"
+        app:layout_constraintTop_toBottomOf="@id/logo_pl"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/active"/>
+
+    <TextView
+        android:id="@+id/tv_ref_lbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reference Number"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_lbl"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_ref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_ref_lbl"
+        android:text="12242415"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/grey"/>
+
+
+    <TextView
+        android:id="@+id/tv_btn_now"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@drawable/border_btn"
+        android:text="Create Event Now"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tv_ref"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_btn_later"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@drawable/border_btn"
+        android:backgroundTint="@color/red"
+        android:text="Create Event Later"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tv_btn_now"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"/>
+
+
+    
+
+</androidx.constraintlayout.widget.ConstraintLayout>

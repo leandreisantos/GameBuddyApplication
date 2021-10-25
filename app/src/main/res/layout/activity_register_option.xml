@@ -7,15 +7,6 @@
     android:background="@color/background"
     tools:context=".RegisterOptionActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
             <TextView
                 android:id="@+id/tv_close_ro"
                 android:layout_width="30dp"
@@ -42,6 +33,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_title_ro"
                 android:layout_marginTop="20dp"
                 android:padding="20dp"
+                android:id="@+id/cl2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -98,9 +90,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loginlot"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:lottie_rawRes="@raw/optionlot"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

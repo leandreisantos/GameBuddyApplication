@@ -67,9 +67,10 @@
                 android:src="@drawable/verify_icon"/>
 
                 <TextView
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     app:layout_constraintLeft_toRightOf="@id/verify"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="3dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
@@ -147,7 +148,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="80dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

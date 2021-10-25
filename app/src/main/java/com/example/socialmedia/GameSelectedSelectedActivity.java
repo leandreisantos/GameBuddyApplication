@@ -53,12 +53,7 @@ public class GameSelectedSelectedActivity extends AppCompatActivity implements V
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_gss,new HomeGss()).commit();
 
-        tv_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showBottomSheet();
-            }
-        });
+        tv_more.setOnClickListener(v -> showBottomSheet());
         tv_close.setOnClickListener(v -> onBackPressed());
 
     }
@@ -72,6 +67,8 @@ public class GameSelectedSelectedActivity extends AppCompatActivity implements V
 
         tvcp.setOnClickListener(v -> {
             Intent intent = new Intent(GameSelectedSelectedActivity.this,PostActivity.class);
+            intent.putExtra("kp","gs");
+            intent.putExtra("t",title);
             startActivity(intent);
         });
 

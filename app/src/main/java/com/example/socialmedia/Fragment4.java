@@ -79,6 +79,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
     String name_result,url_result,uid_result,usertoken;
 
     AllUserMember userMember;
+    String currentuid;
 
 
     @Nullable
@@ -92,11 +93,11 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         super.onActivityCreated(savedInstanceState);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String currentuid = user.getUid();
+         currentuid = user.getUid();
 
         button = getActivity().findViewById(R.id.createpost_f4);
         logoref = getActivity().findViewById(R.id.aname_f4);
-        reference = database.getReference("All post");
+        reference = database.getReference("All post").child("public");
         likesref = database.getReference("post likes");
         storyRef = database.getReference("All story");
         referenceDel = database.getReference("story");
@@ -112,7 +113,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
         db1 = database.getReference("All images").child(currentuid);
         db2 = database.getReference("All videos").child(currentuid);
-        db3 = database.getReference("All post");
+        db3 = database.getReference("All post").child("public");
         db3.keepSynced(true);
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -143,6 +144,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         if (v.getId() == R.id.createpost_f4) {
             Intent intent = new Intent(getActivity(),PostActivity.class);
+            intent.putExtra("kp","p");
             startActivity(intent);
         }
     }
@@ -326,6 +328,17 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                             startActivity(intent);
                         });
                         holder.iv_post.setOnClickListener(v -> ShowPost(url,userid,postkey,name));
+                        holder.sharebtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(currentuid.equals(userid)){
+                                    shareother(name,url);
+                                }else{
+                                    Intent intent = new Intent(getActivity(),ShareActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
 
                     }
 
@@ -398,6 +411,14 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         intent.putExtra("p",postkey);
         intent.putExtra("n",name);
         startActivity(intent);
+    }
+
+    public void shareother(String name,String url){
+        String sharetext = name + "\n" + "\n" + url;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Intent.EXTRA_TEXT,sharetext);
+        intent.setType("text/plain");
     }
 
     void showDialog(String name,String url,String time,String userid,String type){
@@ -550,8 +571,6 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Intent.EXTRA_TEXT,sharetext);
             intent.setType("text/plain");
-            startActivity(intent.createChooser(intent,"share via"));
-
             alertDialog.dismiss();
         });
 

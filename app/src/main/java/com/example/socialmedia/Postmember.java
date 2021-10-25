@@ -11,6 +11,7 @@ public class Postmember {
     String desc;
     String privacy;
     String date;
+    String postkey;
 
     public Postmember(){
 
@@ -87,6 +88,15 @@ public class Postmember {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public String getPostkey() {
+        return postkey;
+    }
+
+    public void setPostkey(String postkey) {
+        this.postkey = postkey;
+    }
+
 
 
 }

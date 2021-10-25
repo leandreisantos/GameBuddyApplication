@@ -10,10 +10,13 @@ import com.example.socialmedia.R;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NewsFeedGss extends Fragment {
     RecyclerView rv;
+
+    LinearLayoutManager linearLayoutManager;
 
     @Nullable
     @Override
@@ -25,7 +28,12 @@ public class NewsFeedGss extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         rv = getActivity().findViewById(R.id.rv_newsfeed_gss);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
 
     }
+
+
 }

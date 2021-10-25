@@ -24,8 +24,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -54,7 +57,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     ImageView addevent;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference,db1,db2,db3,profileRef,referenceDeveloper,db4;
+    DatabaseReference reference,db1,db2,db3,profileRef,referenceDeveloper,db4,event;
     RelativeLayout sta,action,adventure,fps;
     //reference
     String name;
@@ -104,6 +107,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
 
         //REFERENCE TO REALTIME DATABASE IN FIREBASE
         db1 = database.getReference("All images").child(currentuid);
+        event = database.getReference("Event Payment");
         db2 = database.getReference("All videos").child(currentuid);
         db3 = database.getReference("All post events");
         db3.keepSynced(true);
@@ -130,8 +134,23 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.df_add_event:
-                //processPayment();
-            showBottomSheet();
+                event.child(currentuid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                          Intent intent = new Intent(getActivity(),EventActivity.class);
+                          startActivity(intent);
+                        } else {
+                            showBottomSheet();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(getActivity(), "Data error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
         }
     }
 
