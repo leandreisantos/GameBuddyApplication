@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.socialmedia.PostController.PostActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -62,7 +63,7 @@ public class MyProfileActivity extends AppCompatActivity {
             startActivity(intent);
         });
         createPost.setOnClickListener(v -> {
-            Intent intent = new Intent(MyProfileActivity.this,PostActivity.class);
+            Intent intent = new Intent(MyProfileActivity.this, PostActivity.class);
             startActivity(intent);
         });
         notifi.setOnClickListener(v -> {

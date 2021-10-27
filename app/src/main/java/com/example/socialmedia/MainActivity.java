@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmedia.EventController.AllEventActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -219,6 +220,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }if(item.getItemId()== R.id.nav_friends){
             Intent intent = new Intent(MainActivity.this,ChatActivity.class);
+            startActivity(intent);
+        }if(item.getItemId()== R.id.nav_all_events){
+            Intent intent = new Intent(MainActivity.this, AllEventActivity.class);
+            startActivity(intent);
+        }if(item.getItemId()== R.id.nav_all_game){
+            Intent intent = new Intent(MainActivity.this, AllGamesActivity.class);
+            startActivity(intent);
+        }if(item.getItemId()== R.id.nav_share){
+            Intent intent = new Intent(MainActivity.this, OnBoardingActivity.class);
             startActivity(intent);
         }
         //drawerLayout.closeDrawer(GravityCompat.START);

@@ -1,6 +1,5 @@
-package com.example.socialmedia;
+package com.example.socialmedia.PostController;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -29,7 +28,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.google.android.gms.tasks.Continuation;
+import com.example.socialmedia.Fragment4;
+import com.example.socialmedia.MainActivity;
+import com.example.socialmedia.R;
+import com.example.socialmedia.databaseReference;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -201,7 +203,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_FILE || resultCode == RESULT_OK || data!= null || data.getData() != null){
+        if(requestCode == PICK_FILE && resultCode == RESULT_OK && data!= null && data.getData() != null){
 
             selectedUri = data.getData();
 
@@ -234,8 +236,8 @@ public class PostActivity extends AppCompatActivity {
                 videoView.start();
                 type = "vv";
                 closePanel.setVisibility(View.VISIBLE);
-                     Toast.makeText(this, "height="+height, Toast.LENGTH_LONG).show();
-                     Toast.makeText(this, "width="+width, Toast.LENGTH_LONG).show();
+//                     Toast.makeText(this, "height="+height, Toast.LENGTH_LONG).show();
+//                     Toast.makeText(this, "width="+width, Toast.LENGTH_LONG).show();
             }else{
                 Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }
@@ -367,7 +369,7 @@ public class PostActivity extends AppCompatActivity {
                     }
                 });
             value = "post";
-            Intent intent = new Intent(PostActivity.this,MainActivity.class);
+            Intent intent = new Intent(PostActivity.this, MainActivity.class);
             intent.putExtra("post",value);
             startActivity(intent);
 

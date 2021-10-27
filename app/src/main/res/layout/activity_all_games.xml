@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".AllGamesActivity">
+
+    <TextView
+        android:id="@+id/tv_back_sga"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_title_sga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="All Games"
+        android:textColor="@color/white"
+        android:fontFamily="@font/baloo"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp"/>
+
+
+    <EditText
+        android:id="@+id/et_search_sga"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_input"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_sga"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:drawableStart="@drawable/ic_round_search_24"
+        android:drawableTint="@color/white"
+        android:padding="10dp"
+        android:hint="Search your game"
+        android:textColor="@color/white"
+        android:textColorHint="@color/grey"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_asg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="130dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

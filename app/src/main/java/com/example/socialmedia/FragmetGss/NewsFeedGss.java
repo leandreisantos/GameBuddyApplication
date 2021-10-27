@@ -20,11 +20,10 @@ import android.widget.Toast;
 import com.example.socialmedia.AllUserMember;
 import com.example.socialmedia.CommentsActivity;
 import com.example.socialmedia.FcmNotificationSender;
-import com.example.socialmedia.GameSelectedSelectedActivity;
 import com.example.socialmedia.MyProfileActivity;
 import com.example.socialmedia.NewMember;
-import com.example.socialmedia.PostViewholder;
-import com.example.socialmedia.Postmember;
+import com.example.socialmedia.PostController.PostViewholder;
+import com.example.socialmedia.PostController.Postmember;
 import com.example.socialmedia.R;
 import com.example.socialmedia.ShareActivity;
 import com.example.socialmedia.ShowLikedUser;
@@ -98,7 +97,7 @@ public class NewsFeedGss extends Fragment {
         Toast.makeText(getActivity(), title, Toast.LENGTH_SHORT).show();
 
 
-        reference = database.getReference("All post");
+        reference = database.getReference("All post").child(title);
         likesref = database.getReference("post likes");
         storyRef = database.getReference("All story");
         referenceDel = database.getReference("story");
@@ -114,7 +113,7 @@ public class NewsFeedGss extends Fragment {
 
         db1 = database.getReference("All images").child(currentuid);
         db2 = database.getReference("All videos").child(currentuid);
-        db3 = database.getReference("All post").child("public");
+        db3 = database.getReference("All post").child(title);
         db3.keepSynced(true);
 
 
@@ -150,7 +149,7 @@ public class NewsFeedGss extends Fragment {
                         final String postkey = getRef(position).getKey();
 
                         holder.SetPost(getActivity(),model.getName(),model.getUrl(),model.getPostUri(),model.getTime(),model.getUid(),
-                                model.getType(),model.getDesc(),model.getPrivacy(),model.getDate());
+                                model.getType(),model.getDesc(),model.getPrivacy(),model.getDate(),model.getPostkey());
 
                         String name = getItem(position).getName();
                         String url = getItem(position).getPostUri();
@@ -253,8 +252,6 @@ public class NewsFeedGss extends Fragment {
                         });
 
                     }
-
-
 
 
                     @NonNull

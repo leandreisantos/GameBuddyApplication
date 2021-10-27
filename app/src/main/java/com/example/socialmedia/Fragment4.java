@@ -23,6 +23,10 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmedia.PostController.PostActivity;
+import com.example.socialmedia.PostController.PostViewholder;
+import com.example.socialmedia.PostController.Postmember;
+import com.example.socialmedia.ReportController.ReportPostActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -143,7 +147,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.createpost_f4) {
-            Intent intent = new Intent(getActivity(),PostActivity.class);
+            Intent intent = new Intent(getActivity(), PostActivity.class);
             intent.putExtra("kp","p");
             startActivity(intent);
         }
@@ -228,7 +232,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         .setQuery(reference,Postmember.class)
                         .build();
 
-        FirebaseRecyclerAdapter<Postmember,PostViewholder> firebaseRecyclerAdapter =
+        FirebaseRecyclerAdapter<Postmember, PostViewholder> firebaseRecyclerAdapter =
                 new FirebaseRecyclerAdapter<Postmember, PostViewholder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull PostViewholder holder, int position, @NonNull Postmember model) {
@@ -239,7 +243,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         final String postkey = getRef(position).getKey();
 
                         holder.SetPost(getActivity(),model.getName(),model.getUrl(),model.getPostUri(),model.getTime(),model.getUid(),
-                                model.getType(),model.getDesc(),model.getPrivacy(),model.getDate());
+                                model.getType(),model.getDesc(),model.getPrivacy(),model.getDate(),model.getPostkey());
 
                         String name = getItem(position).getName();
                         String url = getItem(position).getPostUri();
@@ -247,11 +251,12 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         String type = getItem(position).getType();
                         String userid = getItem(position).getUid();
                         String desc = getItem(position).getDesc();
+                        String post_key = getItem(position).getPostkey();
 
                         holder.likechecker(postkey);
                         holder.commentchecker(postkey);
 
-                        holder.menuoptions.setOnClickListener(v -> showDialog(name,url,time,userid,type));
+                        holder.menuoptions.setOnClickListener(v -> showDialog(name,url,time,userid,type,post_key));
                         holder.imageViewprofile.setOnClickListener(v -> {
                             if (currentUserid.equals(userid)) {
                                 Intent intent = new Intent(getActivity(),MyProfileActivity.class);
@@ -421,7 +426,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         intent.setType("text/plain");
     }
 
-    void showDialog(String name,String url,String time,String userid,String type){
+    void showDialog(String name,String url,String time,String userid,String type,String postKey){
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.post_options,null);
@@ -429,6 +434,8 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         TextView share = view.findViewById(R.id.share_tv_post);
         TextView delete = view.findViewById(R.id.delete_tv_post);
         TextView copyurl = view.findViewById(R.id.copyurl_tv_post);
+        TextView edit = view.findViewById(R.id.edit_tv_post);
+        TextView report = view.findViewById(R.id.report_tv_post);
 
 
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
@@ -440,12 +447,25 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentuid = user.getUid();
 
+        if(type.equals("txt")) download.setVisibility(View.GONE);
+        else download.setVisibility(View.VISIBLE);
 
         if(userid.equals(currentuid)){
             delete.setVisibility(View.VISIBLE);
+            edit.setVisibility(View.VISIBLE);
+            report.setVisibility(View.GONE);
+
         }else{
             delete.setVisibility(View.GONE);
+            edit.setVisibility(View.GONE);
         }
+
+        edit.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(),EditPostActivity.class);
+            intent.putExtra("p","public");
+            intent.putExtra("k",postKey);
+            startActivity(intent);
+        });
 
         delete.setOnClickListener(v -> {
 
@@ -581,6 +601,13 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
             clip.getDescription();
             Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
             alertDialog.dismiss();
+        });
+
+        report.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ReportPostActivity.class);
+            intent.putExtra("p","public");
+            intent.putExtra("k",postKey);
+            startActivity(intent);
         });
 
     }

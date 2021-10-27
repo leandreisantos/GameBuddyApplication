@@ -28,7 +28,6 @@ public class OnBoardingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_on_boarding);
 
         viewPager = findViewById(R.id.slider);
@@ -75,7 +74,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         }
 
         if(dots.length > 0){
-            dots[position].setTextColor(getResources().getColor(R.color.red));
+            dots[position].setTextColor(getResources().getColor(R.color.icon));
         }
     }
     ViewPager.OnPageChangeListener changeListener = new ViewPager.OnPageChangeListener() {

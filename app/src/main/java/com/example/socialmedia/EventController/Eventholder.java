@@ -1,5 +1,6 @@
 package com.example.socialmedia.EventController;
 
+import android.app.Application;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,14 +31,19 @@ public class Eventholder extends RecyclerView.ViewHolder {
 
 
         if(type != null){
-
             Picasso.get().load(postUri).into(iv);
             desctxt.setText(desc);
             titletxt.setText(title);
-
         }
 
+    }
+    public void setAllEvent(Application application, String name, String url, String postUri, String time, String uid, String type, String desc, String title) {
+        iv = itemView.findViewById(R.id.iv_bg_el);
+        desctxt = itemView.findViewById(R.id.tv_title_el);
+        titletxt = itemView.findViewById(R.id.tv_desc_el);
 
-
+        Picasso.get().load(postUri).into(iv);
+        desctxt.setText(desc);
+        titletxt.setText(title);
     }
 }

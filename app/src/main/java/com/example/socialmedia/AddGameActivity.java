@@ -13,10 +13,13 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -30,8 +33,9 @@ import java.util.Calendar;
 public class AddGameActivity extends AppCompatActivity {
 
     ImageView dp,bg;
-    TextView add,close;
-    EditText title,desc,about,email,address,owner;
+    TextView add,close,lblbg,lbldp;
+    EditText title,desc,about,email,address,owner,new_g;
+    ProgressBar pb;
 
     int picture;
 
@@ -40,7 +44,7 @@ public class AddGameActivity extends AppCompatActivity {
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference db3;
+    DatabaseReference db3,allgameref;
 
     StorageReference storageReference;
     UploadTask uploadTask,uploadTask2;
@@ -48,6 +52,10 @@ public class AddGameActivity extends AppCompatActivity {
     GameMember gameMember;
 
     String keyword;
+
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String currentuid = user.getUid();
 
 
     @Override
@@ -76,9 +84,14 @@ public class AddGameActivity extends AppCompatActivity {
         address = findViewById(R.id.et_address_ag);
         owner = findViewById(R.id.et_owner_ag);
         close = findViewById(R.id.tv_close_ag);
+        lblbg = findViewById(R.id.tv_lbl_bg);
+        lbldp = findViewById(R.id.tv_lbl_dp);
+        new_g = findViewById(R.id.et_new_ag);
+        pb = findViewById(R.id.pb_ag);
 
         storageReference = FirebaseStorage.getInstance().getReference("All game");
         db3 = database.getReference(keyword);
+        allgameref = database.getReference("All game");
 
         close.setOnClickListener(v -> onBackPressed());
 
@@ -112,13 +125,15 @@ public class AddGameActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_FILE || resultCode == RESULT_OK || data!= null || data.getData() != null){
+        if(requestCode == PICK_FILE && resultCode == RESULT_OK && data!= null && data.getData() != null){
 
             if(picture == 1){
+                lbldp.setVisibility(View.GONE);
                 selectedUridp = data.getData();
                 if(selectedUridp.toString().contains("image")) Picasso.get().load(selectedUridp).into(dp);
                 else Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }else if(picture == 2){
+                lblbg.setVisibility(View.GONE);
                 selectedUribg = data.getData();
                 if(selectedUribg.toString().contains("image"))Picasso.get().load(selectedUribg).into(bg);
                 else Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
@@ -131,7 +146,7 @@ public class AddGameActivity extends AppCompatActivity {
 
     private void AddGame() {
 
-
+        pb.setVisibility(View.VISIBLE);
         Calendar cdate = Calendar.getInstance();
         SimpleDateFormat currentdate = new SimpleDateFormat("dd-MMMM-yyy");
         final String savedate = currentdate.format(cdate.getTime());
@@ -146,9 +161,10 @@ public class AddGameActivity extends AppCompatActivity {
         String email_et = email.getText().toString();
         String address_et = address.getText().toString();
         String owner_et = owner.getText().toString();
+        String new_et = new_g.getText().toString();
 
         if(!(TextUtils.isEmpty(desc_et)&&TextUtils.isEmpty(title_et)&&TextUtils.isEmpty(about_et)&&TextUtils.isEmpty(email_et)&&TextUtils.isEmpty(address_et)
-                &&TextUtils.isEmpty(owner_et))&&selectedUridp != null&&selectedUribg !=null) {
+                &&TextUtils.isEmpty(owner_et)&&TextUtils.isEmpty(new_et))&&selectedUridp != null&&selectedUribg !=null) {
 
             final StorageReference reference = storageReference.child(System.currentTimeMillis() + "." + getFileExt(selectedUridp));
             final StorageReference reference2 = storageReference.child(System.currentTimeMillis() + "." + getFileExt(selectedUribg));
@@ -194,17 +210,24 @@ public class AddGameActivity extends AppCompatActivity {
                          gameMember.setEmail(email_et);
                          gameMember.setAddress(address_et);
                          gameMember.setOwner(owner_et);
+                         gameMember.setCreate(currentuid);
+                         gameMember.setWhatNew(new_et);
 
 
                         db3.child(id).setValue(gameMember);
+                        allgameref.child(id).setValue(gameMember);
 
 
                         Toast.makeText(AddGameActivity.this, "Game Addedd", Toast.LENGTH_SHORT).show();
-
+                        onBackPressed();
                 }
             });
 
-        }else Toast.makeText(this, "Please fill up all fields", Toast.LENGTH_SHORT).show();
+        }else {
+            pb.setVisibility(View.GONE);
+            Toast.makeText(this, "Please fill up all fields", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 }

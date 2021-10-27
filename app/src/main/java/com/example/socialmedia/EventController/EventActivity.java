@@ -3,6 +3,7 @@ package com.example.socialmedia.EventController;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -55,20 +56,22 @@ public class EventActivity extends AppCompatActivity {
     UploadTask uploadTask;
     EditText etdesc,etTitle;
     Button btnchoosefile;
-    TextView btnuploadfile;
+    TextView btnuploadfile,closeImage;
     VideoView videoView;
     String url,name;
     StorageReference storageReference;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference db1,db2,db3,event;
-
+    CardView cv_add;
     MediaController mediaController;
     String type;
     EventMember eventMember;
+    CardView closePanel;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,27 +87,33 @@ public class EventActivity extends AppCompatActivity {
         imageView = findViewById(R.id.event_iv_post);
         useriv = findViewById(R.id.event_iv);
         videoView = findViewById(R.id.event_vv_post);
-        btnchoosefile = findViewById(R.id.event_btn_choosefile_post);
         btnuploadfile = findViewById(R.id.event_btn_uploadfile_post);
         etdesc = findViewById(R.id.event_et_decs_post);
         etTitle = findViewById(R.id.event_et_title_post);
         closebtn = findViewById(R.id.event_close);
+        cv_add = findViewById(R.id.cv_addimage);
+        closePanel = findViewById(R.id.cl_parentclose_ap);
+        closeImage = findViewById(R.id.tv_close_iv_ap);
 
         storageReference = FirebaseStorage.getInstance().getReference("User posts events");
 
 
         db1 = database.getReference("All images").child(currentuid);
         db2 = database.getReference("All videos").child(currentuid);
-        db3 = database.getReference("All post events");
+        db3 = database.getReference("All post").child("event");
         event = database.getReference("Event Payment");
 
         btnuploadfile.setOnClickListener(v -> Dopost());
 
-        btnchoosefile.setOnClickListener(v -> chooseImage());
+        cv_add.setOnClickListener(v -> chooseImage());
 
         closebtn.setOnClickListener(v -> {
             Intent intent = new Intent(EventActivity.this, MainActivity.class);
             startActivity(intent);
+        });
+        closeImage.setOnClickListener(v -> {
+            selectedUri= null;
+            closePanel.setVisibility(View.GONE);
         });
 
     }
@@ -122,7 +131,7 @@ public class EventActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_FILE || resultCode == RESULT_OK || data!= null || data.getData() != null){
+        if(requestCode == PICK_FILE && resultCode == RESULT_OK && data!= null && data.getData() != null){
 
             selectedUri = data.getData();
             if(selectedUri.toString().contains("image")){
@@ -130,6 +139,7 @@ public class EventActivity extends AppCompatActivity {
                 imageView.setVisibility(View.VISIBLE);
                 videoView.setVisibility(View.INVISIBLE);
                 type = "iv";
+                closePanel.setVisibility(View.VISIBLE);
             }else if(selectedUri.toString().contains("video")) {
                 videoView.setMediaController(mediaController);
                 videoView.setVisibility(View.VISIBLE);
@@ -137,6 +147,7 @@ public class EventActivity extends AppCompatActivity {
                 videoView.setVideoURI(selectedUri);
                 videoView.start();
                 type = "vv";
+                closePanel.setVisibility(View.VISIBLE);
             }else{
                 Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }
@@ -153,9 +164,6 @@ public class EventActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String currentuid = user.getUid();
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference documentReference = db.collection("user").document(currentuid);
 
@@ -167,8 +175,6 @@ public class EventActivity extends AppCompatActivity {
                         url = task.getResult().getString("url");
 
                         Picasso.get().load(url).into(useriv);
-
-
                     }else{
                         Toast.makeText(EventActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
@@ -179,8 +185,14 @@ public class EventActivity extends AppCompatActivity {
 
     private void Dopost() {
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String currentuid = user.getUid();
+        Calendar cdate = Calendar.getInstance();
+        SimpleDateFormat currentdate = new SimpleDateFormat("dd-MMMM-yyy");
+        final String savedate = currentdate.format(cdate.getTime());
+
+        Calendar ctime = Calendar.getInstance();
+        SimpleDateFormat currenttime =new SimpleDateFormat("HH-mm-ss");
+        final String savetime = currenttime.format(ctime.getTime());
+
 
         String desc = etdesc.getText().toString();
         String title = etTitle.getText().toString();
@@ -206,20 +218,22 @@ public class EventActivity extends AppCompatActivity {
                     Uri downloadUri = task.getResult();
 
                     if(type.equals("iv")){
+                        String id1 = db3.push().getKey();
                         eventMember.setTitle(title);
                         eventMember.setDesc(desc);
                         eventMember.setName(name);
                         eventMember.setPostUri(downloadUri.toString());
-                        eventMember.setTime(time);
+                        eventMember.setTime(savetime);
                         eventMember.setUid(currentuid);
                         eventMember.setUrl(url);
                         eventMember.setType("iv");
+                        eventMember.setDate(savedate);
+                        eventMember.setPostkey(id1);
 
                         //for image
                         String id = db1.push().getKey();
                         db1.child(id).setValue(eventMember);
                         //for both
-                        String id1 = db3.push().getKey();
                         db3.child(id1).setValue(eventMember);
 
                         progressBar.setVisibility(View.INVISIBLE);
@@ -228,6 +242,7 @@ public class EventActivity extends AppCompatActivity {
                         deletedb();
 
                     }else if(type.equals("vv")){
+                        String id1 = db3.push().getKey();
                         eventMember.setTitle(title);
                         eventMember.setDesc(desc);
                         eventMember.setName(name);
@@ -236,12 +251,13 @@ public class EventActivity extends AppCompatActivity {
                         eventMember.setUid(currentuid);
                         eventMember.setUrl(url);
                         eventMember.setType("vv");
+                        eventMember.setDate(savedate);
+                        eventMember.setPostkey(id1);
 
                         //for image
                         String id = db1.push().getKey();
                         db1.child(id).setValue(eventMember);
                         //for both
-                        String id1 = db3.push().getKey();
                         db3.child(id1).setValue(eventMember);
 
                         progressBar.setVisibility(View.INVISIBLE);

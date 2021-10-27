@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -22,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class SelectedGameActivity extends AppCompatActivity {
+public class AllGamesActivity extends AppCompatActivity {
 
     String title,keyword;
     TextView title_tv,add_game,back;
@@ -34,42 +33,26 @@ public class SelectedGameActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference db1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selected_game);
+        setContentView(R.layout.activity_all_games);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            title = extras.getString("s");
-            keyword = extras.getString("k");
-        }
-        else Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
+        keyword = "All game";
 
-        db1 = database.getReference(keyword);
+        db1 = database.getReference("All game");
 
-        title_tv = findViewById(R.id.tv_title_sga);
-        add_game = findViewById(R.id.tv_add_sga);
-        rv = findViewById(R.id.rv_asg);
-        search_game = findViewById(R.id.et_search_sga);
         back = findViewById(R.id.tv_back_sga);
+        search_game = findViewById(R.id.et_search_sga);
 
-        linearLayoutManager = new LinearLayoutManager(SelectedGameActivity.this);
+        rv = findViewById(R.id.rv_asg);
+        linearLayoutManager = new LinearLayoutManager(AllGamesActivity.this);
         rv.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
 
-        title_tv.setText(title);
-
         back.setOnClickListener(v -> {
-            Intent intent = new Intent(SelectedGameActivity.this,MainActivity.class);
-            startActivity(intent);
-        });
-
-        add_game.setOnClickListener(v -> {
-            Intent intent = new Intent(SelectedGameActivity.this,AddGameActivity.class);
-            intent.putExtra("k",keyword);
+            Intent intent = new Intent(AllGamesActivity.this,MainActivity.class);
             startActivity(intent);
         });
 
@@ -95,18 +78,18 @@ public class SelectedGameActivity extends AppCompatActivity {
 
         FirebaseRecyclerOptions<GameMember> options = null;
 
-        if(id.equals("n")){
+        if (id.equals("n")) {
             options =
                     new FirebaseRecyclerOptions.Builder<GameMember>()
-                            .setQuery(db1,GameMember.class)
+                            .setQuery(db1, GameMember.class)
                             .build();
-        }else if(id.equals("s")){
+        } else if (id.equals("s")) {
 
             String query = search_game.getText().toString();
-            Query search = db1.orderByChild("title").startAt(query).endAt(query+"\uf0ff");
+            Query search = db1.orderByChild("title").startAt(query).endAt(query + "\uf0ff");
             options =
                     new FirebaseRecyclerOptions.Builder<GameMember>()
-                            .setQuery(search,GameMember.class)
+                            .setQuery(search, GameMember.class)
                             .build();
         }
 
@@ -124,7 +107,7 @@ public class SelectedGameActivity extends AppCompatActivity {
                         String title = getItem(position).getTitle();
 
                         holder.cons.setOnClickListener(v -> {
-                            Intent intent = new Intent(SelectedGameActivity.this,GameSelectedSelectedActivity.class);
+                            Intent intent = new Intent(AllGamesActivity.this,GameSelectedSelectedActivity.class);
                             intent.putExtra("k",keyword);
                             intent.putExtra("id",post_key);
                             intent.putExtra("t",title);
@@ -155,6 +138,5 @@ public class SelectedGameActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         showRec("n");
-
     }
 }

@@ -1,4 +1,4 @@
-package com.example.socialmedia;
+package com.example.socialmedia.PostController;
 
 public class Postmember {
 

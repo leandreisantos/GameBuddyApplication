@@ -262,11 +262,12 @@
                             app:cardBackgroundColor="@color/secondary_background">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:id="@+id/tv_allevent_dash"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
                                 android:background="@drawable/ic_next"
-                                android:textAlignment="center"
-                                android:layout_gravity="center"/>
+                                android:textAlignment="center" />
 
 
                         </androidx.cardview.widget.CardView>

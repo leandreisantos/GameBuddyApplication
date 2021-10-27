@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 import com.example.socialmedia.FragmetGss.CommunityGss;
 import com.example.socialmedia.FragmetGss.HomeGss;
 import com.example.socialmedia.FragmetGss.NewsFeedGss;
+import com.example.socialmedia.PostController.PostActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -66,7 +66,7 @@ public class GameSelectedSelectedActivity extends AppCompatActivity implements V
         TextView tvcp = dialog.findViewById(R.id.tv_cpf4);
 
         tvcp.setOnClickListener(v -> {
-            Intent intent = new Intent(GameSelectedSelectedActivity.this,PostActivity.class);
+            Intent intent = new Intent(GameSelectedSelectedActivity.this, PostActivity.class);
             intent.putExtra("kp","gs");
             intent.putExtra("t",title);
             startActivity(intent);

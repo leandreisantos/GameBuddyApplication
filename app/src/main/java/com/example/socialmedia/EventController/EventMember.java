@@ -10,6 +10,8 @@ public class EventMember {
     String type;
     String desc;
     String title;
+    String date;
+    String postkey;
 
     public EventMember(){
 
@@ -77,6 +79,21 @@ public class EventMember {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getPostkey() {
+        return postkey;
+    }
+
+    public void setPostkey(String postkey) {
+        this.postkey = postkey;
     }
 
 }

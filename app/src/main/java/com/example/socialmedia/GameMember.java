@@ -13,6 +13,8 @@ public class GameMember {
     String Email;
     String Address;
     String Owner;
+    String create;
+    String WhatNew;
 
 
     public GameMember(){
@@ -112,6 +114,23 @@ public class GameMember {
 
     public void setOwner(String owner) {
         Owner = owner;
+    }
+
+
+    public String getCreate() {
+        return create;
+    }
+
+    public void setCreate(String create) {
+        this.create = create;
+    }
+
+    public String getWhatNew() {
+        return WhatNew;
+    }
+
+    public void setWhatNew(String whatNew) {
+        WhatNew = whatNew;
     }
 
 }

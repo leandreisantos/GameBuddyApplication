@@ -1,4 +1,4 @@
-package com.example.socialmedia;
+package com.example.socialmedia.Fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,6 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmedia.BottomSheetMenu;
+import com.example.socialmedia.ChatActivity;
+import com.example.socialmedia.CreateProfile;
+import com.example.socialmedia.FollowerActivity;
+import com.example.socialmedia.ImageActivity;
+import com.example.socialmedia.IndividualPost;
+import com.example.socialmedia.MainActivity;
+import com.example.socialmedia.NotificationActivity;
+import com.example.socialmedia.R;
+import com.example.socialmedia.StoryActivity;
+import com.example.socialmedia.UpdateProfile;
+import com.example.socialmedia.databaseReference;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -121,12 +133,12 @@ public class Fragment1 extends Fragment implements View.OnClickListener{
         switch (v.getId()){
 
             case R.id.tv_newf1:
-                Intent intent3 = new Intent(getActivity(),NotificationActivity.class);
+                Intent intent3 = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent3);
                 changeSeen();
                 break;
             case R.id.ib_edit_f1:
-                Intent intent = new Intent(getActivity(),UpdateProfile.class);
+                Intent intent = new Intent(getActivity(), UpdateProfile.class);
                 startActivity(intent);
                 break;
             case R.id.ib_menu_f1:
@@ -141,20 +153,20 @@ public class Fragment1 extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.tv_followers_f1:
-                Intent follower = new Intent(getActivity(),FollowerActivity.class);
+                Intent follower = new Intent(getActivity(), FollowerActivity.class);
                 follower.putExtra("u",currentid);
                 startActivity(follower);
                 break;
             case R.id.iv_f1:
-                Intent intent1 = new Intent(getActivity(),ImageActivity.class);
+                Intent intent1 = new Intent(getActivity(), ImageActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.tv_post_f1:
-                Intent intent5 = new Intent(getActivity(),IndividualPost.class);
+                Intent intent5 = new Intent(getActivity(), IndividualPost.class);
                 startActivity(intent5);
                 break;
             case R.id.btn_sendmessage_f1:
-                Intent in = new Intent(getActivity(),ChatActivity.class);
+                Intent in = new Intent(getActivity(), ChatActivity.class);
                 startActivity(in);
                 break;
             case R.id.tv_web_f1:
@@ -180,7 +192,7 @@ public class Fragment1 extends Fragment implements View.OnClickListener{
                 imageUri = data.getData();
 
                 String url = imageUri.toString();
-                Intent intent = new Intent(getActivity(),StoryActivity.class);
+                Intent intent = new Intent(getActivity(), StoryActivity.class);
                 intent.putExtra("u",url);
                 startActivity(intent);
             }
@@ -283,7 +295,7 @@ public class Fragment1 extends Fragment implements View.OnClickListener{
 
 
                        }else{
-                           Intent intent = new Intent(getActivity(),CreateProfile.class);
+                           Intent intent = new Intent(getActivity(), CreateProfile.class);
                            startActivity(intent);
                        }
                    }

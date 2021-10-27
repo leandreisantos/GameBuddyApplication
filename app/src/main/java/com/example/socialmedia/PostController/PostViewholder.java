@@ -1,4 +1,4 @@
-package com.example.socialmedia;
+package com.example.socialmedia.PostController;
 
 import android.view.View;
 import android.widget.ImageButton;
@@ -6,6 +6,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmedia.GetCurrentTime;
+import com.example.socialmedia.R;
+import com.example.socialmedia.databaseReference;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
@@ -42,7 +45,7 @@ public class PostViewholder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void SetPost(FragmentActivity activity, String name,String url,String postUri,String time,String uid,String type,String desc,String postprivacy,String date){
+    public void SetPost(FragmentActivity activity, String name,String url,String postUri,String time,String uid,String type,String desc,String postprivacy,String date,String post_key){
 
         imageViewprofile = itemView.findViewById(R.id.iv_profile_item_post);
         iv_post = itemView.findViewById(R.id.iv_post_item);

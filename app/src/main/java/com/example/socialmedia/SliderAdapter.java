@@ -23,8 +23,8 @@ public class SliderAdapter extends PagerAdapter {
 
     int images[] = {
 
-            R.raw.events_lottie_anim,
-            R.raw.search_lottie_anim,
+            R.raw.aboutlotbuddy,
+            R.raw.searchaboutlot,
             R.raw.team_lottie_anim,
             R.raw.community,
             R.raw.subscribe_lottie_anim

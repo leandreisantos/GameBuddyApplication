@@ -17,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialMedia"
         android:usesCleartextTraffic="true">
+        <activity android:name=".EditPostActivity"></activity>
+        <activity android:name=".ReportController.ReportPostActivity" />
+        <activity android:name=".AllGamesActivity" />
+        <activity android:name=".EventController.AllEventActivity" />
         <activity
             android:name=".ShareActivity"
             android:exported="false" />
@@ -57,7 +61,7 @@
             android:name=".IndividualPost"
             android:label="@string/title_activity_individual_post"
             android:theme="@style/Theme.SocialMedia.NoActionBar" />
-        <activity android:name=".PostActivity" />
+        <activity android:name=".PostController.PostActivity" />
         <activity android:name=".AnswerActivity" />
         <activity android:name=".ReplyActivity" />
         <activity android:name=".YourQuestions" />

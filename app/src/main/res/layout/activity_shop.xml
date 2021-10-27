@@ -142,7 +142,7 @@
                     android:id="@+id/tv_iv_sell"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/border_input"
                     android:fontFamily="@font/baloo"
                     android:gravity="center"

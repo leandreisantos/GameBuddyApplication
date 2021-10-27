@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.socialmedia.Config.Config;
+import com.example.socialmedia.EventController.AllEventActivity;
 import com.example.socialmedia.EventController.EventActivity;
 import com.example.socialmedia.EventController.EventMember;
 import com.example.socialmedia.EventController.Eventholder;
@@ -62,6 +63,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     //reference
     String name;
     String currentuid;
+    TextView allevent;
 
 
     @Nullable
@@ -88,8 +90,9 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         action = getActivity().findViewById(R.id.rl_ac_dash);
         adventure = getActivity().findViewById(R.id.rl_ad_dash);
         fps = getActivity().findViewById(R.id.rl_fps_dash);
+        allevent = getActivity().findViewById(R.id.tv_allevent_dash);
 
-        reference = database.getReference("All post events");
+        reference = database.getReference("All post").child("event");
         referenceDeveloper = database.getReference("All users");
         featuredEvents = getActivity().findViewById(R.id.df_event_rv);
         featuredEvents.setHasFixedSize(true);
@@ -120,6 +123,11 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
         action.setOnClickListener(v -> GotoSga("Action Game","All action"));
         adventure.setOnClickListener(v -> GotoSga("Adventure Game","All adventure"));
         fps.setOnClickListener(v -> GotoSga("Fps Game","All fps"));
+
+        allevent.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AllEventActivity.class);
+            startActivity(intent);
+        });
 
     }
 
