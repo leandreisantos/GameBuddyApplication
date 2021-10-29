@@ -24,18 +24,24 @@ import com.squareup.picasso.Picasso;
 import java.util.Collections;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class PostViewholder extends RecyclerView.ViewHolder {
 
-    public ImageView imageViewprofile,iv_post;
+    public ImageView imageViewprofile,iv_post,imageViewprofile_s,iv_post_s;
     public TextView tv_name,tv_desc,tv_likes,tv_comment,tv_time,tv_nameprofile;
+
+    public TextView tv_nameprofile_s,tv_desc_s,tv_time_s;
     public ImageButton likebtn,menuoptions,commentbtn,sharebtn;
     DatabaseReference likesref,commentref;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     public int likescount,commentcount;
+    CardView cv_main;
+    ConstraintLayout share_cl;
 
     GetCurrentTime gc = new GetCurrentTime();
     String utime = gc.ctime();
@@ -45,7 +51,9 @@ public class PostViewholder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void SetPost(FragmentActivity activity, String name,String url,String postUri,String time,String uid,String type,String desc,String postprivacy,String date,String post_key){
+    public void SetPost(FragmentActivity activity, String name,String url,String postUri,String time,String uid,String type,String desc,String postprivacy,String date,String post_key,
+                        String descSharer,String postkeySharer,String uidSharer,String privacySharer,String sharerType,String timeShare,
+                        String dateSharer,String nameSharer,String urlSharer){
 
         imageViewprofile = itemView.findViewById(R.id.iv_profile_item_post);
         iv_post = itemView.findViewById(R.id.iv_post_item);
@@ -58,10 +66,19 @@ public class PostViewholder extends RecyclerView.ViewHolder {
         menuoptions = itemView.findViewById(R.id.morebutton_posts);
         tv_time = itemView.findViewById(R.id.tv_time_post);
         tv_nameprofile = itemView.findViewById(R.id.tv_name_post);
+        cv_main = itemView.findViewById(R.id.cv_iv_main);
+        share_cl = itemView.findViewById(R.id.cl_s);
+
+        tv_nameprofile_s = itemView.findViewById(R.id.tv_name_post_s);
+        tv_desc_s = itemView.findViewById(R.id.tv_desc_post_s);
+        tv_time_s = itemView.findViewById(R.id.tv_time_post_s);
+        imageViewprofile_s = itemView.findViewById(R.id.iv_profile_item_post_s);
+        iv_post_s = itemView.findViewById(R.id.iv_post_item_s);
 
 
         SimpleExoPlayer exoPlayer;
         PlayerView playerView = itemView.findViewById(R.id.exoplayer_item_post);
+        PlayerView playerView_s = itemView.findViewById(R.id.exoplayer_item_post_s);
 
 
 //            Picasso.get().load(url).into(imageViewprofile);
@@ -71,27 +88,71 @@ public class PostViewholder extends RecyclerView.ViewHolder {
 //            tv_nameprofile.setText(name);
 //            playerView.setVisibility(View.INVISIBLE);
 
-        if(type != null){
+        if(sharerType != null){
+            if(sharerType.equals("txt")){
+                cv_main.setVisibility(View.GONE);
+                share_cl.setVisibility(View.VISIBLE);
 
-            if(type.equals("txt")){
-                Picasso.get().load(url).into(imageViewprofile);
-                setItem(desc,time,name);
-                playerView.setVisibility(View.INVISIBLE);
-                iv_post.setVisibility(View.GONE);
-                playerView.setVisibility(View.GONE);
+                tv_desc.setText(descSharer);
+                tv_time.setText(timeShare);
+                tv_nameprofile.setText(nameSharer);
+                Picasso.get().load(urlSharer).into(imageViewprofile);
+
+                if(type != null){
+                    if(type.equals("txt")){
+                        Picasso.get().load(url).into(imageViewprofile_s);
+                        setItemShare(desc,time,name);
+                        playerView.setVisibility(View.INVISIBLE);
+                        iv_post_s.setVisibility(View.GONE);
+                        playerView_s.setVisibility(View.GONE);
+                    }
+                    if(type.equals("iv")){
+                        Picasso.get().load(url).into(imageViewprofile_s);
+                        //iv_post.requestLayout();
+                        //iv_post.getLayoutParams().height = 3000;
+                        Picasso.get().load(postUri).into(iv_post_s);
+                        setItemShare(desc,time,name);
+                        playerView_s.setVisibility(View.INVISIBLE);
+                    }
+                    if(type.equals("vv")){
+                        iv_post_s.setVisibility(View.INVISIBLE);
+                        setItemShare(desc,time,name);
+                        Picasso.get().load(url).into(imageViewprofile_s);
+                        try{
+                            SimpleExoPlayer simpleExoPlayer= new SimpleExoPlayer.Builder(activity).build();
+                            playerView_s.setPlayer(simpleExoPlayer);
+                            MediaItem mediaItem = MediaItem.fromUri(postUri);
+                            simpleExoPlayer.addMediaItems(Collections.singletonList(mediaItem));
+                            simpleExoPlayer.prepare();
+                            simpleExoPlayer.setPlayWhenReady(false);
+                        }catch(Exception e){
+                            Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
             }
-            if(type.equals("iv")){
-                Picasso.get().load(url).into(imageViewprofile);
-                //iv_post.requestLayout();
-                //iv_post.getLayoutParams().height = 3000;
-                Picasso.get().load(postUri).into(iv_post);
-                setItem(desc,time,name);
-                playerView.setVisibility(View.INVISIBLE);
-            }if(type.equals("vv")){
-                iv_post.setVisibility(View.INVISIBLE);
-                setItem(desc,time,name);
-                Picasso.get().load(url).into(imageViewprofile);
-                try{
+        } else{
+            if(type != null){
+
+                if(type.equals("txt")){
+                    Picasso.get().load(url).into(imageViewprofile);
+                    setItem(desc,time,name);
+                    playerView.setVisibility(View.INVISIBLE);
+                    iv_post.setVisibility(View.GONE);
+                    playerView.setVisibility(View.GONE);
+                }
+                if(type.equals("iv")){
+                    Picasso.get().load(url).into(imageViewprofile);
+                    //iv_post.requestLayout();
+                    //iv_post.getLayoutParams().height = 3000;
+                    Picasso.get().load(postUri).into(iv_post);
+                    setItem(desc,time,name);
+                    playerView.setVisibility(View.INVISIBLE);
+                }if(type.equals("vv")){
+                    iv_post.setVisibility(View.INVISIBLE);
+                    setItem(desc,time,name);
+                    Picasso.get().load(url).into(imageViewprofile);
+                    try{
 //                    Uri uri = Uri.parse(postUri);
 //                    SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(activity);
 //                    DefaultHttpDataSourceFactory df = new DefaultHttpDataSourceFactory("video");
@@ -100,21 +161,24 @@ public class PostViewholder extends RecyclerView.ViewHolder {
 //                    playerView.setPlayer(player);
 //                    player.prepare(mediaSource);
 //                    player.setPlayWhenReady(false);
-                    SimpleExoPlayer simpleExoPlayer= new SimpleExoPlayer.Builder(activity).build();
-                    playerView.setPlayer(simpleExoPlayer);
-                    MediaItem mediaItem = MediaItem.fromUri(postUri);
-                    simpleExoPlayer.addMediaItems(Collections.singletonList(mediaItem));
-                    simpleExoPlayer.prepare();
-                    simpleExoPlayer.setPlayWhenReady(false);
+                        SimpleExoPlayer simpleExoPlayer= new SimpleExoPlayer.Builder(activity).build();
+                        playerView.setPlayer(simpleExoPlayer);
+                        MediaItem mediaItem = MediaItem.fromUri(postUri);
+                        simpleExoPlayer.addMediaItems(Collections.singletonList(mediaItem));
+                        simpleExoPlayer.prepare();
+                        simpleExoPlayer.setPlayWhenReady(false);
 
 
-                }catch(Exception e){
-                    Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+                    }catch(Exception e){
+                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+                    }
                 }
+            }else{
+                Toast.makeText(activity, "Empty", Toast.LENGTH_SHORT).show();
             }
-        }else{
-            Toast.makeText(activity, "Empty", Toast.LENGTH_SHORT).show();
         }
+
+
 
     }
 
@@ -122,6 +186,11 @@ public class PostViewholder extends RecyclerView.ViewHolder {
         tv_desc.setText(desc);
         tv_time.setText(time);
         tv_nameprofile.setText(name);
+    }
+    private void setItemShare(String desc,String time,String name) {
+        tv_desc_s.setText(desc);
+        tv_time_s.setText(time);
+        tv_nameprofile_s.setText(name);
     }
 
     public void likechecker(String postKey) {

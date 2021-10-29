@@ -50,7 +50,6 @@ public class ShowUser extends AppCompatActivity {
 
     int followercount,postiv,postvv;
 
-
     NewMember newMember;
 
     @Override
@@ -214,6 +213,7 @@ public class ShowUser extends AppCompatActivity {
                         String web_result = task.getResult().getString("web");
                         String Url = task.getResult().getString("url");
                         p = task.getResult().getString("privacy");
+
 
                         if (p.equals("Public")){
                             professiontv.setText(bio_result);
@@ -398,7 +398,6 @@ public class ShowUser extends AppCompatActivity {
             requesttv.setText("Wait Until your request is accepted");
 
             sendNotification(userid,name_result,"sr");
-
         }
     }
 

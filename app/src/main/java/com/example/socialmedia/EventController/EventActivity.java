@@ -4,14 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +31,7 @@ import android.widget.VideoView;
 
 import com.example.socialmedia.GetCurrentTime;
 import com.example.socialmedia.MainActivity;
+import com.example.socialmedia.PostController.PostActivity;
 import com.example.socialmedia.R;
 import com.example.socialmedia.databaseReference;
 import com.google.android.gms.tasks.Continuation;
@@ -68,6 +76,7 @@ public class EventActivity extends AppCompatActivity {
     String type;
     EventMember eventMember;
     CardView closePanel;
+    ConstraintLayout date_time;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
@@ -94,6 +103,7 @@ public class EventActivity extends AppCompatActivity {
         cv_add = findViewById(R.id.cv_addimage);
         closePanel = findViewById(R.id.cl_parentclose_ap);
         closeImage = findViewById(R.id.tv_close_iv_ap);
+        date_time = findViewById(R.id.cl_date);
 
         storageReference = FirebaseStorage.getInstance().getReference("User posts events");
 
@@ -116,8 +126,22 @@ public class EventActivity extends AppCompatActivity {
             closePanel.setVisibility(View.GONE);
         });
 
+        date_time.setOnClickListener(v -> showDateTime());
+
     }
 
+    private void showDateTime() {
+        final Dialog dialog = new Dialog(EventActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottom_date_time_layout);
+
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.Bottomanim;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
 
 
     private void chooseImage() {
@@ -200,7 +224,7 @@ public class EventActivity extends AppCompatActivity {
               GetCurrentTime gc = new GetCurrentTime();
               String time = gc.ctime();
 
-        if(TextUtils.isEmpty(desc) || selectedUri != null){
+        if(!TextUtils.isEmpty(desc) && selectedUri != null && !TextUtils.isEmpty(title)){
 
             progressBar.setVisibility(View.VISIBLE);
             final StorageReference reference = storageReference.child(System.currentTimeMillis()+"."+getFileExt(selectedUri));

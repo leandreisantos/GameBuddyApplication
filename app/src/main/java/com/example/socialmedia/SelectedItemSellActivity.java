@@ -3,27 +3,52 @@ package com.example.socialmedia;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class SelectedItemSellActivity extends AppCompatActivity {
 
     ImageView iv_iv,iv_seller;
-    TextView tv_title,tv_price,tv_con,tv_cat,tv_desc,tv_seller_name,tv_btn_viewp;
+    TextView tv_title,tv_price,tv_con,tv_cat,tv_desc,tv_seller_name,tv_btn_viewp,back,more;
     String postKey;
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference reference;
+
+    String uid;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String currentuid = user.getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +74,12 @@ public class SelectedItemSellActivity extends AppCompatActivity {
         tv_desc = findViewById(R.id.tv_desc_asi);
         tv_seller_name = findViewById(R.id.tv_sellername_asi);
         tv_btn_viewp = findViewById(R.id.tv_btn_p);
+        back = findViewById(R.id.tv_back_asi);
+        more = findViewById(R.id.tv_more_asi);
+
+        back.setOnClickListener(v -> onBackPressed());
+
+        more.setOnClickListener(v -> showDialog());
     }
 
     @Override
@@ -67,6 +98,8 @@ public class SelectedItemSellActivity extends AppCompatActivity {
                    String username = snapshot.child("name").getValue(String.class);
                    String url = snapshot.child("url").getValue(String.class);
                    String image = snapshot.child("postUri").getValue(String.class);
+                   uid = snapshot.child("uid").getValue(String.class);
+
 
                    tv_title.setText(title);
                    tv_price.setText("₱"+price);
@@ -84,6 +117,38 @@ public class SelectedItemSellActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+    void showDialog(){
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.post_options,null);
+        TextView download = view.findViewById(R.id.download_tv_post);
+        TextView share = view.findViewById(R.id.share_tv_post);
+        TextView delete = view.findViewById(R.id.delete_tv_post);
+        TextView copyurl = view.findViewById(R.id.copyurl_tv_post);
+        TextView edit = view.findViewById(R.id.edit_tv_post);
+        TextView report = view.findViewById(R.id.report_tv_post);
+
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setView(view)
+                .create();
+
+        alertDialog.show();
+
+        download.setVisibility(View.GONE);
+        share.setVisibility(View.GONE);
+        copyurl.setVisibility(View.GONE);
+
+        if(uid.equals(currentuid)){
+            delete.setVisibility(View.VISIBLE);
+            edit.setVisibility(View.VISIBLE);
+            report.setVisibility(View.GONE);
+        }else{
+            delete.setVisibility(View.GONE);
+            edit.setVisibility(View.GONE);
+        }
 
 
 

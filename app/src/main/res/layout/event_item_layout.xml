@@ -48,24 +48,59 @@
             android:layout_marginStart="15dp"
             android:textSize="15sp"/>
 
-        <TextView
-            android:id="@+id/tv_int_icon_el"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/not_interested_icon"
+<!--        <TextView-->
+<!--            android:id="@+id/tv_int_icon_el"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:background="@drawable/not_interested_icon"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_desc_el"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_marginTop="10dp"/>-->
+
+        <ImageButton
             app:layout_constraintTop_toBottomOf="@id/tv_desc_el"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/not_interested_icon"
+            android:background="@android:color/transparent"
+            android:id="@+id/tv_int_icon_el"
+            />
 
         <TextView
             android:id="@+id/tv_int_el"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1k insterested"
+            android:text=""
             app:layout_constraintTop_toBottomOf="@id/tv_desc_el"
             android:textColor="@color/grey"
             app:layout_constraintLeft_toRightOf="@id/tv_int_icon_el"
+            android:layout_marginTop="18dp" />
+
+
+        <ImageButton
+            app:layout_constraintTop_toBottomOf="@id/tv_desc_el"
+            app:layout_constraintLeft_toRightOf="@id/tv_int_el"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/going_icon"
+            android:background="@android:color/transparent"
+            android:id="@+id/tv_going_icon_el"
+            />
+
+        <TextView
+            android:id="@+id/tv_going_el"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            app:layout_constraintTop_toBottomOf="@id/tv_desc_el"
+            android:textColor="@color/grey"
+            app:layout_constraintLeft_toRightOf="@id/tv_going_icon_el"
             android:layout_marginTop="18dp" />
 
 

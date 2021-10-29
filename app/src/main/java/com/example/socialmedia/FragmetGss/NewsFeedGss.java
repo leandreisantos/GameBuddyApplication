@@ -149,7 +149,8 @@ public class NewsFeedGss extends Fragment {
                         final String postkey = getRef(position).getKey();
 
                         holder.SetPost(getActivity(),model.getName(),model.getUrl(),model.getPostUri(),model.getTime(),model.getUid(),
-                                model.getType(),model.getDesc(),model.getPrivacy(),model.getDate(),model.getPostkey());
+                                model.getType(),model.getDesc(),model.getPrivacy(),model.getDate(),model.getPostkey(),model.getDescSharer(),model.getPostkeySharer(),
+                                model.getUidSharer(),model.getPrivacySharer(),model.getSharerType(),model.getTimeShare(),model.getDateShare(),model.getNameSharer(),model.getUrlSharer());
 
                         String name = getItem(position).getName();
                         String url = getItem(position).getPostUri();

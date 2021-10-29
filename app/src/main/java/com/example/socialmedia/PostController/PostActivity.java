@@ -69,7 +69,7 @@ public class PostActivity extends AppCompatActivity {
     StorageReference storageReference;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference db1,db2,db3;
+    DatabaseReference db1,db2,db3,db4;
     String privacy_post= "p";
     String key_post,title_post;
 
@@ -117,6 +117,7 @@ public class PostActivity extends AppCompatActivity {
 
         db1 = database.getReference("All images").child(currentuid);
         db2 = database.getReference("All videos").child(currentuid);
+        db4 = database.getReference("All post").child(currentuid);
 
         if(key_post.equals("p")){
             db3 = database.getReference("All post").child("public");
@@ -129,12 +130,7 @@ public class PostActivity extends AppCompatActivity {
        btnchoosefile.setOnClickListener(v -> chooseImage());
 
        btn_p_close.setOnClickListener(v -> {
-//               value = "post";
-//               Intent intent = new Intent(PostActivity.this,MainActivity.class);
-//               intent.putExtra("post",value);
-//               startActivity(intent);
-           FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-           fragmentTransaction.replace(R.id.container,new Fragment4()).commit();
+           onBackPressed();
        });
        closeImage.setOnClickListener(v -> {
            imageView.setVisibility(View.GONE);
@@ -329,12 +325,14 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setPrivacy(privacy_post);
                             postmember.setDate(savedate);
                             postmember.setPostkey(id1);
+                            postmember.setSharerType(null);
 
                             //for image
                             String id = db1.push().getKey();
                             db1.child(id).setValue(postmember);
                             //for both
                             db3.child(id1).setValue(postmember);
+                            db4.child(id1).setValue(postmember);
 
                             progressBar.setVisibility(View.INVISIBLE);
 
@@ -353,6 +351,7 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setDate(savedate);
                             postmember.setPrivacy(privacy_post);
                             postmember.setPostkey(id4);
+                            postmember.setSharerType(null);
 
                             //for video
                             String id3 = db2.push().getKey();
@@ -360,6 +359,7 @@ public class PostActivity extends AppCompatActivity {
 
                             //for both
                             db3.child(id4).setValue(postmember);
+                            db4.child(id4).setValue(postmember);
 
                             progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(PostActivity.this, "post uploaded", Toast.LENGTH_SHORT).show();
@@ -393,12 +393,14 @@ public class PostActivity extends AppCompatActivity {
             postmember.setPrivacy(privacy_post);
             postmember.setDate(savedate);
             postmember.setPostkey(id1);
+            postmember.setSharerType(null);
 
             //for image
             String id = db1.push().getKey();
             db1.child(id).setValue(postmember);
             //for both
             db3.child(id1).setValue(postmember);
+            db4.child(id1).setValue(postmember);
 
             progressBar.setVisibility(View.INVISIBLE);
 
@@ -443,12 +445,14 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setPrivacy(privacy_post);
                             postmember.setDate(savedate);
                             postmember.setPostkey(id1);
+                            postmember.setSharerType(null);
 
                             //for image
                             String id = db1.push().getKey();
                             db1.child(id).setValue(postmember);
                             //for both
                             db3.child(id1).setValue(postmember);
+                            db4.child(id1).setValue(postmember);
 
                             progressBar.setVisibility(View.INVISIBLE);
 
@@ -467,6 +471,7 @@ public class PostActivity extends AppCompatActivity {
                             postmember.setPrivacy(privacy_post);
                             postmember.setDate(savedate);
                             postmember.setPostkey(id4);
+                            postmember.setSharerType(null);
 
                             //for video
                             String id3 = db2.push().getKey();
@@ -474,6 +479,7 @@ public class PostActivity extends AppCompatActivity {
 
                             //for both
                             db3.child(id4).setValue(postmember);
+                            db4.child(id4).setValue(postmember);
 
                             progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(PostActivity.this, "post uploaded", Toast.LENGTH_SHORT).show();

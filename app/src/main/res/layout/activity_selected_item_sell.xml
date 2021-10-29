@@ -26,6 +26,31 @@
                 android:layout_marginStart="10dp"/>
 
             <TextView
+                android:id="@+id/tv_title_asi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:fontFamily="sans-serif"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:id="@+id/tv_price_asi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/icon"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_asi"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp" />
+
+            <TextView
                 android:id="@+id/tv_more_asi"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -35,61 +60,36 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"/>
 
-            <ImageView
-                android:id="@+id/iv_iv_asi"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_pic"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:background="@color/secondary_background"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="60dp"
-                android:scaleType="center"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_price_asi"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_iv_asi"
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    android:background="@color/secondary_background"
+                    android:scaleType="center" />
+
+            </androidx.cardview.widget.CardView>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/iv_iv_asi"
+                app:layout_constraintTop_toBottomOf="@id/cv_pic"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:id="@+id/cl1">
 
-                <TextView
-                    android:id="@+id/tv_title_asi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:fontFamily="sans-serif"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"/>
-
-                <TextView
-                    android:id="@+id/tv_price_asi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:fontFamily="sans-serif"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title_asi"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"/>
-
-                <TextView
-                    android:id="@+id/lbl_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/detail_lbl"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/baloo"
-                    app:layout_constraintTop_toBottomOf="@id/tv_price_asi"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginStart="10dp"/>
 
 
                 <TextView
@@ -100,19 +100,11 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:fontFamily="@font/baloo"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_detail"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="20dp"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginStart="20dp"/>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:background="@color/grey"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_condition"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginTop="10dp"/>
 
                 <TextView
                     android:id="@+id/tv_con_asi"
@@ -120,20 +112,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
                     android:textSize="18sp"
+                    android:text="@string/sample"
                     android:fontFamily="sans-serif"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_condition"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="30dp"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:background="@color/grey"
-                    app:layout_constraintTop_toBottomOf="@id/tv_con_asi"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"/>
 
                 <TextView
                     android:id="@+id/lbl_cat"
@@ -146,16 +130,8 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_con_asi"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="20dp"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginStart="20dp"/>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:background="@color/grey"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_cat"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginTop="10dp"/>
 
                 <TextView
                     android:id="@+id/tv_cat_asi"
@@ -163,20 +139,13 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
                     android:textSize="18sp"
+                    android:text="@string/sample"
                     android:fontFamily="sans-serif"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_cat"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="30dp"/>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:background="@color/grey"
-                    app:layout_constraintTop_toBottomOf="@id/tv_cat_asi"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_con_asi"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"/>
+
 
                 <TextView
                     android:id="@+id/lbl_desc"
@@ -189,16 +158,8 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_cat_asi"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="20dp"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginStart="20dp"/>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:background="@color/grey"
-                    app:layout_constraintTop_toBottomOf="@id/lbl_desc"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginTop="10dp"/>
 
                 <TextView
                     android:id="@+id/tv_desc_asi"
@@ -206,11 +167,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
                     android:textSize="18sp"
+                    android:text="@string/sample"
                     android:fontFamily="sans-serif"
                     app:layout_constraintTop_toBottomOf="@id/lbl_desc"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="30dp"/>
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="20dp"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -229,11 +191,10 @@
                     android:text="@string/seller_lbl"
                     android:textColor="@color/white"
                     android:textSize="30sp"
-                    android:fontFamily="@font/baloo"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginStart="20dp"/>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_1_si"

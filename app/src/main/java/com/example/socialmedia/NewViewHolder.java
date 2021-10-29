@@ -14,6 +14,7 @@ public class NewViewHolder extends RecyclerView.ViewHolder {
 
     ImageView imageView;
     TextView nametv,texttv,icon,more;
+    TextView accept,decline;
 
 
     public NewViewHolder(@NonNull View itemView) {
@@ -27,16 +28,21 @@ public class NewViewHolder extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.iv_new);
         icon = itemView.findViewById(R.id.icon_notifi);
         more = itemView.findViewById(R.id.more_nitem);
+        accept = itemView.findViewById(R.id.tv_accept_nl);
+        decline = itemView.findViewById(R.id.tv_decline_nl);
 
         Picasso.get().load(url).into(imageView);
         nametv.setText(name);
         texttv.setText(text);
         if(action.equals("L")){
             icon.setVisibility(View.VISIBLE);
-        }else if(action.equals("C")){
+        }else if(action.equals("C")) {
             icon.setVisibility(View.VISIBLE);
             icon.setBackgroundResource(R.drawable.ic_baseline_comment_24);
 
+        }else if(action.equals("f")){
+            accept.setVisibility(View.VISIBLE);
+            decline.setVisibility(View.VISIBLE);
         }
 
     }

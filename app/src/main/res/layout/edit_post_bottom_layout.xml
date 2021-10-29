@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp"
+    android:background="@drawable/bottom_sheet_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Post Description"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/lbl_title"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_title">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:id="@+id/iv_epb"/>
+    </androidx.cardview.widget.CardView>
+
+
+    <EditText
+        android:id="@+id/et_desc_epb"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintLeft_toRightOf="@id/cv_dp"
+        app:layout_constraintTop_toBottomOf="@id/lbl_title"
+        android:layout_marginStart="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_save_epb"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/border_btn"
+        android:text="Save changes"
+        android:textColor="@color/white"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/et_desc_epb"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

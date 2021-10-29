@@ -64,6 +64,10 @@ public class GameSelectedSelectedActivity extends AppCompatActivity implements V
         dialog.setContentView(R.layout.f4_bottomsheet);
 
         TextView tvcp = dialog.findViewById(R.id.tv_cpf4);
+        TextView tv_s = dialog.findViewById(R.id.tv_csf4);
+        TextView tv_r = dialog.findViewById(R.id.tv_report);
+
+        tv_s.setVisibility(View.GONE);
 
         tvcp.setOnClickListener(v -> {
             Intent intent = new Intent(GameSelectedSelectedActivity.this, PostActivity.class);
@@ -71,6 +75,7 @@ public class GameSelectedSelectedActivity extends AppCompatActivity implements V
             intent.putExtra("t",title);
             startActivity(intent);
         });
+
 
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);

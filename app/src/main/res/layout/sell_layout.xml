@@ -2,39 +2,49 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="180dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/secondary_background"
+    android:background="@color/background"
     android:id="@+id/content_sl"
+    android:padding="10dp"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/sell_layout_iv"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="match_parent"
-        android:scaleType="centerCrop"
-        android:background="@color/white"
-        android:layout_height="200dp"/>
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageView
+            android:id="@+id/sell_layout_iv"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@color/white"
+            android:layout_height="200dp"/>
+
+    </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/tv_title_sl"
         android:textColor="@color/white"
-        android:fontFamily="@font/baloo"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/sell_layout_iv"
+        android:textSize="20sp"
+        android:text="@string/sample"
+        app:layout_constraintTop_toBottomOf="@id/cv"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"/>
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/tv_price_sl"
-        android:textColor="@color/white"
-        android:fontFamily="@font/baloo"
+        android:textColor="@color/grey"
+        android:text="100"
         app:layout_constraintTop_toBottomOf="@id/tv_title_sl"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="wrap_content"
-        android:layout_marginStart="10dp"
         android:textSize="15sp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -63,13 +63,39 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv2"
+                    android:id="@+id/cv3"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     app:cardCornerRadius="5dp"
                     android:layout_marginTop="20dp"
                     app:cardBackgroundColor="@color/secondary_background"
                     app:layout_constraintTop_toBottomOf="@id/cv1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_developer_ro"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Game Developer"
+                        android:paddingStart="20dp"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/game_developer_icon"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/baloo"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv2"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:cardCornerRadius="5dp"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="@color/secondary_background"
+                    app:layout_constraintTop_toBottomOf="@id/cv3"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent">
 

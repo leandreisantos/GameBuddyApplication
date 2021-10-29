@@ -147,11 +147,13 @@ public class ReportPostActivity extends AppCompatActivity {
                 }else if(type.equals("iv")){
                     cv.setVisibility(View.VISIBLE);
                     Picasso.get().load(image).into(pic);
+                    playerView.setVisibility(View.GONE);
                     name.setText(username);
                     desc.setText(desc_s);
                     Picasso.get().load(url).into(dp);
                 }else if(type.equals("vv")){
                     cv.setVisibility(View.VISIBLE);
+                    pic.setVisibility(View.GONE);
                     name.setText(username);
                     desc.setText(desc_s);
                     Picasso.get().load(url).into(dp);

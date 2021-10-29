@@ -13,6 +13,16 @@ public class Postmember {
     String date;
     String postkey;
 
+    String descSharer;
+    String postkeySharer;
+    String uidSharer;
+    String privacySharer;
+    String sharerType;
+    String timeShare;
+    String dateShare;
+    String nameSharer;
+    String urlSharer;
+
     public Postmember(){
 
     }
@@ -96,6 +106,77 @@ public class Postmember {
     public void setPostkey(String postkey) {
         this.postkey = postkey;
     }
+    public String getDescSharer() {
+        return descSharer;
+    }
+
+    public void setDescSharer(String descSharer) {
+        this.descSharer = descSharer;
+    }
+
+    public String getPostkeySharer() {
+        return postkeySharer;
+    }
+
+    public void setPostkeySharer(String postkeySharer) {
+        this.postkeySharer = postkeySharer;
+    }
+
+    public String getUidSharer() {
+        return uidSharer;
+    }
+
+    public void setUidSharer(String uidSharer) {
+        this.uidSharer = uidSharer;
+    }
+
+    public String getPrivacySharer() {
+        return privacySharer;
+    }
+
+    public void setPrivacySharer(String privacySharer) {
+        this.privacySharer = privacySharer;
+    }
+    public String getSharerType() {
+        return sharerType;
+    }
+
+    public void setSharerType(String sharerType) {
+        this.sharerType = sharerType;
+    }
+    public String getTimeShare() {
+        return timeShare;
+    }
+
+    public void setTimeShare(String timeShare) {
+        this.timeShare = timeShare;
+    }
+
+    public String getDateShare() {
+        return dateShare;
+    }
+
+    public void setDateShare(String dateShare) {
+        this.dateShare = dateShare;
+    }
+
+    public String getNameSharer() {
+        return nameSharer;
+    }
+
+    public void setNameSharer(String nameSharer) {
+        this.nameSharer = nameSharer;
+    }
+
+    public String getUrlSharer() {
+        return urlSharer;
+    }
+
+    public void setUrlSharer(String urlSharer) {
+        this.urlSharer = urlSharer;
+    }
+
+
 
 
 

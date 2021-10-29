@@ -20,12 +20,36 @@
             android:layout_height="match_parent"
             android:background="@color/background">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:background="@color/white"
+            <TextView
+                android:id="@+id/tv_close_vu"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ic_round_close_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="User Profile"
+                android:textColor="@color/white"
+                android:layout_marginTop="18dp"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/iv_bg_vu"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:scaleType="centerCrop"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tv_close_vu"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="10dp"
                 app:layout_constraintRight_toRightOf="parent"/>
 
             <androidx.cardview.widget.CardView
@@ -87,13 +111,42 @@
                     android:textSize="30sp"
                     android:fontFamily="@font/baloo"/>
 
+                <TextView
+                    android:id="@+id/tv_follow_vu"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/solid_btn"
+                    android:text="Follow"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@id/prof_mp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="170dp"/>
+
+                <TextView
+                    android:id="@+id/tv_message_vu"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/border_btn"
+                    android:text="Message"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@id/prof_mp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="170dp"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/prof_mp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_follow_vu"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent">
 
@@ -334,58 +387,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/clb_2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
-
-
-                <TextView
-                    android:id="@+id/tv_message_vu"
-                    android:drawableTop="@drawable/send_message_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Message"
-                    android:textColor="@color/white"
-                    android:drawablePadding="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginEnd="510dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
-
-                <TextView
-                    android:id="@+id/tv_call_vu"
-                    android:drawableTop="@drawable/call_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Call"
-                    android:textColor="@color/white"
-                    android:drawablePadding="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
-
-                <TextView
-                    android:id="@+id/tv_video_vu"
-                    android:drawableTop="@drawable/videocall_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Video"
-                    android:textColor="@color/white"
-                    android:drawablePadding="10dp"
-                    android:layout_marginStart="210dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

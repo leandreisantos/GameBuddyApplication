@@ -13,8 +13,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -28,6 +30,9 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseAuth mAuth;
     ImageView back_btn;
+    String keyoption;
+    LottieAnimationView lot;
+    TextView title;
 
 //    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 //    String currentuid = user.getUid();
@@ -41,10 +46,19 @@ public class RegisterActivity extends AppCompatActivity {
 
         //databaseReference = database.getReference("newKey");
 
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            keyoption = bundle.getString("k");
+        }else{
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
         emailEt = findViewById(R.id.register_email_et);
         passEt = findViewById(R.id.register_password_et);
+        title = findViewById(R.id.txtcreate);
         confirm_pass = findViewById(R.id.register_confirmpassword_et);
         register_btn = findViewById(R.id.button_register);
+        lot = findViewById(R.id.registerlot);
         back_btn = findViewById(R.id.back);
         //login_btn = findViewById(R.id.signup_to_login);
         checkBox = findViewById(R.id.register_checkbox);
@@ -63,8 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         back_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.this,WaitingActivity.class);
-            startActivity(intent);
+            onBackPressed();
         });
 
         register_btn.setOnClickListener(v -> {
@@ -98,13 +111,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-//        login_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
     }
 
@@ -135,6 +141,16 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        if(keyoption.equals("gd")){
+            lot.setAnimation(R.raw.addgamelot);
+            title.setText("CREATE GAME DEVELOPER ACCOUNT");
+        }
+        if(keyoption.equals("c")){
+            lot.setAnimation(R.raw.companylot);
+            title.setText("CREATE COMPANY ACCOUNT");
+        }
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){

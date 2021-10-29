@@ -15,11 +15,14 @@ import android.os.Environment;
 import android.content.ClipboardManager;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -64,7 +68,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
     RecyclerView recyclerView;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference,likesref,db1,db2,db3,storyRef,likelist,referenceDel,ntref;
+    DatabaseReference reference,likesref,db1,db2,db3,storyRef,likelist,referenceDel,ntref,reference_s;
     Boolean likechecker = false;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -187,23 +191,28 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         });
     }
 
-    private void showBottomsheet() {
+    private void showBottomsheet(String url,String desc,String post_key_s) {
 
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.f4_bottomsheet);
+        dialog.setContentView(R.layout.edit_post_bottom_layout);
 
-        TextView tvcp = dialog.findViewById(R.id.tv_cpf4);
-        TextView tvcs = dialog.findViewById(R.id.tv_csf4);
+        ImageView dp = dialog.findViewById(R.id.iv_epb);
+        EditText et = dialog.findViewById(R.id.et_desc_epb);
+        TextView save = dialog.findViewById(R.id.tv_save_epb);
 
-        tvcp.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(),PostActivity.class);
-            startActivity(intent);
-        });
-        tvcs.setOnClickListener(v -> {
-            Intent intentstory = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intentstory.setType("image/*");
-            startActivityForResult(intentstory,PICK_IMAGE);
+        reference_s = database.getReference("All post").child("public").child(post_key_s);
+
+
+        Picasso.get().load(url).into(dp);
+        et.setText(desc);
+
+        String et_text = et.getText().toString();
+
+        String tempdesc = et_text;
+        save.setOnClickListener(v -> {
+            reference_s.child("descSharer").setValue(tempdesc);
+            Toast.makeText(getActivity(), "Saved Changes", Toast.LENGTH_SHORT).show();
         });
 
 
@@ -243,7 +252,8 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         final String postkey = getRef(position).getKey();
 
                         holder.SetPost(getActivity(),model.getName(),model.getUrl(),model.getPostUri(),model.getTime(),model.getUid(),
-                                model.getType(),model.getDesc(),model.getPrivacy(),model.getDate(),model.getPostkey());
+                                model.getType(),model.getDesc(),model.getPrivacy(),model.getDate(),model.getPostkey(),model.getDescSharer(),model.getPostkeySharer(),
+                                model.getUidSharer(),model.getPrivacySharer(),model.getSharerType(),model.getTimeShare(),model.getDateShare(),model.getNameSharer(),model.getUrlSharer());
 
                         String name = getItem(position).getName();
                         String url = getItem(position).getPostUri();
@@ -252,18 +262,30 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         String userid = getItem(position).getUid();
                         String desc = getItem(position).getDesc();
                         String post_key = getItem(position).getPostkey();
+                        String share_id = getItem(position).getUidSharer();
+                        String type_share = getItem(position).getSharerType();
+                        String url_share = getItem(position).getUrlSharer();
+                        String desc_share = getItem(position).getDescSharer();
+                        String postkey_share = getItem(position).getPostkeySharer();
 
                         holder.likechecker(postkey);
                         holder.commentchecker(postkey);
 
-                        holder.menuoptions.setOnClickListener(v -> showDialog(name,url,time,userid,type,post_key));
+                        holder.sharebtn.setOnClickListener(v -> {
+                            Intent intent = new Intent(getActivity(),ShareActivity.class);
+                            intent.putExtra("p","public");
+                            intent.putExtra("k",post_key);
+                            startActivity(intent);
+                        });
+
+                        holder.menuoptions.setOnClickListener(v -> showDialog(name,url,time,userid,type,post_key,share_id,type_share,url_share,desc_share,postkey_share));
                         holder.imageViewprofile.setOnClickListener(v -> {
                             if (currentUserid.equals(userid)) {
                                 Intent intent = new Intent(getActivity(),MyProfileActivity.class);
                                 startActivity(intent);
 
                             }else {
-                                Intent intent = new Intent(getActivity(),ShowUser.class);
+                                Intent intent = new Intent(getActivity(),ViewUserActivity.class);
                                 intent.putExtra("n",name);
                                 intent.putExtra("u",url);
                                 intent.putExtra("uid",userid);
@@ -333,17 +355,6 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                             startActivity(intent);
                         });
                         holder.iv_post.setOnClickListener(v -> ShowPost(url,userid,postkey,name));
-                        holder.sharebtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if(currentuid.equals(userid)){
-                                    shareother(name,url);
-                                }else{
-                                    Intent intent = new Intent(getActivity(),ShareActivity.class);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
 
                     }
 
@@ -426,7 +437,9 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         intent.setType("text/plain");
     }
 
-    void showDialog(String name,String url,String time,String userid,String type,String postKey){
+
+    void showDialog(String name,String url,String time,String userid,String type,String postKey,String s_id,String type_s,
+                    String url_s,String desc_s,String postkey_s){
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.post_options,null);
@@ -447,24 +460,40 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentuid = user.getUid();
 
+        if(type_s!=null){
+            if (s_id.equals(currentuid)) {
+                delete.setVisibility(View.VISIBLE);
+                edit.setVisibility(View.VISIBLE);
+                report.setVisibility(View.GONE);
+            }else{
+                delete.setVisibility(View.GONE);
+                edit.setVisibility(View.GONE);
+            }
+        }else{
+            if(userid.equals(currentuid)){
+                delete.setVisibility(View.VISIBLE);
+                edit.setVisibility(View.VISIBLE);
+                report.setVisibility(View.GONE);
+
+            }else{
+                delete.setVisibility(View.GONE);
+                edit.setVisibility(View.GONE);
+            }
+        }
+
         if(type.equals("txt")) download.setVisibility(View.GONE);
         else download.setVisibility(View.VISIBLE);
 
-        if(userid.equals(currentuid)){
-            delete.setVisibility(View.VISIBLE);
-            edit.setVisibility(View.VISIBLE);
-            report.setVisibility(View.GONE);
-
-        }else{
-            delete.setVisibility(View.GONE);
-            edit.setVisibility(View.GONE);
-        }
 
         edit.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(),EditPostActivity.class);
-            intent.putExtra("p","public");
-            intent.putExtra("k",postKey);
-            startActivity(intent);
+            if(type_s!=null){
+                showBottomsheet(url_s,desc_s,postkey_s);
+            }else{
+                Intent intent = new Intent(getActivity(),EditPostActivity.class);
+                intent.putExtra("p","public");
+                intent.putExtra("k",postKey);
+                startActivity(intent);
+            }
         });
 
         delete.setOnClickListener(v -> {

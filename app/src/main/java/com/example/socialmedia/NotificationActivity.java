@@ -21,6 +21,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -44,7 +45,7 @@ public class NotificationActivity extends AppCompatActivity {
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference ntRef,df;
+    DatabaseReference ntRef,df,followingref;
     String userid;
     LinearLayoutManager linearLayoutManager;
     String image;
@@ -57,6 +58,8 @@ public class NotificationActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         userid = user.getUid();
         df = FirebaseDatabase.getInstance().getReference("notification");
+
+        followingref = FirebaseDatabase.getInstance().getReference("Followers").child(userid);
 
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -187,6 +190,10 @@ public class NotificationActivity extends AppCompatActivity {
                             }
                         });
                         holder.more.setOnClickListener(v -> showBottomSheet());
+
+                        holder.accept.setOnClickListener(v -> {
+                            Toast.makeText(NotificationActivity.this, "accepted", Toast.LENGTH_SHORT).show();
+                        });
                     }
 
                     @NonNull

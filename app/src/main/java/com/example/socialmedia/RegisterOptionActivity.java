@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class RegisterOptionActivity extends AppCompatActivity {
 
-    TextView gamer,company,close;
+    TextView gamer,company,close,gd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +19,30 @@ public class RegisterOptionActivity extends AppCompatActivity {
         gamer = findViewById(R.id.tv_gamer_ro);
         company = findViewById(R.id.tv_com_ro);
         close = findViewById(R.id.tv_close_ro);
+        gd = findViewById(R.id.tv_developer_ro);
 
         gamer.setOnClickListener(v -> {
             Intent itent = new Intent(RegisterOptionActivity.this,RegisterActivity.class);
+            itent.putExtra("k","g");
+            startActivity(itent);
+        });
+
+        gd.setOnClickListener(v -> {
+            Intent itent = new Intent(RegisterOptionActivity.this,RegisterActivity.class);
+            itent.putExtra("k","gd");
+            startActivity(itent);
+        });
+
+        company.setOnClickListener(v -> {
+            Intent itent = new Intent(RegisterOptionActivity.this,RegisterActivity.class);
+            itent.putExtra("k","c");
             startActivity(itent);
         });
 
         close.setOnClickListener(v -> {
-            Intent itent = new Intent(RegisterOptionActivity.this,WaitingActivity.class);
-            startActivity(itent);
+            onBackPressed();
         });
+
+
     }
 }

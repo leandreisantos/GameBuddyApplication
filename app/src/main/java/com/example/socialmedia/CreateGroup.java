@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +31,11 @@ public class CreateGroup extends AppCompatActivity {
     ImageView close,profilecg;
     EditText cgName;
     TextView btncg;
+    ProgressBar pb;
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,databaseReference2;
     UploadTask uploadTask;
     StorageReference storageReference;
     String currentUserId;
@@ -51,11 +54,13 @@ public class CreateGroup extends AppCompatActivity {
         currentUserId = user.getUid();
         storageReference = FirebaseStorage.getInstance().getReference("Group images");
         databaseReference = database.getReference("All group");
+        databaseReference2 = database.getReference("Group");
 
         close = findViewById(R.id.btn_cg_close);
         profilecg = findViewById(R.id.iv_cg);
         cgName = findViewById(R.id.et_cg_name);
         btncg = findViewById(R.id.btn_cg);
+        pb = findViewById(R.id.pb_cg);
 
 
         btncg.setOnClickListener(v -> createcg());
@@ -69,6 +74,11 @@ public class CreateGroup extends AppCompatActivity {
     }
 
     private void createcg() {
+
+        pb.setVisibility(View.VISIBLE);
+        cgName.setEnabled(false);
+        btncg.setEnabled(false);
+        profilecg.setEnabled(false);
 
         String namecg = cgName.getText().toString();
 
@@ -91,15 +101,21 @@ public class CreateGroup extends AppCompatActivity {
                     member.setUid(currentUserId);
                     member.setUrl(downloadUri.toString());
                     member.setPostkey(id);
+                    member.setMember1(currentUserId);
 
                     databaseReference.child(id).setValue(member);
+                    databaseReference2.child(currentUserId).child(id).setValue(member);
 
                     Toast.makeText(CreateGroup.this, "Group created", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CreateGroup.this,MainActivity.class);
+                    onBackPressed();
                 }
             });
 
         }else{
+            pb.setVisibility(View.GONE);
+            cgName.setEnabled(true);
+            btncg.setEnabled(true);
+            profilecg.setEnabled(true);
             Toast.makeText(this, "Please fill all Fields", Toast.LENGTH_SHORT).show();
         }
 
@@ -111,7 +127,7 @@ public class CreateGroup extends AppCompatActivity {
 
 
         try {
-            if(requestCode == PICK_IMAGE || resultCode == RESULT_OK||data != null||data.getData()!=null){
+            if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null&& data.getData()!=null){
                 imageUri = data.getData();
                 Picasso.get().load(imageUri).into(profilecg);
             }
