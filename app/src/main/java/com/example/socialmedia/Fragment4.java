@@ -200,7 +200,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         ImageView dp = dialog.findViewById(R.id.iv_epb);
         EditText et = dialog.findViewById(R.id.et_desc_epb);
         TextView save = dialog.findViewById(R.id.tv_save_epb);
-
+        Toast.makeText(getActivity(), post_key_s, Toast.LENGTH_SHORT).show();
         reference_s = database.getReference("All post").child("public").child(post_key_s);
 
 
@@ -267,6 +267,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         String url_share = getItem(position).getUrlSharer();
                         String desc_share = getItem(position).getDescSharer();
                         String postkey_share = getItem(position).getPostkeySharer();
+                        String time_share = getItem(position).getTimeShare();
 
                         holder.likechecker(postkey);
                         holder.commentchecker(postkey);
@@ -278,7 +279,8 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                             startActivity(intent);
                         });
 
-                        holder.menuoptions.setOnClickListener(v -> showDialog(name,url,time,userid,type,post_key,share_id,type_share,url_share,desc_share,postkey_share));
+                        holder.menuoptions.setOnClickListener(v -> showDialog(name,url,time,userid,type,post_key,share_id,type_share,
+                                url_share,desc_share,postkey_share,time_share));
                         holder.imageViewprofile.setOnClickListener(v -> {
                             if (currentUserid.equals(userid)) {
                                 Intent intent = new Intent(getActivity(),MyProfileActivity.class);
@@ -439,7 +441,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
 
     void showDialog(String name,String url,String time,String userid,String type,String postKey,String s_id,String type_s,
-                    String url_s,String desc_s,String postkey_s){
+                    String url_s,String desc_s,String postkey_s,String time_s){
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.post_options,null);
@@ -497,8 +499,14 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         });
 
         delete.setOnClickListener(v -> {
+            String timefinal;
+            if(type_s!=null){
+                timefinal = time_s;
+            }else{
+                timefinal = time;
+            }
 
-            Query query = db1.orderByChild("time").equalTo(time);
+            Query query = db1.orderByChild("time").equalTo(timefinal);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -515,7 +523,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                 }
             });
 
-            Query query2 = db2.orderByChild("time").equalTo(time);
+            Query query2 = db2.orderByChild("time").equalTo(timefinal);
             query2.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -531,7 +539,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
                 }
             });
-            Query query3 = db3.orderByChild("time").equalTo(time);
+            Query query3 = db3.orderByChild("time").equalTo(timefinal);
             query3.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

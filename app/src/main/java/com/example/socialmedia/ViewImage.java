@@ -23,7 +23,7 @@ public class ViewImage extends AppCompatActivity {
 
     String id,url,postkey,name;
     ImageButton like,comment,share;
-    TextView clike,ccomment;
+    TextView clike,ccomment,back;
     ImageView iv_main;
 
     databaseReference dbr = new databaseReference();
@@ -64,6 +64,7 @@ public class ViewImage extends AppCompatActivity {
 
         clike = findViewById(R.id.tv_likes_view_im);
         ccomment = findViewById(R.id.tv_comment_view_im);
+        back = findViewById(R.id.back_vm);
 
         like.setOnClickListener(v -> likefunction());
         comment.setOnClickListener(v -> {
@@ -74,6 +75,8 @@ public class ViewImage extends AppCompatActivity {
             intent.putExtra("uid",id);
             startActivity(intent);
         });
+
+        back.setOnClickListener(v -> onBackPressed());
 
     }
 

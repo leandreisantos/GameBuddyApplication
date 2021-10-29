@@ -1,4 +1,4 @@
-package com.example.socialmedia;
+package com.example.socialmedia.MarketPlaceController;
 
 public class SellMember {
 

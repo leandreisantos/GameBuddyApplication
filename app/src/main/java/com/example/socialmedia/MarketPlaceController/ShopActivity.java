@@ -1,4 +1,4 @@
-package com.example.socialmedia;
+package com.example.socialmedia.MarketPlaceController;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmedia.CreateProfile;
+import com.example.socialmedia.R;
+import com.example.socialmedia.databaseReference;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +47,7 @@ public class ShopActivity extends AppCompatActivity {
     private Uri selectedUri;
     UploadTask uploadTask;
 
-    databaseReference dbr = new databaseReference();
+    com.example.socialmedia.databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference databaseReference,db1;
 
@@ -85,7 +88,9 @@ public class ShopActivity extends AppCompatActivity {
 
 
         iv.setOnClickListener(v -> chooseImage());
+        ivsell.setOnClickListener(v -> chooseImage());
         publish.setOnClickListener(v -> DoPublish());
+        close.setOnClickListener(v -> onBackPressed());
     }
 
     private void DoPublish() {
@@ -172,7 +177,7 @@ public class ShopActivity extends AppCompatActivity {
                         username.setText(name);
 
                     }else{
-                        Intent intent = new Intent(ShopActivity.this,CreateProfile.class);
+                        Intent intent = new Intent(ShopActivity.this, CreateProfile.class);
                         startActivity(intent);
                     }
                 });
@@ -199,7 +204,7 @@ public class ShopActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_FILE || resultCode == RESULT_OK || data!= null || data.getData() != null){
+        if(requestCode == PICK_FILE && resultCode == RESULT_OK && data!= null && data.getData() != null){
 
             selectedUri = data.getData();
 

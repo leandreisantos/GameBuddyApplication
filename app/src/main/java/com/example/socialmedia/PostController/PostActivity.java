@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -54,7 +55,7 @@ public class PostActivity extends AppCompatActivity {
     //value for fragment
     String value="";
 
-    TextView cansee;
+    TextView cansee,cam;
     CardView closePanel;
 
     ImageView imageView,iv_profile_p,btn_p_close;
@@ -78,6 +79,9 @@ public class PostActivity extends AppCompatActivity {
     Postmember postmember;
 
     int width=0,height=0;
+
+    private ImageView mImageView;
+    private Bitmap mImageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +112,7 @@ public class PostActivity extends AppCompatActivity {
         cansee = findViewById(R.id.cansee_post);
         closePanel = findViewById(R.id.cl_parentclose_ap);
         closeImage = findViewById(R.id.tv_close_iv_ap);
+        cam = findViewById(R.id.cam_post);
 
         storageReference = FirebaseStorage.getInstance().getReference("User posts");
 
@@ -141,7 +146,14 @@ public class PostActivity extends AppCompatActivity {
 
        cansee.setOnClickListener(v -> showBottomsheet());
 
+       cam.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+           }
+       });
+
     }
+
 
     private void showBottomsheet() {
 

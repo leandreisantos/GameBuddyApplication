@@ -3,37 +3,29 @@ package com.example.socialmedia;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.app.DownloadManager;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
+
 import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.os.Environment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socialmedia.MarketPlaceController.ViewItemPicture;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
+
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
 
 public class SelectedItemSellActivity extends AppCompatActivity {
 
@@ -49,6 +41,8 @@ public class SelectedItemSellActivity extends AppCompatActivity {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
+
+    String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +74,12 @@ public class SelectedItemSellActivity extends AppCompatActivity {
         back.setOnClickListener(v -> onBackPressed());
 
         more.setOnClickListener(v -> showDialog());
+
+        iv_iv.setOnClickListener(v -> {
+            Intent intent = new Intent(SelectedItemSellActivity.this, ViewItemPicture.class);
+            intent.putExtra("p",image);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -97,7 +97,7 @@ public class SelectedItemSellActivity extends AppCompatActivity {
                    String desc = snapshot.child("description").getValue(String.class);
                    String username = snapshot.child("name").getValue(String.class);
                    String url = snapshot.child("url").getValue(String.class);
-                   String image = snapshot.child("postUri").getValue(String.class);
+                    image = snapshot.child("postUri").getValue(String.class);
                    uid = snapshot.child("uid").getValue(String.class);
 
 
@@ -140,6 +140,7 @@ public class SelectedItemSellActivity extends AppCompatActivity {
         download.setVisibility(View.GONE);
         share.setVisibility(View.GONE);
         copyurl.setVisibility(View.GONE);
+        edit.setText("Edit Sell Post");
 
         if(uid.equals(currentuid)){
             delete.setVisibility(View.VISIBLE);

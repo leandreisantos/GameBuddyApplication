@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialMedia"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditPostActivity"></activity>
+        <activity android:name=".MarketPlaceController.ViewItemPicture"></activity>
+        <activity android:name=".EditPostActivity" />
         <activity android:name=".ReportController.ReportPostActivity" />
         <activity android:name=".AllGamesActivity" />
         <activity android:name=".EventController.AllEventActivity" />
@@ -34,7 +37,7 @@
         <activity android:name=".EditProfile" />
         <activity android:name=".InvitePeopleGroupActivity" />
         <activity android:name=".SelectedItemSellActivity" />
-        <activity android:name=".ShopActivity" />
+        <activity android:name=".MarketPlaceController.ShopActivity" />
         <activity android:name=".ViewImage" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".EventSelectedActivity" />

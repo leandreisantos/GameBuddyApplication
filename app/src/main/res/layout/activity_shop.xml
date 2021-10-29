@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".ShopActivity">
+    tools:context=".MarketPlaceController.ShopActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -127,40 +127,51 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
 
-                <ImageView
-                    android:visibility="invisible"
-                    android:id="@+id/iv_sell"
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-
-                <TextView
-                    android:id="@+id/tv_iv_sell"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="250dp"
+                    android:id="@+id/cl_iv"
                     android:background="@drawable/border_input"
-                    android:fontFamily="@font/baloo"
-                    android:gravity="center"
-                    android:text="@string/sell_addPhoto"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    app:drawableTint="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <ImageView
+                        android:id="@+id/iv_sell"
+                        android:scaleType="centerCrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_iv_sell"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/baloo"
+                        android:drawableStart="@drawable/ic_outline_camera_alt_24"
+                        android:text="@string/sell_addPhoto"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:drawableTint="@color/white" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
                 <EditText
                     android:id="@+id/sell_tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_iv_sell"
+                    app:layout_constraintTop_toBottomOf="@id/cl_iv"
                     android:background="@drawable/border_input"
                     android:layout_marginTop="20dp"
                     android:hint="@string/sell_hintt"

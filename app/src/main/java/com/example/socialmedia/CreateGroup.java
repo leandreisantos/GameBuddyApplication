@@ -70,6 +70,7 @@ public class CreateGroup extends AppCompatActivity {
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(intent,PICK_IMAGE);
         });
+        close.setOnClickListener(v -> onBackPressed());
 
     }
 

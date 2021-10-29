@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.socialmedia.MarketPlaceController.SellMember;
+import com.example.socialmedia.MarketPlaceController.ShopActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +57,7 @@ public class Shop_Fragment extends Fragment{
 
 
         shop.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(),ShopActivity.class);
+            Intent intent = new Intent(getActivity(), ShopActivity.class);
             startActivity(intent);
         });
     }
