@@ -27,13 +27,14 @@
 
                 <ImageView
                     android:id="@+id/back"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/ic_back"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/white"
-                    android:layout_margin="20dp">
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp">
                 </ImageView>
 
                 <TextView
@@ -71,6 +72,7 @@
                     app:lottie_autoPlay="true" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/email_lbl"
                     android:layout_marginTop="20dp"
                     app:layout_constraintTop_toBottomOf="@id/loginlot"
@@ -88,21 +90,55 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/white"
+                    android:padding="10dp"
+                    android:background="@drawable/bg_input_login"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:id="@+id/login_email_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hintEmail_la"
+                    android:layout_height="50dp"
+                    android:hint="@string/emaiLbl_la"
                     android:autofillHints="username"
                     android:textColorHint="@color/grey"
-                    android:drawableStart="@drawable/ic_baseline_person_24"
-                    android:drawablePadding="10dp"
                     android:textColor="@color/white"
                     android:inputType="textEmailAddress"/>
 
                 <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_delete_etEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_round_close_24"
+                    app:layout_constraintTop_toBottomOf="@id/email_lbl"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="25dp"/>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/error_etEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/report_icon"
+                    android:backgroundTint="@color/red"
+                    app:layout_constraintTop_toBottomOf="@id/email_lbl"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="25dp"/>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_error_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="The email entered is not valid."
+                    app:layout_constraintTop_toBottomOf="@id/login_email_et"
+                    android:textColor="@color/red"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginStart="20dp"/>
+
+                <TextView
+                    android:visibility="gone"
                     android:id="@+id/pass_lbl"
                     android:layout_marginTop="30dp"
                     app:layout_constraintTop_toBottomOf="@id/login_email_et"
@@ -115,25 +151,45 @@
                     android:textColor="@color/grey"
                     android:text="@string/passLbl_la"/>
 
-                <EditText
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     app:layout_constraintTop_toBottomOf="@id/pass_lbl"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/white"
+                    android:layout_marginTop="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:id="@+id/login_password_et"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/bg_input_login"
+                    android:layout_marginEnd="20dp">
+
+                    <EditText
+                        android:background="@drawable/bg_input_login"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:padding="10dp"
+                        android:id="@+id/login_password_et"
+                        android:layout_width="320dp"
+                        android:layout_height="50dp"
+                        android:hint="@string/hintPass_la"
+                        android:textColorHint="@color/grey"
+                        android:textColor="@color/white"
+                        android:inputType="textPassword"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_passview_al"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hintPass_la"
-                    android:textColorHint="@color/grey"
-                    android:drawableStart="@drawable/ic_outline_visibility_24"
-                    android:drawablePadding="10dp"
-                    android:textColor="@color/white"
-                    android:inputType="textPassword"/>
+                    android:background="@drawable/ic_outline_visibility_24"
+                    app:layout_constraintTop_toBottomOf="@id/pass_lbl"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginEnd="30dp"/>
 
                 <CheckBox
+                    android:visibility="gone"
                     android:id="@+id/showpass_la"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -141,7 +197,7 @@
                     android:text="@string/showpass_la"
                     android:textColor="@color/white"
                     android:fontFamily="sans-serif"
-                    app:layout_constraintTop_toBottomOf="@id/login_password_et"
+                    app:layout_constraintTop_toBottomOf="@id/cl_pass"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="5dp"/>
@@ -155,7 +211,7 @@
                     android:backgroundTint="@color/btn"
                     android:includeFontPadding="false"
                     android:text="@string/sigin_la"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     app:cornerRadius="20dp"

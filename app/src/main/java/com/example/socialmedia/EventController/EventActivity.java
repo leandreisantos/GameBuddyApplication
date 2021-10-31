@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.socialmedia.DatePicker;
 import com.example.socialmedia.GetCurrentTime;
 import com.example.socialmedia.MainActivity;
 import com.example.socialmedia.PostController.PostActivity;
@@ -52,6 +54,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -80,6 +83,8 @@ public class EventActivity extends AppCompatActivity {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
+
+    TextView dia_date;
 
 
     @Override
@@ -134,6 +139,15 @@ public class EventActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(EventActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_date_time_layout);
+        dia_date = dialog.findViewById(R.id.tv_date);
+
+        dia_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
 
         dialog.show();
@@ -141,6 +155,16 @@ public class EventActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.Bottomanim;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
+
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Calendar mCalendar = Calendar.getInstance();
+        int year = mCalendar.get(Calendar.YEAR);
+        int month = mCalendar.get(Calendar.MONTH);
+        int dayOfMonth = mCalendar.get(Calendar.DAY_OF_MONTH);
+        return new DatePickerDialog(EventActivity.this, (DatePickerDialog.OnDateSetListener)
+                EventActivity.this, year, month, dayOfMonth);
     }
 
 

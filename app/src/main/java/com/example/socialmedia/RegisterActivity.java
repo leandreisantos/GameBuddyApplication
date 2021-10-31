@@ -95,8 +95,10 @@ public class RegisterActivity extends AppCompatActivity {
                             sendtoMain();
                             progressBar.setVisibility(View.INVISIBLE);
                         }else{
+                            process(false);
                             String error = Objects.requireNonNull(task.getException()).getMessage();
                             Toast.makeText(RegisterActivity.this, "Error:"+error, Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
                 }else{

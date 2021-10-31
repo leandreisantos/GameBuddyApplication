@@ -109,16 +109,15 @@ public class CreateProfile extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            if(requestCode == PICK_IMAGE || resultCode == RESULT_OK||data != null||data.getData()!=null){
+            if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData()!=null){
                 if(picture == 1){
                     imageUridp = data.getData();
                     Picasso.get().load(imageUridp).into(imageView);
                 }else if(picture == 2){
                     imageUribg = data.getData();
                     Picasso.get().load(imageUribg).into(bgProfile);
-                }else{
-                    Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
-                }
+                }else Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+
             }
 
         }catch (Exception e){

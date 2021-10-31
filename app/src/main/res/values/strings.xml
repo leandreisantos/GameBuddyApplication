@@ -13,7 +13,7 @@
     <string name="emaiLbl_la">Email</string>
     <string name="hintEmail_la">samp@gmail.com</string>
     <string name="passLbl_la">Password</string>
-    <string name="hintPass_la">*****</string>
+    <string name="hintPass_la">Password</string>
     <string name="showpass_la">Show Password</string>
     <string name="sigin_la">SIGN IN</string>
     <string name="forgotpass_la">Forget your password?</string>

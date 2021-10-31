@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -31,8 +33,16 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     ImageView back_btn;
 
+    TextView del_email,view_pass;
+    Boolean show_pass = false;
+
+    TextView error_icon,txt_eror;
+
     //Textview for fogotpass
     TextView forgotpass;
+    String email,pass;
+
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,10 @@ public class LoginActivity extends AppCompatActivity {
         login_btn = findViewById(R.id.button_login);
         showPass = findViewById(R.id.showpass_la);
         progressBar = findViewById(R.id.progressbar_login);
+        del_email = findViewById(R.id.tv_delete_etEmail);
+        view_pass = findViewById(R.id.tv_passview_al);
+        error_icon = findViewById(R.id.error_etEmail);
+        txt_eror = findViewById(R.id.tv_error_email);
         mAuth = FirebaseAuth.getInstance();
 
         showPass.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -59,8 +73,20 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         login_btn.setOnClickListener(v -> {
-            String email = emailEt.getText().toString();
-            String pass = passEt.getText().toString();
+            email = emailEt.getText().toString();
+            pass = passEt.getText().toString();
+
+            if(!email.matches(emailPattern)){
+                error_icon.setVisibility(View.VISIBLE);
+                del_email.setVisibility(View.GONE);
+                txt_eror.setVisibility(View.VISIBLE);
+            }else if(TextUtils.isEmpty(email)){
+                error_icon.setVisibility(View.VISIBLE);
+                del_email.setVisibility(View.GONE);
+                txt_eror.setText("Input some valid Email");
+                txt_eror.setVisibility(View.VISIBLE);
+            }
+
             process(true);
             if(!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(pass)){
                 mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(task -> {
@@ -91,6 +117,53 @@ public class LoginActivity extends AppCompatActivity {
                 builder.show();
             }
 });
+        emailEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(TextUtils.isEmpty(emailEt.getText())) {
+                    del_email.setVisibility(View.GONE);
+                    error_icon.setVisibility(View.GONE);
+                    txt_eror.setVisibility(View.GONE);
+
+                }else{
+                    if(emailEt.getText().toString().matches(emailPattern)){
+                        del_email.setVisibility(View.VISIBLE);
+                        error_icon.setVisibility(View.GONE);
+                        txt_eror.setVisibility(View.GONE);
+                    }
+                }
+
+            }
+        });
+
+
+        del_email.setOnClickListener(v -> emailEt.getText().clear());
+
+        view_pass.setOnClickListener(v -> {
+            if(show_pass) {
+                passEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                view_pass.setBackgroundResource(R.drawable.hidepass_icon);
+                show_pass = false;
+            }
+            else{
+                passEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                view_pass.setBackgroundResource(R.drawable.ic_outline_visibility_24);
+                show_pass = true;
+            }
+        });
+
+
+
     }
 
     private void process(Boolean what){
