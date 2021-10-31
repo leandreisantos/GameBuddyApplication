@@ -268,6 +268,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         String desc_share = getItem(position).getDescSharer();
                         String postkey_share = getItem(position).getPostkeySharer();
                         String time_share = getItem(position).getTimeShare();
+                        String name_share = getItem(position).getNameSharer();
 
                         holder.likechecker(postkey);
                         holder.commentchecker(postkey);
@@ -281,17 +282,31 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
                         holder.menuoptions.setOnClickListener(v -> showDialog(name,url,time,userid,type,post_key,share_id,type_share,
                                 url_share,desc_share,postkey_share,time_share));
-                        holder.imageViewprofile.setOnClickListener(v -> {
-                            if (currentUserid.equals(userid)) {
-                                Intent intent = new Intent(getActivity(),MyProfileActivity.class);
-                                startActivity(intent);
 
-                            }else {
-                                Intent intent = new Intent(getActivity(),ViewUserActivity.class);
-                                intent.putExtra("n",name);
-                                intent.putExtra("u",url);
-                                intent.putExtra("uid",userid);
-                                startActivity(intent);
+                        holder.imageViewprofile.setOnClickListener(v -> {
+                            if(type_share!=null){
+                                if (currentUserid.equals(share_id)) {
+                                    Intent intent = new Intent(getActivity(), MyProfileActivity.class);
+                                    startActivity(intent);
+                                }else{
+                                    Intent intent = new Intent(getActivity(),ViewUserActivity.class);
+                                    intent.putExtra("n",name_share);
+                                    intent.putExtra("u",url_share);
+                                    intent.putExtra("uid",share_id);
+                                    startActivity(intent);
+                                }
+                            }else{
+                                if (currentUserid.equals(userid)) {
+                                    Intent intent = new Intent(getActivity(),MyProfileActivity.class);
+                                    startActivity(intent);
+
+                                }else {
+                                    Intent intent = new Intent(getActivity(),ViewUserActivity.class);
+                                    intent.putExtra("n",name);
+                                    intent.putExtra("u",url);
+                                    intent.putExtra("uid",userid);
+                                    startActivity(intent);
+                                }
                             }
                         });
                         holder.likebtn.setOnClickListener(v -> {
@@ -499,62 +514,72 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         });
 
         delete.setOnClickListener(v -> {
-            String timefinal;
             if(type_s!=null){
-                timefinal = time_s;
+                db3.child(postkey_s).removeValue();
+                //Toast.makeText(getActivity(), "share deleted", Toast.LENGTH_SHORT).show();
+            }else if(type_s == null){
+                if(type.equals("txt")){
+                    db3.child(postKey).removeValue();
+                   // Toast.makeText(getActivity(), "txt deleted", Toast.LENGTH_SHORT).show();
+                }else{
+                    db3.child(postKey).removeValue();
+                    db1.child(postKey).removeValue();
+                    db2.child(postKey).removeValue();
+                   // Toast.makeText(getActivity(), "iv or vv deleted", Toast.LENGTH_SHORT).show();
+                }
             }else{
-                timefinal = time;
+                //Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
             }
 
-            Query query = db1.orderByChild("time").equalTo(timefinal);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    for(DataSnapshot dataSnapshot1: snapshot.getChildren()){
-                        dataSnapshot1.getRef().removeValue();
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-            Query query2 = db2.orderByChild("time").equalTo(timefinal);
-            query2.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    for(DataSnapshot dataSnapshot1: snapshot.getChildren()){
-                        dataSnapshot1.getRef().removeValue();
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            Query query3 = db3.orderByChild("time").equalTo(timefinal);
-            query3.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    for(DataSnapshot dataSnapshot1: snapshot.getChildren()){
-                        dataSnapshot1.getRef().removeValue();
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+//            Query query = db1.orderByChild("time").equalTo(timefinal);
+//            query.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                    for(DataSnapshot dataSnapshot1: snapshot.getChildren()){
+//                        dataSnapshot1.getRef().removeValue();
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//
+//            Query query2 = db2.orderByChild("time").equalTo(timefinal);
+//            query2.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                    for(DataSnapshot dataSnapshot1: snapshot.getChildren()){
+//                        dataSnapshot1.getRef().removeValue();
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//            Query query3 = db3.orderByChild("time").equalTo(timefinal);
+//            query3.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                    for(DataSnapshot dataSnapshot1: snapshot.getChildren()){
+//                        dataSnapshot1.getRef().removeValue();
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
 
             if(type.equals("txt")){
                 Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();

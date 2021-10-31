@@ -36,12 +36,12 @@ public class PostViewholder extends RecyclerView.ViewHolder {
 
     public TextView tv_nameprofile_s,tv_desc_s,tv_time_s;
     public ImageButton likebtn,menuoptions,commentbtn,sharebtn;
-    DatabaseReference likesref,commentref;
+    DatabaseReference likesref,commentref,db1;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     public int likescount,commentcount;
     CardView cv_main;
-    ConstraintLayout share_cl;
+    ConstraintLayout share_cl,deleted_share;
 
     GetCurrentTime gc = new GetCurrentTime();
     String utime = gc.ctime();
@@ -68,6 +68,7 @@ public class PostViewholder extends RecyclerView.ViewHolder {
         tv_nameprofile = itemView.findViewById(R.id.tv_name_post);
         cv_main = itemView.findViewById(R.id.cv_iv_main);
         share_cl = itemView.findViewById(R.id.cl_s);
+        deleted_share = itemView.findViewById(R.id.cl_deleted_post);
 
         tv_nameprofile_s = itemView.findViewById(R.id.tv_name_post_s);
         tv_desc_s = itemView.findViewById(R.id.tv_desc_post_s);
@@ -88,49 +89,73 @@ public class PostViewholder extends RecyclerView.ViewHolder {
 //            tv_nameprofile.setText(name);
 //            playerView.setVisibility(View.INVISIBLE);
 
+        db1 = database.getReference("All post").child("public");
+
         if(sharerType != null){
-            if(sharerType.equals("txt")){
-                cv_main.setVisibility(View.GONE);
-                share_cl.setVisibility(View.VISIBLE);
 
-                tv_desc.setText(descSharer);
-                tv_time.setText(timeShare);
-                tv_nameprofile.setText(nameSharer);
-                Picasso.get().load(urlSharer).into(imageViewprofile);
+            db1.child(post_key).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        if(sharerType.equals("txt")){
+                            cv_main.setVisibility(View.GONE);
+                            share_cl.setVisibility(View.VISIBLE);
 
-                if(type != null){
-                    if(type.equals("txt")){
-                        Picasso.get().load(url).into(imageViewprofile_s);
-                        setItemShare(desc,time,name);
-                        playerView.setVisibility(View.INVISIBLE);
-                        iv_post_s.setVisibility(View.GONE);
-                        playerView_s.setVisibility(View.GONE);
-                    }
-                    if(type.equals("iv")){
-                        Picasso.get().load(url).into(imageViewprofile_s);
-                        //iv_post.requestLayout();
-                        //iv_post.getLayoutParams().height = 3000;
-                        Picasso.get().load(postUri).into(iv_post_s);
-                        setItemShare(desc,time,name);
-                        playerView_s.setVisibility(View.INVISIBLE);
-                    }
-                    if(type.equals("vv")){
-                        iv_post_s.setVisibility(View.INVISIBLE);
-                        setItemShare(desc,time,name);
-                        Picasso.get().load(url).into(imageViewprofile_s);
-                        try{
-                            SimpleExoPlayer simpleExoPlayer= new SimpleExoPlayer.Builder(activity).build();
-                            playerView_s.setPlayer(simpleExoPlayer);
-                            MediaItem mediaItem = MediaItem.fromUri(postUri);
-                            simpleExoPlayer.addMediaItems(Collections.singletonList(mediaItem));
-                            simpleExoPlayer.prepare();
-                            simpleExoPlayer.setPlayWhenReady(false);
-                        }catch(Exception e){
-                            Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+                            tv_desc.setText(descSharer);
+                            tv_time.setText(timeShare);
+                            tv_nameprofile.setText(nameSharer);
+                            Picasso.get().load(urlSharer).into(imageViewprofile);
+
+                            if(type != null){
+                                if(type.equals("txt")){
+                                    Picasso.get().load(url).into(imageViewprofile_s);
+                                    setItemShare(desc,time,name);
+                                    playerView.setVisibility(View.INVISIBLE);
+                                    iv_post_s.setVisibility(View.GONE);
+                                    playerView_s.setVisibility(View.GONE);
+                                }
+                                if(type.equals("iv")){
+                                    Picasso.get().load(url).into(imageViewprofile_s);
+                                    //iv_post.requestLayout();
+                                    //iv_post.getLayoutParams().height = 3000;
+                                    Picasso.get().load(postUri).into(iv_post_s);
+                                    setItemShare(desc,time,name);
+                                    playerView_s.setVisibility(View.INVISIBLE);
+                                }
+                                if(type.equals("vv")){
+                                    iv_post_s.setVisibility(View.INVISIBLE);
+                                    setItemShare(desc,time,name);
+                                    Picasso.get().load(url).into(imageViewprofile_s);
+                                    try{
+                                        SimpleExoPlayer simpleExoPlayer= new SimpleExoPlayer.Builder(activity).build();
+                                        playerView_s.setPlayer(simpleExoPlayer);
+                                        MediaItem mediaItem = MediaItem.fromUri(postUri);
+                                        simpleExoPlayer.addMediaItems(Collections.singletonList(mediaItem));
+                                        simpleExoPlayer.prepare();
+                                        simpleExoPlayer.setPlayWhenReady(false);
+                                    }catch(Exception e){
+                                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
                         }
+                    }else{
+                        tv_desc.setText(descSharer);
+                        tv_time.setText(timeShare);
+                        tv_nameprofile.setText(nameSharer);
+                        Picasso.get().load(urlSharer).into(imageViewprofile);
+                        cv_main.setVisibility(View.GONE);
+                        deleted_share.setVisibility(View.VISIBLE);
+                        sharebtn.setEnabled(false);
                     }
                 }
-            }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         } else{
             if(type != null){
 

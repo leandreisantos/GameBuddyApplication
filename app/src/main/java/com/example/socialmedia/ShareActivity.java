@@ -226,53 +226,53 @@ public class ShareActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                if(snapshot.exists()){
+                    desc_main = snapshot.child("desc").getValue(String.class);
+                    name_main = snapshot.child("name").getValue(String.class);
+                    url_main = snapshot.child("url").getValue(String.class);
+                    uri_main = snapshot.child("postUri").getValue(String.class);
+                    time_main = snapshot.child("time").getValue(String.class);
+                    uid_main = snapshot.child("uid").getValue(String.class);
+                    type_main = snapshot.child("type").getValue(String.class);
+                    privacy_main = snapshot.child("privacy").getValue(String.class);
+                    date_main = snapshot.child("date").getValue(String.class);
+                    postkey_main = snapshot.child("postkey").getValue(String.class);
+
+                    if(type_main.equals("txt")){
+                        cv.setVisibility(View.GONE);
+
+                        name.setText(name_main);
+                        desc.setText(desc_main);
+                        Picasso.get().load(url_main).into(dp);
+
+                    }else if(type_main.equals("iv")){
+                        cv.setVisibility(View.VISIBLE);
+                        Picasso.get().load(uri_main).into(pic);
+                        playerView.setVisibility(View.GONE);
+                        name.setText(name_main);
+                        desc.setText(desc_main);
+                        Picasso.get().load(url_main).into(dp);
+                    }else if(type_main.equals("vv")){
+                        cv.setVisibility(View.VISIBLE);
+                        pic.setVisibility(View.GONE);
+                        name.setText(name_main);
+                        desc.setText(desc_main);
+                        Picasso.get().load(url_main).into(dp);
+                        try{
+                            SimpleExoPlayer simpleExoPlayer= new SimpleExoPlayer.Builder(ShareActivity.this).build();
+                            playerView.setPlayer(simpleExoPlayer);
+                            MediaItem mediaItem = MediaItem.fromUri(uri_main);
+                            simpleExoPlayer.addMediaItems(Collections.singletonList(mediaItem));
+                            simpleExoPlayer.prepare();
+                            simpleExoPlayer.setPlayWhenReady(false);
 
 
-                desc_main = snapshot.child("desc").getValue(String.class);
-                name_main = snapshot.child("name").getValue(String.class);
-                url_main = snapshot.child("url").getValue(String.class);
-                uri_main = snapshot.child("postUri").getValue(String.class);
-                time_main = snapshot.child("time").getValue(String.class);
-                uid_main = snapshot.child("uid").getValue(String.class);
-                type_main = snapshot.child("type").getValue(String.class);
-                privacy_main = snapshot.child("privacy").getValue(String.class);
-                date_main = snapshot.child("date").getValue(String.class);
-                postkey_main = snapshot.child("postkey").getValue(String.class);
-
-                if(type_main.equals("txt")){
-                    cv.setVisibility(View.GONE);
-
-                    name.setText(name_main);
-                    desc.setText(desc_main);
-                    Picasso.get().load(url_main).into(dp);
-
-                }else if(type_main.equals("iv")){
-                    cv.setVisibility(View.VISIBLE);
-                    Picasso.get().load(uri_main).into(pic);
-                    playerView.setVisibility(View.GONE);
-                    name.setText(name_main);
-                    desc.setText(desc_main);
-                    Picasso.get().load(url_main).into(dp);
-                }else if(type_main.equals("vv")){
-                    cv.setVisibility(View.VISIBLE);
-                    pic.setVisibility(View.GONE);
-                    name.setText(name_main);
-                    desc.setText(desc_main);
-                    Picasso.get().load(url_main).into(dp);
-                    try{
-                        SimpleExoPlayer simpleExoPlayer= new SimpleExoPlayer.Builder(ShareActivity.this).build();
-                        playerView.setPlayer(simpleExoPlayer);
-                        MediaItem mediaItem = MediaItem.fromUri(uri_main);
-                        simpleExoPlayer.addMediaItems(Collections.singletonList(mediaItem));
-                        simpleExoPlayer.prepare();
-                        simpleExoPlayer.setPlayWhenReady(false);
-
-
-                    }catch(Exception e){
-                        Toast.makeText(ShareActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        }catch(Exception e){
+                            Toast.makeText(ShareActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(ShareActivity.this, "Unknown type", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(ShareActivity.this, "Unknown type", Toast.LENGTH_SHORT).show();
                 }
 
             }

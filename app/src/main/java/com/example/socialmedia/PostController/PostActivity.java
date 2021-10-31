@@ -341,7 +341,7 @@ public class PostActivity extends AppCompatActivity {
 
                             //for image
                             String id = db1.push().getKey();
-                            db1.child(id).setValue(postmember);
+                            db1.child(id1).setValue(postmember);
                             //for both
                             db3.child(id1).setValue(postmember);
                             db4.child(id1).setValue(postmember);
@@ -367,7 +367,7 @@ public class PostActivity extends AppCompatActivity {
 
                             //for video
                             String id3 = db2.push().getKey();
-                            db2.child(id3).setValue(postmember);
+                            db2.child(id4).setValue(postmember);
 
                             //for both
                             db3.child(id4).setValue(postmember);
@@ -461,7 +461,7 @@ public class PostActivity extends AppCompatActivity {
 
                             //for image
                             String id = db1.push().getKey();
-                            db1.child(id).setValue(postmember);
+                            db1.child(id1).setValue(postmember);
                             //for both
                             db3.child(id1).setValue(postmember);
                             db4.child(id1).setValue(postmember);
@@ -487,7 +487,7 @@ public class PostActivity extends AppCompatActivity {
 
                             //for video
                             String id3 = db2.push().getKey();
-                            db2.child(id3).setValue(postmember);
+                            db2.child(id4).setValue(postmember);
 
                             //for both
                             db3.child(id4).setValue(postmember);

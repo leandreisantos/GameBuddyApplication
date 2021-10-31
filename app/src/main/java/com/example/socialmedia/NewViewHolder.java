@@ -39,7 +39,6 @@ public class NewViewHolder extends RecyclerView.ViewHolder {
         }else if(action.equals("C")) {
             icon.setVisibility(View.VISIBLE);
             icon.setBackgroundResource(R.drawable.ic_baseline_comment_24);
-
         }else if(action.equals("f")){
             accept.setVisibility(View.VISIBLE);
             decline.setVisibility(View.VISIBLE);
