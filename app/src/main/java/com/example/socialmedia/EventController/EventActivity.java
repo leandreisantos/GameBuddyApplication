@@ -39,6 +39,11 @@ import com.example.socialmedia.databaseReference;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointBackward;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,6 +62,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -84,7 +90,10 @@ public class EventActivity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
 
-    TextView dia_date;
+    TextView dia_date,date;
+
+    String date_now;
+    MaterialDatePicker materialDatePicker;
 
 
     @Override
@@ -109,6 +118,9 @@ public class EventActivity extends AppCompatActivity {
         closePanel = findViewById(R.id.cl_parentclose_ap);
         closeImage = findViewById(R.id.tv_close_iv_ap);
         date_time = findViewById(R.id.cl_date);
+        date = findViewById(R.id.tv_date_ae);
+
+
 
         storageReference = FirebaseStorage.getInstance().getReference("User posts events");
 
@@ -117,6 +129,8 @@ public class EventActivity extends AppCompatActivity {
         db2 = database.getReference("All videos").child(currentuid);
         db3 = database.getReference("All post").child("event");
         event = database.getReference("Event Payment");
+
+
 
         btnuploadfile.setOnClickListener(v -> Dopost());
 
@@ -131,7 +145,47 @@ public class EventActivity extends AppCompatActivity {
             closePanel.setVisibility(View.GONE);
         });
 
+
+
+
         date_time.setOnClickListener(v -> showDateTime());
+
+        //Calendar Object
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.clear();
+
+        //Today Time
+        long today = MaterialDatePicker.todayInUtcMilliseconds();
+
+        calendar.setTimeInMillis(today);
+
+        //Start Bound in Millis
+        calendar.set(Calendar.MONTH,Calendar.MARCH);
+        long startbound = calendar.getTimeInMillis();
+
+        //End Bound
+        calendar.set(Calendar.MONTH,Calendar.DECEMBER);
+        long endTime = calendar.getTimeInMillis();
+
+        //Certain date
+        calendar.set(2002,Calendar.JANUARY,1);
+        long startime = calendar.getTimeInMillis();
+
+        CalendarConstraints.Builder calendarConstraints = new CalendarConstraints.Builder();
+        calendarConstraints.setValidator(DateValidatorPointForward.from(startime));
+//        calendarConstraints.setStart(startbound);
+//        calendarConstraints.setEnd(endTime);
+
+
+
+        //Date picker Builder
+        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("Select Event Date");
+        builder.setSelection(today);
+        builder.setCalendarConstraints(calendarConstraints.build());
+         materialDatePicker = builder.build();
+
+         //date_now = materialDatePicker.getHeaderText().toString();
 
     }
 
@@ -139,12 +193,28 @@ public class EventActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(EventActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_date_time_layout);
+
+
+
+
         dia_date = dialog.findViewById(R.id.tv_date);
+
+
 
         dia_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
+            }
+        });
+
+        //Date Picker Positive button on click listner
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+
+                dia_date.setText(materialDatePicker.getHeaderText());
             }
         });
 
@@ -211,6 +281,8 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        //date.setText(date_now);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference documentReference = db.collection("user").document(currentuid);

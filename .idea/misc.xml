@@ -15,10 +15,16 @@
         <entry key="..\:/Users/Ronniel/AndroidStudioProjects/GameBuddyApplication/app/src/main/res/layout/gamelayout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/AndroidStudioProjects/GameBuddyApplication/app/src/main/res/layout/new_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/AndroidStudioProjects/GameBuddyApplication/app/src/main/res/layout/post_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/AndroidStudioProjects/clone/GameBuddyApplication/app/src/main/res/layout/activity_add_game.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/AndroidStudioProjects/clone/GameBuddyApplication/app/src/main/res/layout/activity_all_event.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/AndroidStudioProjects/clone/GameBuddyApplication/app/src/main/res/layout/activity_design_creator.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/AndroidStudioProjects/clone/GameBuddyApplication/app/src/main/res/layout/activity_event.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/AndroidStudioProjects/clone/GameBuddyApplication/app/src/main/res/layout/activity_event_selected.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/AndroidStudioProjects/clone/GameBuddyApplication/app/src/main/res/layout/activity_selected_game.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
