@@ -35,8 +35,8 @@ import com.squareup.picasso.Picasso;
 public class UpdateProfile extends AppCompatActivity {
 
     EditText etname,etBio,etProfession,etEmail,etWeb;
-    TextView button,button_del;
-    ImageView iv;
+    TextView button,button_del,back;
+    ImageView iv,bg;
 
     //database stuff
     databaseReference dbr = new databaseReference();
@@ -64,6 +64,8 @@ public class UpdateProfile extends AppCompatActivity {
         etWeb = findViewById(R.id.et_web_up);
         button = findViewById(R.id.btn_up);
         iv = findViewById(R.id.iv_up);
+        back = findViewById(R.id.tv_back_up);
+        bg = findViewById(R.id.iv_cp_bg);
         //button_del = findViewById(R.id.btn_del);
 
         button.setOnClickListener(v -> updateProfile());
@@ -75,6 +77,8 @@ public class UpdateProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        back.setOnClickListener(view -> onBackPressed());
 
     }
 
@@ -167,6 +171,7 @@ public class UpdateProfile extends AppCompatActivity {
                         String emailResult = task.getResult().getString("email");
                         String webResult = task.getResult().getString("web");
                         String url = task.getResult().getString("url");
+                        String url2 = task.getResult().getString("url2");
                         String profResult = task.getResult().getString("prof");
 
                         etname.setText(nameResult);
@@ -175,6 +180,7 @@ public class UpdateProfile extends AppCompatActivity {
                         etWeb.setText(webResult);
                         etProfession.setText(profResult);
                         Picasso.get().load(url).into(iv);
+                        Picasso.get().load(url2).into(bg);
 
                     }else{
                         Toast.makeText(UpdateProfile.this, "No Profile Exist", Toast.LENGTH_SHORT).show();
@@ -203,9 +209,12 @@ public class UpdateProfile extends AppCompatActivity {
             transaction.update(sDoc, "bio",bio);
 
 
+
             // Success
             return null;
         }).addOnSuccessListener(aVoid -> Toast.makeText(UpdateProfile.this, "Updated", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(UpdateProfile.this, "failed", Toast.LENGTH_SHORT).show());
+
+        onBackPressed();
     }
 }

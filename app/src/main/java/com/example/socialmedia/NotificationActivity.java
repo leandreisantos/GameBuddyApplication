@@ -40,7 +40,7 @@ public class NotificationActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView search;
     EditText search_et;
-    TextView lbl;
+    TextView lbl,back;
 
 
     databaseReference dbr = new databaseReference();
@@ -67,6 +67,7 @@ public class NotificationActivity extends AppCompatActivity {
         search= findViewById(R.id.search_btn_an);
         search_et = findViewById(R.id.search_et_an);
         lbl = findViewById(R.id.tv_lbl);
+        back = findViewById(R.id.tv_back_noti);
 
         ntRef = database.getReference("notification").child(userid);
         linearLayoutManager.setReverseLayout(true);
@@ -80,6 +81,8 @@ public class NotificationActivity extends AppCompatActivity {
             lbl.setVisibility(View.GONE);
             search_et.setVisibility(View.VISIBLE);
         });
+
+        back.setOnClickListener(view -> onBackPressed());
 
         search_et.addTextChangedListener(new TextWatcher() {
             @Override

@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -62,6 +64,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class EventActivity extends AppCompatActivity {
@@ -90,10 +93,12 @@ public class EventActivity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
 
-    TextView dia_date,date;
+    TextView dia_date,date,time;
 
-    String date_now;
     MaterialDatePicker materialDatePicker;
+
+    int hour,minute;
+
 
 
     @Override
@@ -119,6 +124,8 @@ public class EventActivity extends AppCompatActivity {
         closeImage = findViewById(R.id.tv_close_iv_ap);
         date_time = findViewById(R.id.cl_date);
         date = findViewById(R.id.tv_date_ae);
+
+
 
 
 
@@ -172,9 +179,9 @@ public class EventActivity extends AppCompatActivity {
         long startime = calendar.getTimeInMillis();
 
         CalendarConstraints.Builder calendarConstraints = new CalendarConstraints.Builder();
-        calendarConstraints.setValidator(DateValidatorPointForward.from(startime));
-//        calendarConstraints.setStart(startbound);
-//        calendarConstraints.setEnd(endTime);
+       // calendarConstraints.setValidator(DateValidatorPointForward.from(startime));
+        calendarConstraints.setStart(startbound);
+        calendarConstraints.setEnd(endTime);
 
 
 
@@ -195,27 +202,33 @@ public class EventActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.bottom_date_time_layout);
 
 
-
-
         dia_date = dialog.findViewById(R.id.tv_date);
+         time = dialog.findViewById(R.id.tv_time);
+
+         time.setOnClickListener(view -> {
+
+             Toast.makeText(EventActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+
+             TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, i, i1) -> {
+
+                 hour = i;
+                 minute = i1;
+                 time.setText(String.format(Locale.getDefault(),"%02d:%02d",hour,minute));
+             };
+
+             TimePickerDialog timePickerDialog = new TimePickerDialog(EventActivity.this,onTimeSetListener,hour,minute,true);
+             timePickerDialog.setTitle("Select Time Event");
+         });
 
 
 
-        dia_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER");
-            }
-        });
+        dia_date.setOnClickListener(v -> materialDatePicker.show(getSupportFragmentManager(),"DATE_PICKER"));
 
         //Date Picker Positive button on click listner
-        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-            @Override
-            public void onPositiveButtonClick(Object selection) {
+        materialDatePicker.addOnPositiveButtonClickListener(selection -> {
 
-                dia_date.setText(materialDatePicker.getHeaderText());
-            }
+            dia_date.setText(materialDatePicker.getHeaderText());
+            date.setText(materialDatePicker.getHeaderText());
         });
 
 
@@ -226,6 +239,8 @@ public class EventActivity extends AppCompatActivity {
         dialog.getWindow().getAttributes().windowAnimations = R.style.Bottomanim;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+
+
 
 
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -413,4 +428,5 @@ public class EventActivity extends AppCompatActivity {
         Intent intent = new Intent(EventActivity.this,MainActivity.class);
         startActivity(intent);
     }
+
 }
