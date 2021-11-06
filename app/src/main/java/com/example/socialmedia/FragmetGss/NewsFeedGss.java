@@ -106,8 +106,13 @@ public class NewsFeedGss extends Fragment {
         newMember = new NewMember();
         ntref = database.getReference("notification").child(currentuid);
 
-        linearLayoutManager = new LinearLayoutManager(getActivity());
+
         recyclerView = getActivity().findViewById(R.id.rv_newsfeed_gss);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
 

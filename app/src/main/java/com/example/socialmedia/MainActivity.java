@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DatabaseReference ntRef;
     String uid;
 
+    String keyfrag;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

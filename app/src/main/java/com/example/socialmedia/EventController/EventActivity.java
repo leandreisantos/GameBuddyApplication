@@ -126,18 +126,12 @@ public class EventActivity extends AppCompatActivity {
         date = findViewById(R.id.tv_date_ae);
 
 
-
-
-
         storageReference = FirebaseStorage.getInstance().getReference("User posts events");
-
 
         db1 = database.getReference("All images").child(currentuid);
         db2 = database.getReference("All videos").child(currentuid);
         db3 = database.getReference("All post").child("event");
         event = database.getReference("Event Payment");
-
-
 
         btnuploadfile.setOnClickListener(v -> Dopost());
 
@@ -151,8 +145,6 @@ public class EventActivity extends AppCompatActivity {
             selectedUri= null;
             closePanel.setVisibility(View.GONE);
         });
-
-
 
 
         date_time.setOnClickListener(v -> showDateTime());
@@ -203,21 +195,27 @@ public class EventActivity extends AppCompatActivity {
 
 
         dia_date = dialog.findViewById(R.id.tv_date);
-         time = dialog.findViewById(R.id.tv_time);
+        time = dialog.findViewById(R.id.tv_time);
 
          time.setOnClickListener(view -> {
+             TimePickerDialog timePickerDialog = new TimePickerDialog(
+                     EventActivity.this,
+                     new TimePickerDialog.OnTimeSetListener() {
+                         @Override
+                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                             hour = hourOfDay;
+                             minute = minute;
+                             Calendar calendar = Calendar.getInstance();
+                             calendar.set(0,0,0,hour,minute);
 
-             Toast.makeText(EventActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+                             //time.setText(DateFormat.format("hh:mm aa",calendar));
+                         }
+                     },12,0,false
+             );
 
-             TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, i, i1) -> {
+             timePickerDialog.updateTime(hour,minute);
+             timePickerDialog.show();
 
-                 hour = i;
-                 minute = i1;
-                 time.setText(String.format(Locale.getDefault(),"%02d:%02d",hour,minute));
-             };
-
-             TimePickerDialog timePickerDialog = new TimePickerDialog(EventActivity.this,onTimeSetListener,hour,minute,true);
-             timePickerDialog.setTitle("Select Time Event");
          });
 
 

@@ -111,6 +111,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         referenceDel = database.getReference("story");
         documentReference = db.collection("user").document(currentuid);
         sp = getActivity().findViewById(R.id.swipe_post);
+
         recyclerView = getActivity().findViewById(R.id.rv_post);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

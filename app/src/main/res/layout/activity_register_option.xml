@@ -51,8 +51,8 @@
                         android:id="@+id/tv_gamer_ro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Gamer"
-                        android:padding="20dp"
+                        android:text="Email"
+                        android:padding="10dp"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:drawablePadding="10dp"
@@ -77,18 +77,19 @@
                         android:id="@+id/tv_developer_ro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Game Developer"
-                        android:paddingStart="20dp"
+                        android:text="Phone Number"
                         android:textColor="@color/white"
                         android:textSize="18sp"
+                        android:padding="10dp"
                         android:drawablePadding="10dp"
-                        android:drawableStart="@drawable/game_developer_icon"
+                        android:drawableStart="@drawable/phone_icon"
                         android:gravity="center_vertical"
                         android:fontFamily="@font/baloo"/>
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:visibility="gone"
                     android:id="@+id/cv2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
