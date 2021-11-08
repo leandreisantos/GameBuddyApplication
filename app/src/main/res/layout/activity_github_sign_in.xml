@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".GithubSignInActivity">
+
+    <TextView
+        android:id="@+id/tv_back_git"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign in with GitHub"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/baloo"
+        android:textSize="25sp"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loginlot"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_back_git"
+        app:lottie_rawRes="@raw/gitlot"
+        android:layout_marginTop="50dp"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
+
+
+
+    <EditText
+        app:layout_constraintTop_toBottomOf="@id/loginlot"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp"
+        android:padding="10dp"
+        android:background="@drawable/bg_input_login"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/et_email_git"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Github Email"
+        android:autofillHints="username"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/white"
+        android:inputType="textEmailAddress"/>
+
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/btn"
+        android:includeFontPadding="false"
+        android:text="@string/sigin_la"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:cornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/et_email_git"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp"/>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/pb_git"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/button_login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"/>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

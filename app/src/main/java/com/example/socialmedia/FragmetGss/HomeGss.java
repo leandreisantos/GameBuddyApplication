@@ -1,6 +1,11 @@
 package com.example.socialmedia.FragmetGss;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.example.socialmedia.MainActivity;
+import com.example.socialmedia.MarketPlaceController.ViewItemPicture;
 import com.example.socialmedia.R;
+import com.example.socialmedia.SplashScreen;
+import com.example.socialmedia.WaitingActivity;
 import com.example.socialmedia.databaseReference;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,6 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,9 +43,9 @@ public class HomeGss extends Fragment {
     ImageView dp,bg;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference;
+    DatabaseReference reference,refjoin;
     TextView tvabout,new_hgss,edit,edit_about,owner,email,cat,add,edit_info,cancel_new_edit,save_new_edit;
-    TextView cancel_about_edit,save_about_edit;
+    TextView cancel_about_edit,save_about_edit,join_com;
     EditText et_new,et_about;
     ConstraintLayout clnew,clabout;
 
@@ -44,6 +57,11 @@ public class HomeGss extends Fragment {
     Boolean clicknew=true,clickabout=true;
 
     String new_et_data,about_et_data;
+
+    JoinMember joinMember;
+
+    Boolean isJoined = false;
+    LottieAnimationView lot;
 
 
     @Nullable
@@ -64,10 +82,12 @@ public class HomeGss extends Fragment {
             Toast.makeText(getActivity(), "No Dat error", Toast.LENGTH_SHORT).show();
         }
 
+        joinMember = new JoinMember();
 
 
         dp = getActivity().findViewById(R.id.iv_dp_hgss);
         bg = getActivity().findViewById(R.id.iv_bg_hgss);
+
         tvabout = getActivity().findViewById(R.id.tv_about_gss);
         new_hgss = getActivity().findViewById(R.id.tv_new_hgss);
         edit = getActivity().findViewById(R.id.edit_home_gss);
@@ -76,6 +96,8 @@ public class HomeGss extends Fragment {
         email = getActivity().findViewById(R.id.tv_email_gss);
         cat = getActivity().findViewById(R.id.tv_cat_gss);
         add = getActivity().findViewById(R.id.tv_add_gss);
+        join_com = getActivity().findViewById(R.id.tv_join_hgss);
+        lot = getActivity().findViewById(R.id.loginlot);
 
         et_new = getActivity().findViewById(R.id.et_new_hgss);
         clnew = getActivity().findViewById(R.id.cl_new_edit);
@@ -90,6 +112,12 @@ public class HomeGss extends Fragment {
 
         reference = database.getReference(keyword).child(post_key);
 
+        refjoin = database.getReference("Game Member").child(keyword).child(post_key);
+
+
+
+
+
         edit.setOnClickListener(v -> {
             if(clicknew){
                 new_hgss.setVisibility(View.GONE);
@@ -103,6 +131,17 @@ public class HomeGss extends Fragment {
 
         });
 
+        join_com.setOnClickListener(v -> {
+            if(isJoined){
+                refjoin.child(currentuid).removeValue();
+                isJoined = false;
+                join_com.setText("Join Community");
+            }else{
+                joinProcess();
+
+            }
+
+        });
 
         cancel_new_edit.setOnClickListener(v -> closeeditnew());
 
@@ -134,6 +173,43 @@ public class HomeGss extends Fragment {
             Toast.makeText(getActivity(), "About changes updated", Toast.LENGTH_SHORT).show();
         });
 
+    }
+
+
+    private void joinProcess() {
+
+        Calendar cdate = Calendar.getInstance();
+        SimpleDateFormat currentdate = new SimpleDateFormat("dd-MMMM-yyy");
+        final String savedate = currentdate.format(cdate.getTime());
+
+        Calendar ctime = Calendar.getInstance();
+        SimpleDateFormat currenttime =new SimpleDateFormat("HH-mm-ss");
+        final String savetime = currenttime.format(ctime.getTime());
+
+        String id = refjoin.push().getKey();
+
+        joinMember.setId(currentuid);
+        joinMember.setDate(savedate);
+        joinMember.setTime(savetime);
+        joinMember.setGamePostkey(post_key);
+        joinMember.setPostkey(id);
+        joinMember.setPosition("Member");
+
+        refjoin.child(currentuid).setValue(joinMember);
+        Toast.makeText(getActivity(), "Joined", Toast.LENGTH_SHORT).show();
+        join_com.setText("Joined");
+        isJoined = true;
+
+
+        lot.setVisibility(View.VISIBLE);
+
+        lot.postDelayed(() -> {
+            lot.animate().alpha(0.0f).setDuration(2000);
+            lot.setVisibility(View.GONE);
+
+        },5000);
+
+
 
     }
 
@@ -157,41 +233,69 @@ public class HomeGss extends Fragment {
     public void onStart() {
         super.onStart();
 
+        refjoin.child(currentuid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    isJoined=true;
+                    join_com.setText("Joined");
+                }else{
+                    isJoined=false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String dps = snapshot.child("postUri1").getValue(String.class);
-                String bgs = snapshot.child("postUri2").getValue(String.class);
-                String about = snapshot.child("about").getValue(String.class);
-                String new_g = snapshot.child("whatNew").getValue(String.class);
-                String id = snapshot.child("create").getValue(String.class);
-                String owner_s = snapshot.child("owner").getValue(String.class);
-                String email_s = snapshot.child("email").getValue(String.class);
-                String cat_s = snapshot.child("cat").getValue(String.class);
-                String add_s = snapshot.child("address").getValue(String.class);
+                if(snapshot.exists()){
+                    String dps = snapshot.child("postUri1").getValue(String.class);
+                    String bgs = snapshot.child("postUri2").getValue(String.class);
+                    String about = snapshot.child("about").getValue(String.class);
+                    String new_g = snapshot.child("whatNew").getValue(String.class);
+                    String id = snapshot.child("create").getValue(String.class);
+                    String owner_s = snapshot.child("owner").getValue(String.class);
+                    String email_s = snapshot.child("email").getValue(String.class);
+                    String cat_s = snapshot.child("cat").getValue(String.class);
+                    String add_s = snapshot.child("address").getValue(String.class);
 
 
-                temp_new = new_g;
-                temp_about = about;
+                    temp_new = new_g;
+                    temp_about = about;
 
-                Picasso.get().load(dps).into(dp);
-                Picasso.get().load(bgs).into(bg);
-                tvabout.setText(about);
-                new_hgss.setText(new_g);
-                owner.setText(owner_s);
-                email.setText(email_s);
-                cat.setText(cat_s);
-                add.setText(add_s);
+                    Picasso.get().load(dps).into(dp);
+                    Picasso.get().load(bgs).into(bg);
+                    tvabout.setText(about);
+                    new_hgss.setText(new_g);
+                    owner.setText(owner_s);
+                    email.setText(email_s);
+                    cat.setText(cat_s);
+                    add.setText(add_s);
 
-                if(id.equals(currentuid)){
-                    edit.setVisibility(View.VISIBLE);
-                    edit_about.setVisibility(View.VISIBLE);
-                    edit_info.setVisibility(View.VISIBLE);
+                    dp.setOnClickListener(v -> {
+                        Intent intent = new Intent(getActivity(), ViewItemPicture.class);
+                        intent.putExtra("p",dps);
+                        startActivity(intent);
+                    });
+                    bg.setOnClickListener(v -> {
+                        Intent intent = new Intent(getActivity(), ViewItemPicture.class);
+                        intent.putExtra("p",bgs);
+                        startActivity(intent);
+                    });
+
+                    if(id.equals(currentuid)){
+                        edit.setVisibility(View.VISIBLE);
+                        edit_about.setVisibility(View.VISIBLE);
+                        edit_info.setVisibility(View.VISIBLE);
+                    }
                 }
-
-
 
             }
 

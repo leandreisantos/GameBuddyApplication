@@ -143,15 +143,14 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        if(keyoption.equals("gd")){
-            lot.setAnimation(R.raw.addgamelot);
-            title.setText("CREATE GAME DEVELOPER ACCOUNT");
-        }
-        if(keyoption.equals("c")){
-            lot.setAnimation(R.raw.companylot);
-            title.setText("CREATE COMPANY ACCOUNT");
-        }
+//        if(keyoption.equals("gd")){
+//            lot.setAnimation(R.raw.addgamelot);
+//            title.setText("CREATE GAME DEVELOPER ACCOUNT");
+//        }
+//        if(keyoption.equals("c")){
+//            lot.setAnimation(R.raw.companylot);
+//            title.setText("CREATE COMPANY ACCOUNT");
+//        }
 
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

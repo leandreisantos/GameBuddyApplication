@@ -29,11 +29,11 @@
             android:fontFamily="sans-serif-black"/>
 
         
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:rating="1.5"
-            style="@style/Widget.AppCompat.RatingBar.Small"/>
+<!--        <RatingBar-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:rating="1.5"-->
+<!--            style="@style/Widget.AppCompat.RatingBar.Small"/>-->
 
         <TextView
             android:id="@+id/fecd_desc_item"

@@ -33,8 +33,36 @@
         android:drawableStart="@drawable/report_icon"
         android:drawablePadding="10dp"
         android:textSize="20sp"/>
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/tv_report"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Community"
+        android:textColor="@color/white"
+        android:id="@+id/tv_delete"
+        android:padding="3dp"
+        android:layout_margin="3dp"
+        android:drawableStart="@drawable/ic_outline_delete_24"
+        android:drawablePadding="10dp"
+        android:textSize="20sp"/>
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@id/tv_delete"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Member"
+        android:textColor="@color/white"
+        android:id="@+id/tv_member"
+        android:padding="3dp"
+        android:layout_margin="3dp"
+        android:drawableStart="@drawable/group_icon"
+        android:drawablePadding="10dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/tv_report"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="wrap_content"

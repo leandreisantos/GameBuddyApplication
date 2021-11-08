@@ -17,10 +17,10 @@
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -188,6 +188,21 @@
                     android:layout_marginTop="35dp"
                     android:layout_marginEnd="30dp"/>
 
+                <TextView
+                    android:id="@+id/tv_forgot_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/forgotpass_la"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/btn"
+                    android:textSize="13sp"
+                    android:textStyle="normal"
+                    app:layout_constraintTop_toBottomOf="@id/tv_passview_al"/>
+
                 <CheckBox
                     android:visibility="gone"
                     android:id="@+id/showpass_la"
@@ -231,19 +246,95 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_option_al"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cl_1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TableRow
+                    android:layout_width="100dp"
+                    android:layout_height="0.1dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/lbl_lw"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="110dp"/>
 
                 <TextView
-                    android:id="@+id/tv_forgot_pass"
-                    android:layout_width="match_parent"
+                    android:id="@+id/lbl_lw"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/forgotpass_la"
-                    android:textColor="@color/btn"
-                    android:textSize="13sp"
-                    android:textStyle="normal"
-                    app:layout_constraintTop_toBottomOf="@id/button_login"/>
+                    android:text="SIGN WITH"
+                    android:textColor="@color/grey"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:textSize="15sp"
+                    android:layout_marginTop="100dp"/>
+
+                <TableRow
+                    android:layout_width="100dp"
+                    android:layout_height="0.1dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/lbl_lw"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="110dp"/>
+
+                <TextView
+                    android:id="@+id/google_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/google_icon"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_lw"
+                    app:layout_constraintRight_toLeftOf="@id/fb_icon"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="30dp"/>
+
+                <TextView
+                    android:id="@+id/fb_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/fb_icon"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_lw"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginEnd="70dp"
+                    android:layout_marginTop="30dp"/>
+
+                <TextView
+                    android:id="@+id/github_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/github2_icon"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_lw"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginStart="70dp"
+                    android:layout_marginTop="30dp"/>
+
+                <TextView
+                    android:id="@+id/twitter_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/twitter_icon"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_lw"
+                    app:layout_constraintLeft_toRightOf="@id/github_icon"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"/>
+
+
+
+
+
+
+
+
 
 
 

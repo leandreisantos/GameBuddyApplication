@@ -21,7 +21,7 @@ public class WaitingActivity extends AppCompatActivity {
             startActivity(intent);
         });
         registerBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(WaitingActivity.this, RegisterOptionActivity.class);
+            Intent intent = new Intent(WaitingActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
 

@@ -380,10 +380,7 @@ public class PostActivity extends AppCompatActivity {
 
                     }
                 });
-            value = "post";
-            Intent intent = new Intent(PostActivity.this, MainActivity.class);
-            intent.putExtra("post",value);
-            startActivity(intent);
+                onBackPressed();
 
 
         }
@@ -418,10 +415,11 @@ public class PostActivity extends AppCompatActivity {
 
             Toast.makeText(PostActivity.this, "post uploaded", Toast.LENGTH_SHORT).show();
 
-            value = "post";
-            Intent intent = new Intent(PostActivity.this,MainActivity.class);
-            intent.putExtra("post",value);
-            startActivity(intent);
+//            value = "post";
+//            Intent intent = new Intent(PostActivity.this,MainActivity.class);
+//            intent.putExtra("post",value);
+//            startActivity(intent);
+            onBackPressed();
 
         }
         else if(etdesc.getText().toString().trim().equals("")&&selectedUri == null){
@@ -501,10 +499,11 @@ public class PostActivity extends AppCompatActivity {
                     }
                 });
 
-            value = "post";
-            Intent intent = new Intent(PostActivity.this,MainActivity.class);
-            intent.putExtra("post",value);
-            startActivity(intent);
+//            value = "post";
+//            Intent intent = new Intent(PostActivity.this,MainActivity.class);
+//            intent.putExtra("post",value);
+//            startActivity(intent);
+            onBackPressed();
 
         }
 

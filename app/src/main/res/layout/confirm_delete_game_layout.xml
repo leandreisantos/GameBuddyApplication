@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:paddingBottom="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/deletecomlot"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:lottie_rawRes="@raw/deletecomlot"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
+
+    <TextView
+        android:id="@+id/tv_title_cdg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Game Community"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/deletecomlot"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_desc_cdg"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Are you sure want to delete your Game Community?"
+        android:textColor="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_cdg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="20dp"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+    <TableRow
+        android:id="@+id/tb"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/tv_desc_cdg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_cancel_cdg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:textColor="@color/red"
+        app:layout_constraintTop_toBottomOf="@id/tb"
+        android:textSize="20sp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_delete_cdg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:textColor="@color/red"
+        app:layout_constraintTop_toBottomOf="@id/tb"
+        android:textSize="20sp"
+        app:layout_constraintRight_toLeftOf="@id/tv_cancel_cdg"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"/>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

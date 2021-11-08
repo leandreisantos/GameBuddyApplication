@@ -30,7 +30,7 @@ public class ProfileViewholder extends RecyclerView.ViewHolder {
     ImageView imageView,iv_ll,iv_follower;
     CardView cardView;
 
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,reference;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
 
@@ -39,8 +39,44 @@ public class ProfileViewholder extends RecyclerView.ViewHolder {
     ImageView iv_developer;
     TextView tvNameDeveloper,tvAboutDeveloper;
 
+    ImageView iv_gm;
+    TextView name_gm,position_gm,btn_gm;
+
     public ProfileViewholder(@NonNull View itemView) {
         super(itemView);
+    }
+
+
+    public void setGameMember(Application ragmentActivity,String postkey,String id,String GamePostkey,String date,String time,String position){
+
+        iv_gm = itemView.findViewById(R.id.iv_ip);
+        name_gm = itemView.findViewById(R.id.tv_name_ip);
+        position_gm = itemView.findViewById(R.id.tv_pos_ip);
+        btn_gm = itemView.findViewById(R.id.tv_profile_ip);
+
+        reference = database.getReference("All users").child(id);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String url = snapshot.child("url").getValue(String.class);
+                String name = snapshot.child("name").getValue(String.class);
+
+                Picasso.get().load(url).into(iv_gm);
+                name_gm.setText(name);
+                position_gm.setText(position);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
     }
 
     public void setProfile(FragmentActivity fragmentActivity,String name,String uid,String prof,String url){
