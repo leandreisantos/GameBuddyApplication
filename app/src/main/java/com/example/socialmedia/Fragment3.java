@@ -45,6 +45,7 @@ public class Fragment3 extends Fragment {
     String currentUserId,usertoken;
     String uid;
     NewMember newMember;
+    TextView req;
 
     @Nullable
     @Override
@@ -82,6 +83,8 @@ public class Fragment3 extends Fragment {
         recyclerView = getActivity().findViewById(R.id.recyclerview_requestf3);
         requesttv = getActivity().findViewById(R.id.requeststv);
 
+        req = getActivity().findViewById(R.id.tv_request_f3);
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -106,6 +109,11 @@ public class Fragment3 extends Fragment {
 
                 search();
             }
+        });
+
+        req.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(),RequestActivity.class);
+            startActivity(intent);
         });
 
     }
@@ -141,7 +149,7 @@ public class Fragment3 extends Fragment {
                             public void onClick(View view) {
 
                                 if (currentUserId.equals(uid)) {
-                                    Intent intent = new Intent(getActivity(),MainActivity.class);
+                                    Intent intent = new Intent(getActivity(),MyProfileActivity.class);
                                     startActivity(intent);
 
                                 }else {
@@ -224,23 +232,18 @@ public class Fragment3 extends Fragment {
 
                        // String uid = "VA0zC50hUhQoRIu8P6xuHLRCWVp1";
 
-                        holder.viewUserProfile.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                        holder.viewUserProfile.setOnClickListener(view -> {
 
-                                if(currentUserId.equals(uid)) {
-                                    Intent intent = new Intent(getActivity(),MainActivity.class);
-                                    startActivity(intent);
+                            if(currentUserId.equals(uid)) {
+                                Intent intent = new Intent(getActivity(),MyProfileActivity.class);
+                                startActivity(intent);
 
-                                }else{
-                                    Intent intent = new Intent(getActivity(),ShowUser.class);
-                                    intent.putExtra("n",name);
-                                    intent.putExtra("u",url);
-                                    intent.putExtra("uid",uid);
-                                    startActivity(intent);
-                                }
-
-
+                            }else{
+                                Intent intent = new Intent(getActivity(),ViewUserActivity.class);
+                                intent.putExtra("n",name);
+                                intent.putExtra("u",url);
+                                intent.putExtra("uid",uid);
+                                startActivity(intent);
                             }
                         });
 

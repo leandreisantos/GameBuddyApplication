@@ -146,6 +146,36 @@
                     app:layout_constraintTop_toBottomOf="@id/event_et_title_post"
                     />
 
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Location"
+                    android:textColorHint="@color/grey"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/border_input"
+                    android:padding="10dp"
+                    android:id="@+id/event_et_location_post"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintLeft_toRightOf="@id/ec2_iv"
+                    app:layout_constraintTop_toBottomOf="@id/event_et_decs_post"
+                    />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Game"
+                    android:textColorHint="@color/grey"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/border_input"
+                    android:padding="10dp"
+                    android:id="@+id/event_et_game_post"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintLeft_toRightOf="@id/ec2_iv"
+                    app:layout_constraintTop_toBottomOf="@id/event_et_location_post"
+                    />
+
+
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_date"
                     android:layout_width="match_parent"
@@ -153,7 +183,7 @@
                     android:paddingBottom="10dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/border_input"
-                    app:layout_constraintTop_toBottomOf="@id/event_et_decs_post"
+                    app:layout_constraintTop_toBottomOf="@id/event_et_game_post"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent">
 
@@ -183,9 +213,10 @@
                         android:id="@+id/tv_time_ae"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" , 12:00"
-                        app:layout_constraintTop_toBottomOf="@id/lbl_dt"
-                        app:layout_constraintLeft_toRightOf="@id/tv_date_ae"
+                        android:text="12:00"
+                        app:layout_constraintTop_toBottomOf="@id/tv_date_ae"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginStart="10dp"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 

@@ -57,7 +57,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         userid = user.getUid();
-        df = FirebaseDatabase.getInstance().getReference("notification");
+        df = FirebaseDatabase.getInstance().getReference("notification").child(userid);
 
         followingref = FirebaseDatabase.getInstance().getReference("Followers").child(userid);
 

@@ -172,13 +172,14 @@ public class ViewUserActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postiv = (int)snapshot.getChildrenCount();
+                post.setText(String.valueOf(postiv));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
-        post.setText(String.valueOf(postiv));
+        //post.setText(String.valueOf(postiv));
 
 
         documentReference.get()
@@ -233,7 +234,6 @@ public class ViewUserActivity extends AppCompatActivity {
 
                 if (snapshot.hasChild(currentUserId)){
                     follow.setText("Requested");
-
                 }
 
             }

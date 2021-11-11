@@ -235,7 +235,7 @@
                     <ImageView
                         android:id="@+id/iv_event_aes"
                         android:layout_width="match_parent"
-                        android:layout_height="400dp"
+                        android:layout_height="200dp"
                         android:scaleType="centerCrop" />
 
 
@@ -255,11 +255,12 @@
 
 
                 <TextView
+                    android:id="@+id/tv_int_es"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Interested"
                     android:textColor="@color/white"
-                    android:drawableStart="@drawable/interested_icon"
+                    android:drawableStart="@drawable/not_interested_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -269,6 +270,203 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_going"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toBottomOf="@id/aes_cl2"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_btn">
+
+
+                <TextView
+                    android:id="@+id/tv_going_es"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Going"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/going_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:gravity="center_vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_loc_es"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Location"
+                android:drawableStart="@drawable/location_icon"
+                android:textColor="@color/grey"
+                android:gravity="center"
+                android:drawablePadding="10dp"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/cl_going"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_time_es"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Time"
+                android:drawableStart="@drawable/time_icon"
+                android:textColor="@color/grey"
+                android:gravity="center"
+                android:drawablePadding="10dp"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_loc_es"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_date_es"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Date"
+                android:drawableStart="@drawable/date_icon"
+                android:textColor="@color/grey"
+                android:gravity="center"
+                android:drawablePadding="10dp"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_time_es"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_game_es"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Game"
+                android:drawableStart="@drawable/game_developer_icon"
+                android:textColor="@color/grey"
+                android:gravity="center"
+                android:drawablePadding="10dp"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_date_es"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/lbl_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What to expect"
+                app:layout_constraintTop_toBottomOf="@id/tv_game_es"
+                android:textColor="@color/white"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/tv_desc_es"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event desc"
+                android:textColor="@color/grey"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/lbl_desc"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_desc_es"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="50dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="@color/secondary_background"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/lbl_creator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Event Creator"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="20dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_creator"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        app:cardCornerRadius="100dp"
+                        app:layout_constraintTop_toBottomOf="@id/lbl_creator"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginTop="20dp">
+
+                        <ImageView
+                            android:id="@+id/iv_creator_es"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"/>
+
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/tv_name_creator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        app:layout_constraintTop_toBottomOf="@id/cv_creator"
+                        android:textColor="@color/white"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginTop="10dp"
+                        android:text="Creator Name"/>
+
+                    <TextView
+                        android:id="@+id/tv_profile_es"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:text="View Profile"
+                        android:background="@drawable/border_btn"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toBottomOf="@id/tv_name_creator"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:gravity="center"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="20dp"/>
+
+
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

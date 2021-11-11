@@ -8,6 +8,11 @@ public class NewMember {
     String uid;
     String seen;
     String action;
+    String date;
+    String time;
+    String postkeyPost;
+    String uidOwner;
+
 
     public  NewMember(){
 
@@ -58,6 +63,37 @@ public class NewMember {
 
     public void setAction(String action) {
         this.action = action;
+    }
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getPostkeyPost() {
+        return postkeyPost;
+    }
+
+    public void setPostkeyPost(String postkeyPost) {
+        this.postkeyPost = postkeyPost;
+    }
+
+    public String getUidOwner() {
+        return uidOwner;
+    }
+
+    public void setUidOwner(String uidOwner) {
+        this.uidOwner = uidOwner;
     }
 
 

@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.socialmedia.MarketPlaceController.ViewItemPicture;
 import com.example.socialmedia.PostController.PostActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,8 +24,8 @@ import com.squareup.picasso.Picasso;
 
 public class MyProfileActivity extends AppCompatActivity {
 
-    ImageView profilepic,profilebg,createPost,notifi,sendMessage;
-    TextView nameEt,profEt,tv_followers,tvPost,tvEdit;
+    ImageView profilepic,profilebg,createPost,notifi,sendMessage,complete;
+    TextView nameEt,profEt,tv_followers,tvPost,tvEdit,back;
     int postiv,post2,post1;
 
     //database reference
@@ -52,6 +54,8 @@ public class MyProfileActivity extends AppCompatActivity {
         createPost = findViewById(R.id.iv_pp);
         notifi = findViewById(R.id.iv_np);
         sendMessage = findViewById(R.id.iv_smp);
+        complete = findViewById(R.id.iv_cp);
+        back = findViewById(R.id.tv_back_mp);
 
 
         db1 = database.getReference("followers").child(currentid);
@@ -64,6 +68,7 @@ public class MyProfileActivity extends AppCompatActivity {
         });
         createPost.setOnClickListener(v -> {
             Intent intent = new Intent(MyProfileActivity.this, PostActivity.class);
+            intent.putExtra("kp","p");
             startActivity(intent);
         });
         notifi.setOnClickListener(v -> {
@@ -74,6 +79,16 @@ public class MyProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(MyProfileActivity.this,ChatActivity.class);
             startActivity(intent);
         });
+        back.setOnClickListener(v -> onBackPressed());
+
+        complete.setOnClickListener(v -> {
+            Intent intent = new Intent(MyProfileActivity.this,CompleteProfileActivity.class);
+            startActivity(intent);
+        });
+
+
+
+
 
     }
 
@@ -137,10 +152,21 @@ public class MyProfileActivity extends AppCompatActivity {
                         nameEt.setText(nameResult);
                         profEt.setText(profResult);
 
+                        profilepic.setOnClickListener(v -> showImage(url));
+                        profilebg.setOnClickListener(v -> showImage(url2));
+
                     }else{
                         Intent intent = new Intent(MyProfileActivity.this,CreateProfile.class);
                         startActivity(intent);
                     }
                 });
     }
+
+    private void showImage(String url) {
+        Intent intent = new Intent(MyProfileActivity.this, ViewItemPicture.class);
+        intent.putExtra("p",url);
+        startActivity(intent);
+    }
+
+
 }

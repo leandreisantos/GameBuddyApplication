@@ -34,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
     LottieAnimationView lot;
     TextView title;
 
+    TextView del_email,view_pass;
+
 //    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 //    String currentuid = user.getUid();
 
@@ -46,13 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         //databaseReference = database.getReference("newKey");
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            keyoption = bundle.getString("k");
-        }else{
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-        }
-
         emailEt = findViewById(R.id.register_email_et);
         passEt = findViewById(R.id.register_password_et);
         title = findViewById(R.id.txtcreate);
@@ -63,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
         //login_btn = findViewById(R.id.signup_to_login);
         checkBox = findViewById(R.id.register_checkbox);
         progressBar = findViewById(R.id.progressbar_login);
+        del_email = findViewById(R.id.tv_delete_etEmail);
         mAuth = FirebaseAuth.getInstance();
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {

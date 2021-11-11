@@ -79,9 +79,11 @@ public class LoginActivity extends AppCompatActivity {
         view_pass = findViewById(R.id.tv_passview_al);
         error_icon = findViewById(R.id.error_etEmail);
         txt_eror = findViewById(R.id.tv_error_email);
+
         google = findViewById(R.id.google_icon);
         fb = findViewById(R.id.fb_icon);
         git = findViewById(R.id.github_icon);
+        twit = findViewById(R.id.twitter_icon);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -268,6 +270,10 @@ public class LoginActivity extends AppCompatActivity {
             login_btn.setEnabled(false);
             showPass.setEnabled(false);
             back_btn.setEnabled(false);
+            fb.setEnabled(false);
+            google.setEnabled(false);
+            git.setEnabled(false);
+            twit.setEnabled(false);
         }else{
             progressBar.setVisibility(View.GONE);
             emailEt.setEnabled(true);

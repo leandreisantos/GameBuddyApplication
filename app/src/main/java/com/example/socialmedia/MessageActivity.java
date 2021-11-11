@@ -62,7 +62,7 @@ import java.util.List;
 public class MessageActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ImageView imageView;
+    ImageView imageView,back;
     ImageButton sendbtn,cambtn,micbtn;
     TextView username,typingtv,btnVc;
     EditText messageEt;
@@ -113,9 +113,10 @@ public class MessageActivity extends AppCompatActivity {
         micbtn = findViewById(R.id.btn_mic);
         typingtv = findViewById(R.id.typingstatus);
         btnVc = findViewById(R.id.btn_vc);
+        back = findViewById(R.id.back_am);
 
 
-
+        back.setOnClickListener(v -> onBackPressed());
 
         Picasso.get().load(url).into(imageView);
         username.setText(receiver_name);

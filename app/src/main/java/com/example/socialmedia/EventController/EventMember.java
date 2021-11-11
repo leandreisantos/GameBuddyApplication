@@ -12,6 +12,8 @@ public class EventMember {
     String title;
     String date;
     String postkey;
+    String address;
+    String game;
 
     public EventMember(){
 
@@ -94,6 +96,22 @@ public class EventMember {
 
     public void setPostkey(String postkey) {
         this.postkey = postkey;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getGame() {
+        return game;
+    }
+
+    public void setGame(String game) {
+        this.game = game;
     }
 
 }

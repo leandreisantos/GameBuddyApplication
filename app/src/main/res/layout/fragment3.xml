@@ -3,22 +3,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/black">
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/tv_title_f3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Friends"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/tv_request_f3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_baseline_person_24"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="20dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_req"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@color/red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp">
+
+        <TextView
+            android:id="@+id/req_count"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:text="0"
+            android:textAlignment="center"/>
+
+    </androidx.cardview.widget.CardView>
 
     <EditText
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_f3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search user"
-        android:layout_margin="5dp"
         android:id="@+id/search_f3"
         android:padding="10dp"
         android:textColorHint="@color/grey"
         android:drawableLeft="@drawable/ic_baseline_search_24"
         android:paddingLeft="20dp"
-        android:textColor="@color/black"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_input_login"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
         android:drawablePadding="10dp"/>
     <TextView
         app:layout_constraintTop_toBottomOf="@id/search_f3"
@@ -45,7 +91,7 @@
         android:id="@+id/recyclerview_profile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="260dp"/>
+        android:layout_marginTop="130dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

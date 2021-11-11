@@ -1,6 +1,5 @@
 package com.example.socialmedia.EventController;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -17,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,24 +28,16 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.example.socialmedia.DatePicker;
 import com.example.socialmedia.GetCurrentTime;
 import com.example.socialmedia.MainActivity;
-import com.example.socialmedia.PostController.PostActivity;
 import com.example.socialmedia.R;
 import com.example.socialmedia.databaseReference;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointBackward;
-import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -54,17 +46,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class EventActivity extends AppCompatActivity {
@@ -74,8 +64,7 @@ public class EventActivity extends AppCompatActivity {
     private Uri selectedUri;
     private static final int PICK_FILE = 1;
     UploadTask uploadTask;
-    EditText etdesc,etTitle;
-    Button btnchoosefile;
+    EditText etdesc,etTitle,etadd,etgame;
     TextView btnuploadfile,closeImage;
     VideoView videoView;
     String url,name;
@@ -93,7 +82,8 @@ public class EventActivity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
 
-    TextView dia_date,date,time;
+    TextView dia_date,date,time,dia_time;
+
 
     MaterialDatePicker materialDatePicker;
 
@@ -124,6 +114,10 @@ public class EventActivity extends AppCompatActivity {
         closeImage = findViewById(R.id.tv_close_iv_ap);
         date_time = findViewById(R.id.cl_date);
         date = findViewById(R.id.tv_date_ae);
+        dia_time = findViewById(R.id.tv_time_ae);
+        etadd = findViewById(R.id.event_et_location_post);
+        etgame = findViewById(R.id.event_et_game_post);
+
 
 
         storageReference = FirebaseStorage.getInstance().getReference("User posts events");
@@ -144,6 +138,7 @@ public class EventActivity extends AppCompatActivity {
         closeImage.setOnClickListener(v -> {
             selectedUri= null;
             closePanel.setVisibility(View.GONE);
+            imageView.setImageDrawable(null);
         });
 
 
@@ -200,16 +195,16 @@ public class EventActivity extends AppCompatActivity {
          time.setOnClickListener(view -> {
              TimePickerDialog timePickerDialog = new TimePickerDialog(
                      EventActivity.this,
-                     new TimePickerDialog.OnTimeSetListener() {
-                         @Override
-                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                             hour = hourOfDay;
-                             minute = minute;
-                             Calendar calendar = Calendar.getInstance();
-                             calendar.set(0,0,0,hour,minute);
+                     (view1, hourOfDay, minute) -> {
 
-                             //time.setText(DateFormat.format("hh:mm aa",calendar));
-                         }
+                         hour = hourOfDay;
+                         minute = minute;
+                         Calendar calendar = Calendar.getInstance();
+                         calendar.set(0,0,0,hour,minute);
+
+                         time.setText(DateFormat.format("hh:mm aa",calendar));
+                         dia_time.setText(DateFormat.format("hh:mm aa",calendar));
+
                      },12,0,false
              );
 
@@ -253,7 +248,7 @@ public class EventActivity extends AppCompatActivity {
 
     private void chooseImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/* video/*");
+        intent.setType("image/*");
         //intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,PICK_FILE);
     }
@@ -317,23 +312,13 @@ public class EventActivity extends AppCompatActivity {
     }
 
     private void Dopost() {
-
-        Calendar cdate = Calendar.getInstance();
-        SimpleDateFormat currentdate = new SimpleDateFormat("dd-MMMM-yyy");
-        final String savedate = currentdate.format(cdate.getTime());
-
-        Calendar ctime = Calendar.getInstance();
-        SimpleDateFormat currenttime =new SimpleDateFormat("HH-mm-ss");
-        final String savetime = currenttime.format(ctime.getTime());
-
-
         String desc = etdesc.getText().toString();
         String title = etTitle.getText().toString();
+        String add = etadd.getText().toString();
+        String game = etgame.getText().toString();
 
-              GetCurrentTime gc = new GetCurrentTime();
-              String time = gc.ctime();
 
-        if(!TextUtils.isEmpty(desc) && selectedUri != null && !TextUtils.isEmpty(title)){
+        if(!TextUtils.isEmpty(desc) && selectedUri != null && !TextUtils.isEmpty(title)&&!TextUtils.isEmpty(add)&&!TextUtils.isEmpty(game)){
 
             progressBar.setVisibility(View.VISIBLE);
             final StorageReference reference = storageReference.child(System.currentTimeMillis()+"."+getFileExt(selectedUri));
@@ -356,12 +341,14 @@ public class EventActivity extends AppCompatActivity {
                         eventMember.setDesc(desc);
                         eventMember.setName(name);
                         eventMember.setPostUri(downloadUri.toString());
-                        eventMember.setTime(savetime);
+                        eventMember.setTime(dia_time.getText().toString());
                         eventMember.setUid(currentuid);
                         eventMember.setUrl(url);
                         eventMember.setType("iv");
-                        eventMember.setDate(savedate);
+                        eventMember.setDate(date.getText().toString());
                         eventMember.setPostkey(id1);
+                        eventMember.setAddress(add);
+                        eventMember.setGame(game);
 
                         //for image
                         String id = db1.push().getKey();
@@ -371,7 +358,7 @@ public class EventActivity extends AppCompatActivity {
 
                         progressBar.setVisibility(View.INVISIBLE);
 
-                        Toast.makeText(EventActivity.this, "post uploaded", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EventActivity.this, "Event Created", Toast.LENGTH_SHORT).show();
                         deletedb();
 
                     }else if(type.equals("vv")){
@@ -380,11 +367,11 @@ public class EventActivity extends AppCompatActivity {
                         eventMember.setDesc(desc);
                         eventMember.setName(name);
                         eventMember.setPostUri(downloadUri.toString());
-                        eventMember.setTime(time);
+                        eventMember.setTime(dia_time.getText().toString());
                         eventMember.setUid(currentuid);
                         eventMember.setUrl(url);
                         eventMember.setType("vv");
-                        eventMember.setDate(savedate);
+                        eventMember.setDate(date.getText().toString());
                         eventMember.setPostkey(id1);
 
                         //for image

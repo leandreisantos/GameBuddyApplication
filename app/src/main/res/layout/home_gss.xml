@@ -62,7 +62,7 @@
                 app:layout_constraintLeft_toRightOf="@id/tv_join_hgss"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Interested"
+                android:text="Edit"
                 android:gravity="center"
                 android:textColor="@color/white"/>
 

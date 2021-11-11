@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ public class Eventholder extends RecyclerView.ViewHolder {
     TextView desctxt,titletxt;
     public TextView EventView;
     public ImageButton int_icon,g_icon;
+    public ConstraintLayout cons;
     DatabaseReference intref,goingref;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
@@ -38,7 +40,8 @@ public class Eventholder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void setEvent(FragmentActivity activity, String name, String url, String postUri, String time, String uid, String type, String desc,String title){
+    public void setEvent(FragmentActivity activity, String name, String url, String postUri, String time, String uid, String type, String desc,String title,String date,
+                         String postkey,String address,String game){
 
         iv = itemView.findViewById(R.id.fecd_iv_item);
         desctxt = itemView.findViewById(R.id.fecd_desc_item);
@@ -59,6 +62,7 @@ public class Eventholder extends RecyclerView.ViewHolder {
         titletxt = itemView.findViewById(R.id.tv_desc_el);
         int_icon = itemView.findViewById(R.id.tv_int_icon_el);
         g_icon = itemView.findViewById(R.id.tv_going_icon_el);
+        cons = itemView.findViewById(R.id.cl_eil);
 
         Picasso.get().load(postUri).into(iv);
         desctxt.setText(desc);

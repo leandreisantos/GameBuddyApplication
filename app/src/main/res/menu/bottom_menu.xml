@@ -33,8 +33,8 @@
         android:id="@+id/ask_bottom"/>
 
     <item
-        android:title="Request"
-        android:icon="@drawable/ic_baseline_queue_24"
+        android:title="Friends"
+        android:icon="@drawable/ic_round_person_24"
         app:showAsAction="always"
         android:id="@+id/queue_bottom"/>
 

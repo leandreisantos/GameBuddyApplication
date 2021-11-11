@@ -219,7 +219,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
                     protected void onBindViewHolder(@NonNull Eventholder holder, int position, @NonNull EventMember model) {
 
                         holder.setEvent(getActivity(),model.getName(),model.getUrl(),model.getPostUri(),model.getTime(),model.getUid(),
-                                model.getType(),model.getDesc(),model.getTitle());
+                                model.getType(),model.getDesc(),model.getTitle(),model.getDate(),model.getPostkey(),model.getAddress(),model.getGame());
 
                         name = getItem(position).getName();
                         String title = getItem(position).getTitle();
@@ -228,15 +228,12 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
                         String name = getItem(position).getName();
                         String desc = getItem(position).getDesc();
                         String uid = getItem(position).getUid();
+                        String event_postkey=getItem(position).getPostkey();
 
                         holder.EventView.setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(),EventSelectedActivity.class);
-                            intent.putExtra("t",title);
-                            intent.putExtra("uri",uri);
-                            intent.putExtra("ti",time);
-                            intent.putExtra("n",name);
-                            intent.putExtra("d",desc);
-                            intent.putExtra("i",uid);
+                            intent.putExtra("p",event_postkey);
+                            intent.putExtra("uid",uid);
                             startActivity(intent);
                         });
 

@@ -1,13 +1,17 @@
 package com.example.socialmedia;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,21 +19,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class UpdateProfile extends AppCompatActivity {
@@ -37,6 +51,7 @@ public class UpdateProfile extends AppCompatActivity {
     EditText etname,etBio,etProfession,etEmail,etWeb;
     TextView button,button_del,back;
     ImageView iv,bg;
+    UploadTask uploadTask;
 
     //database stuff
     databaseReference dbr = new databaseReference();
@@ -47,6 +62,11 @@ public class UpdateProfile extends AppCompatActivity {
 
     FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
+    private static final int PICK_IMAGE=1;
+    private static final int PICK_IMAGE1=1;
+    int picture;
+    Uri imageUridp,imageUribg,downloadUri2;
+    StorageReference storageReference;
 
 
 
@@ -66,21 +86,54 @@ public class UpdateProfile extends AppCompatActivity {
         iv = findViewById(R.id.iv_up);
         back = findViewById(R.id.tv_back_up);
         bg = findViewById(R.id.iv_cp_bg);
+        storageReference = FirebaseStorage.getInstance().getReference("Profile images");
         //button_del = findViewById(R.id.btn_del);
 
         button.setOnClickListener(v -> updateProfile());
         //button_del.setOnClickListener(v -> deleteProf());
-        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UpdateProfile.this,ImageActivity.class);
-                startActivity(intent);
-            }
+        iv.setOnClickListener(v -> {
+            chooseImage();
+            picture = 1;
         });
 
         back.setOnClickListener(view -> onBackPressed());
 
     }
+
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,PICK_IMAGE1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if(requestCode == PICK_IMAGE1 && resultCode == RESULT_OK && data != null && data.getData()!=null){
+                if(picture == 1){
+                    imageUridp = data.getData();
+                    Picasso.get().load(imageUridp).into(iv);
+                }else if(picture == 2){
+                    imageUribg = data.getData();
+                    Picasso.get().load(imageUribg).into(bg);
+                }else Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+
+            }
+
+        }catch (Exception e){
+            Toast.makeText(this, "Error"+e, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String getFileExt(Uri uri){
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType((contentResolver.getType(uri)));
+    }
+
+
 
     private void deleteProf() {
         AlertDialog.Builder builder = new AlertDialog.Builder(UpdateProfile.this);
@@ -122,6 +175,7 @@ public class UpdateProfile extends AppCompatActivity {
         
     }
 
+
     private void deleteImage() {
         documentReference.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -155,6 +209,8 @@ public class UpdateProfile extends AppCompatActivity {
 
                 });
     }
+
+
 
     @Override
     protected void onStart() {
@@ -197,24 +253,62 @@ public class UpdateProfile extends AppCompatActivity {
         String web = etWeb.getText().toString();
         String email = etEmail.getText().toString();
 
+//        final DocumentReference sDoc = db.collection("user").document(currentuid);
+//        db.runTransaction((Transaction.Function<Void>) transaction -> {
+//           // DocumentSnapshot snapshot = transaction.get(sfDocRef);
+//
+//            transaction.update(sDoc, "name",name);
+//            transaction.update(sDoc, "prof",prof);
+//            transaction.update(sDoc, "email",email);
+//            transaction.update(sDoc, "web",web);
+//            transaction.update(sDoc, "bio",bio);
+//            transaction.update(sDoc,"url",)
+//
+//
+//
+//            // Success
+//            return null;
+//        }).addOnSuccessListener(aVoid -> Toast.makeText(UpdateProfile.this, "Updated", Toast.LENGTH_SHORT).show())
+//                .addOnFailureListener(e -> Toast.makeText(UpdateProfile.this, "failed", Toast.LENGTH_SHORT).show());
 
-        final DocumentReference sDoc = db.collection("user").document(currentuid);
-        db.runTransaction((Transaction.Function<Void>) transaction -> {
-           // DocumentSnapshot snapshot = transaction.get(sfDocRef);
-
-            transaction.update(sDoc, "name",name);
-            transaction.update(sDoc, "prof",prof);
-            transaction.update(sDoc, "email",email);
-            transaction.update(sDoc, "web",web);
-            transaction.update(sDoc, "bio",bio);
 
 
+        final StorageReference reference = storageReference.child(System.currentTimeMillis()+"."+getFileExt(imageUridp));
+        uploadTask = reference.putFile(imageUridp);
+        Task<Uri> urlTask = uploadTask.continueWithTask((Continuation<UploadTask.TaskSnapshot, Task<Uri>>) task -> {
+            if(!task.isSuccessful()){
+                throw task.getException();
 
-            // Success
-            return null;
-        }).addOnSuccessListener(aVoid -> Toast.makeText(UpdateProfile.this, "Updated", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(UpdateProfile.this, "failed", Toast.LENGTH_SHORT).show());
+            }
+            return reference.getDownloadUrl();
+        }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
 
-        onBackPressed();
+            if(task.isSuccessful()){
+                Uri downloadUri = task.getResult();
+
+                final DocumentReference sDoc1 = db.collection("user").document(currentuid);
+                db.runTransaction((Transaction.Function<Void>) transaction -> {
+                    // DocumentSnapshot snapshot = transaction.get(sfDocRef);
+
+                    transaction.update(sDoc1, "name",name);
+                    transaction.update(sDoc1, "prof",prof);
+                    transaction.update(sDoc1, "email",email);
+                    transaction.update(sDoc1, "web",web);
+                    transaction.update(sDoc1, "bio",bio);
+                    transaction.update(sDoc1, "url",downloadUri);
+
+
+                    // Success
+                    return null;
+                }).addOnSuccessListener(aVoid -> {
+                    Toast.makeText(UpdateProfile.this, "Updated", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }).addOnFailureListener(e -> Toast.makeText(UpdateProfile.this, "failed", Toast.LENGTH_SHORT).show());
+
+
+            }
+        });
+
+
     }
 }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.socialmedia.AllUserMember;
+import com.example.socialmedia.EventSelectedActivity;
 import com.example.socialmedia.NewMember;
 import com.example.socialmedia.R;
 import com.example.socialmedia.databaseReference;
@@ -106,10 +108,18 @@ public class AllEventActivity extends AppCompatActivity {
                         String post_key = getItem(position).getPostkey();
                         String name = getItem(position).getName();
                         String url = getItem(position).getPostUri();
+                        String uid = getItem(position).getUid();
 
                         holder.intchecker(post_key);
                         holder.goingchecker(post_key);
 
+
+                        holder.cons.setOnClickListener(v -> {
+                            Intent intent = new Intent(AllEventActivity.this, EventSelectedActivity.class);
+                            intent.putExtra("p",post_key);
+                            intent.putExtra("uid",uid);
+                            startActivity(intent);
+                        });
                         holder.g_icon.setOnClickListener(v -> {
                             goingChecker = true;
 

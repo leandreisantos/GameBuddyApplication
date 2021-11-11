@@ -28,7 +28,7 @@ public class DebitActivity extends AppCompatActivity {
     EditText card;
     Button proceed;
     ProgressBar pv;
-    TextView process;
+    TextView process,back;
 
     PaymentMember member;
 
@@ -50,10 +50,13 @@ public class DebitActivity extends AppCompatActivity {
         proceed = findViewById(R.id.btn_debit);
         pv = findViewById(R.id.pv_debit);
         process = findViewById(R.id.tv_process_debit);
+        back = findViewById(R.id.tv_back_ad);
 
         db1 = database.getReference("Event Payment");
 
         proceed.setOnClickListener(v -> doPay());
+
+        back.setOnClickListener(v -> onBackPressed());
     }
 
 

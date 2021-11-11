@@ -21,7 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialMedia"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FragmetGss.ShowAllMemberGss_Activity"></activity>
+        <activity android:name=".RequestActivity"></activity>
+        <activity android:name=".CompleteProfileActivity" />
+        <activity android:name=".FragmetGss.ShowAllMemberGss_Activity" />
         <activity android:name=".ReportGameCommunityController.ReportGameActivity" />
         <activity android:name=".GithubSignInActivity" />
         <activity

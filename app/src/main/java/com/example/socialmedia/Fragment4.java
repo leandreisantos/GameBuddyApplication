@@ -48,6 +48,8 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -117,7 +119,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         newMember = new NewMember();
-        ntref = database.getReference("notification").child(currentuid);
+        ntref = database.getReference("notification");
 
 
         db1 = database.getReference("All images").child(currentuid);
@@ -237,6 +239,14 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                     }
                 });
 
+        Calendar cdate = Calendar.getInstance();
+        SimpleDateFormat currentdate = new SimpleDateFormat("dd-MMMM-yyy");
+        final String savedate = currentdate.format(cdate.getTime());
+
+        Calendar ctime = Calendar.getInstance();
+        SimpleDateFormat currenttime =new SimpleDateFormat("HH-mm-ss");
+        final String savetime = currenttime.format(ctime.getTime());
+
         FirebaseRecyclerOptions<Postmember> options =
                 new FirebaseRecyclerOptions.Builder<Postmember>()
                         .setQuery(reference,Postmember.class)
@@ -324,7 +334,8 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                                             likelist.removeValue();
                                             //delete(time);
 
-                                            ntref.child(currentUserid+"l").removeValue();
+                                            ntref.child(userid).child(currentUserid+"l").removeValue();
+                                            //ntref.child(currentUserid+"l").removeValue();
                                             likechecker = false;
                                         }else{
                                             likesref.child(postkey).child(currentUserid).setValue(true);
@@ -335,14 +346,20 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
 
                                             likelist.child(currentUserid).setValue(userMember);
 
+                                            String id1 = ntref.push().getKey();
+
                                             newMember.setName(name_result);
                                             newMember.setUid(currentUserid);
                                             newMember.setUrl(url_result);
                                             newMember.setSeen("no");
                                             newMember.setText("Like your post");
                                             newMember.setAction("L");
+                                            newMember.setDate(savedate);
+                                            newMember.setTime(savetime);
+                                            newMember.setPostkeyPost(post_key);
+                                            newMember.setUidOwner(userid);
 
-                                            ntref.child(currentUserid+"l").setValue(newMember);
+                                            ntref.child(userid).child(currentUserid+"l").setValue(newMember);
                                             sendNotification(name_result,userid);
 
 

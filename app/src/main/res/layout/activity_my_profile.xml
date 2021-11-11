@@ -21,6 +21,8 @@
             android:layout_height="match_parent"
             android:background="@color/background">
 
+
+
             <ImageView
                 android:layout_margin="10dp"
                 android:id="@+id/iv_bg_mp"
@@ -31,6 +33,16 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_back_mp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_back"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"/>
 
 
             <androidx.cardview.widget.CardView
