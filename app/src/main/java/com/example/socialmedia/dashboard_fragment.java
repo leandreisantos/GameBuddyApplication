@@ -58,7 +58,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
     ImageView addevent;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference,db1,db2,db3,profileRef,referenceDeveloper,db4,event;
+    DatabaseReference reference,db1,db2,db3,profileRef,referenceDeveloper,db4,event,devref;
     RelativeLayout sta,action,adventure,fps;
     //reference
     String name;
@@ -94,6 +94,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
 
         reference = database.getReference("All post").child("event");
         referenceDeveloper = database.getReference("All users");
+        devref = database.getReference("All Developer");
         featuredEvents = getActivity().findViewById(R.id.df_event_rv);
         featuredEvents.setHasFixedSize(true);
         featuredEvents.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
@@ -260,7 +261,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
 
         FirebaseRecyclerOptions<AllUserMember> options1 =
                 new FirebaseRecyclerOptions.Builder<AllUserMember>()
-                        .setQuery(referenceDeveloper,AllUserMember.class)
+                        .setQuery(devref,AllUserMember.class)
                         .build();
 
         FirebaseRecyclerAdapter<AllUserMember,ProfileViewholder> firebaseRecyclerAdapter1 =
@@ -268,12 +269,7 @@ public class dashboard_fragment extends Fragment implements View.OnClickListener
                     @Override
                     protected void onBindViewHolder(@NonNull ProfileViewholder holder, int position, @NonNull AllUserMember model) {
 
-                        holder.setGameDeveloper(getActivity(),model.getName(),model.getUid(),model.getProf(),model.getUrl(),model.getAbout());
-
-                        String  name = getItem(position).getName();
-                        String  url = getItem(position).getUrl();
-                        String uid = getItem(position).getUid();
-
+                        holder.setGameDeveloper(getActivity(),model.getUid());
 
                     }
 

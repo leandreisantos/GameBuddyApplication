@@ -102,7 +102,7 @@ public class CreateProfile extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,PICK_IMAGE1);
+        startActivityForResult(intent,PICK_IMAGE);
     }
 
     @Override
@@ -158,8 +158,8 @@ public class CreateProfile extends AppCompatActivity {
 
             Task<Uri> urlTask2 = uploadTask2.continueWithTask((Task<UploadTask.TaskSnapshot> task2) -> {
                 if(!task2.isSuccessful()){
+                    Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
                     throw task2.getException();
-
                 }
                 return reference2.getDownloadUrl();
             }).addOnCompleteListener(task2 -> {

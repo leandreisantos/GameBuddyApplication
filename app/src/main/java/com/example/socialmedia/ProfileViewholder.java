@@ -30,7 +30,7 @@ public class ProfileViewholder extends RecyclerView.ViewHolder {
     ImageView imageView,iv_ll,iv_follower;
     CardView cardView;
 
-    DatabaseReference databaseReference,reference;
+    DatabaseReference databaseReference,reference,documentReference;
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
 
@@ -41,6 +41,8 @@ public class ProfileViewholder extends RecyclerView.ViewHolder {
 
     ImageView iv_gm;
     TextView name_gm,position_gm,btn_gm;
+
+
 
     public ProfileViewholder(@NonNull View itemView) {
         super(itemView);
@@ -92,15 +94,35 @@ public class ProfileViewholder extends RecyclerView.ViewHolder {
         textViewName.setText(name);
     }
 
-    public void setGameDeveloper(FragmentActivity fragmentActivity,String name,String uid,String prof,String url,String about){
+    public void setGameDeveloper(FragmentActivity fragmentActivity,String uid){
 
         iv_developer = itemView.findViewById(R.id.iv_profile_dl);
         tvNameDeveloper=itemView.findViewById(R.id.tv_name_dl);
         tvAboutDeveloper= itemView.findViewById(R.id.tv_about_dl);
 
-        Picasso.get().load(url).into(iv_developer);
-        tvNameDeveloper.setText(name);
-        tvAboutDeveloper.setText(about);
+        documentReference = database.getReference("All users").child(uid);
+
+        documentReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = snapshot.child("name").getValue(String.class);
+                String about = snapshot.child("about").getValue(String.class);
+                String url = snapshot.child("url").getValue(String.class);
+
+                Picasso.get().load(url).into(iv_developer);
+                tvNameDeveloper.setText(name);
+                tvAboutDeveloper.setText(about);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 
     public void setProfileInchat(Application fragmentActivity, String name, String uid, String prof,

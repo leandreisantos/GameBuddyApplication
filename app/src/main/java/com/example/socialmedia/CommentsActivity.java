@@ -33,7 +33,7 @@ import com.squareup.picasso.Picasso;
 
 public class CommentsActivity extends AppCompatActivity {
 
-    ImageView usernameImageview;
+    ImageView usernameImageview,post_pic_user;
     TextView usernameTextview,descTextview,close;
     TextView commentsBtn;
     EditText commentsEdittext;
@@ -68,6 +68,7 @@ public class CommentsActivity extends AppCompatActivity {
         usernameTextview = findViewById(R.id.name_comments_tv);
         descTextview = findViewById(R.id.tv_desc_ac);
         commentsEdittext = findViewById(R.id.et_comments);
+        post_pic_user = findViewById(R.id.iv_post_pic);
         close = findViewById(R.id.tv_close_ac);
         Bundle extras = getIntent().getExtras();
 
@@ -100,7 +101,6 @@ public class CommentsActivity extends AppCompatActivity {
         super.onStart();
 
         Picasso.get().load(url).into(usernameImageview);
-        usernameTextview.setText(name);
         descTextview.setText(desc);
 
 
@@ -117,6 +117,21 @@ public class CommentsActivity extends AppCompatActivity {
                         web_result = task.getResult().getString("website");
                         Url = task.getResult().getString("url");
                         uid = task.getResult().getString("uid");
+                    }
+                });
+
+
+        DocumentReference documentReference2 = db.collection("user").document(bundleuid);
+
+        documentReference.get()
+                .addOnCompleteListener(task -> {
+                    if (task.getResult().exists()) {
+                        String name_user_post = task.getResult().getString("name");
+                        String url_user_post = task.getResult().getString("url");
+
+                        usernameTextview.setText(name_user_post);
+                        Picasso.get().load(url_user_post).into(post_pic_user);
+
                     }
                 });
 

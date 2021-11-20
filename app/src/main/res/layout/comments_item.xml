@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:layout_marginTop="10dp"
-    android:background="@color/secondary_background">
+    android:background="@drawable/border_input">
 
     <androidx.cardview.widget.CardView
         app:layout_constraintTop_toTopOf="parent"

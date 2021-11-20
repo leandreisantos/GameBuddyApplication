@@ -44,12 +44,13 @@ public class AddGameActivity extends AppCompatActivity {
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference db3,allgameref;
+    DatabaseReference db3,allgameref,devref;
 
     StorageReference storageReference;
     UploadTask uploadTask,uploadTask2;
 
     GameMember gameMember;
+    developerMember devMember;
 
     String keyword;
 
@@ -92,6 +93,7 @@ public class AddGameActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("All game");
         db3 = database.getReference(keyword);
         allgameref = database.getReference("All game");
+        devref = database.getReference("All Developer");
 
         close.setOnClickListener(v -> onBackPressed());
 
@@ -175,6 +177,7 @@ public class AddGameActivity extends AppCompatActivity {
 
             Task<Uri> urlTask2 = uploadTask2.continueWithTask((Task<UploadTask.TaskSnapshot> task2) -> {
                 if(!task2.isSuccessful()){
+                    Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
                     throw task2.getException();
 
                 }
@@ -193,25 +196,29 @@ public class AddGameActivity extends AppCompatActivity {
                 return reference.getDownloadUrl();
             }).addOnCompleteListener(task -> {
 
-                if(task.isSuccessful()){
-                    Uri downloadUri = task.getResult();
+                if(downloadUri2!=null){
+                    if(task.isSuccessful()){
+                        Uri downloadUri = task.getResult();
 
-                    String id = db3.push().getKey();
+                        String id = db3.push().getKey();
 
-                         gameMember.setTitle(title_et);
-                         gameMember.setDesc(desc_et);
-                         gameMember.setPostkey(id);
-                         gameMember.setCat(keyword);
-                         gameMember.setPostUri1(downloadUri.toString());
-                         gameMember.setPostUri2(downloadUri2.toString());
-                         gameMember.setTime(savetime);
-                         gameMember.setDate(savedate);
-                         gameMember.setAbout(about_et);
-                         gameMember.setEmail(email_et);
-                         gameMember.setAddress(address_et);
-                         gameMember.setOwner(owner_et);
-                         gameMember.setCreate(currentuid);
-                         gameMember.setWhatNew(new_et);
+                        gameMember.setTitle(title_et);
+                        gameMember.setDesc(desc_et);
+                        gameMember.setPostkey(id);
+                        gameMember.setCat(keyword);
+                        gameMember.setPostUri1(downloadUri.toString());
+                        gameMember.setPostUri2(downloadUri2.toString());
+                        gameMember.setTime(savetime);
+                        gameMember.setDate(savedate);
+                        gameMember.setAbout(about_et);
+                        gameMember.setEmail(email_et);
+                        gameMember.setAddress(address_et);
+                        gameMember.setOwner(owner_et);
+                        gameMember.setCreate(currentuid);
+                        gameMember.setWhatNew(new_et);
+
+                        devMember.setUid(currentuid);
+                        devref.child(currentuid).setValue(devMember);
 
 
                         db3.child(id).setValue(gameMember);
@@ -220,7 +227,11 @@ public class AddGameActivity extends AppCompatActivity {
 
                         Toast.makeText(AddGameActivity.this, "Game Addedd", Toast.LENGTH_SHORT).show();
                         onBackPressed();
+                    }
+                }else{
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                 }
+
             });
 
         }else {

@@ -148,7 +148,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_cg"
-                app:lottie_rawRes="@raw/creategrouplot"
+                app:lottie_rawRes="@raw/grouplotfragment"
                 android:layout_marginTop="50dp"
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true" />

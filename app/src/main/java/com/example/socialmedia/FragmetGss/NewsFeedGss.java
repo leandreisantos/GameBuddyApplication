@@ -59,6 +59,7 @@ public class NewsFeedGss extends Fragment {
     RecyclerView recyclerView;
 
     LinearLayoutManager linearLayoutManager;
+    String name;
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
@@ -157,12 +158,14 @@ public class NewsFeedGss extends Fragment {
                                 model.getType(),model.getDesc(),model.getPrivacy(),model.getDate(),model.getPostkey(),model.getDescSharer(),model.getPostkeySharer(),
                                 model.getUidSharer(),model.getPrivacySharer(),model.getSharerType(),model.getTimeShare(),model.getDateShare(),model.getNameSharer(),model.getUrlSharer());
 
-                        String name = getItem(position).getName();
+                         name = getItem(position).getName();
                         String url = getItem(position).getPostUri();
                         String time = getItem(position).getTime();
                         String type = getItem(position).getType();
                         String userid = getItem(position).getUid();
                         String desc = getItem(position).getDesc();
+
+                        Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
 
                         holder.likechecker(postkey);
                         holder.commentchecker(postkey);

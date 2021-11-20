@@ -175,7 +175,6 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                             for(DataSnapshot dataSnapshot1: snapshot.getChildren()){
                                 dataSnapshot1.getRef().removeValue();
 
-
                             }
                         }
 
