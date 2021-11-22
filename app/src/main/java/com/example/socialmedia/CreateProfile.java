@@ -175,7 +175,7 @@ public class CreateProfile extends AppCompatActivity {
                 return reference.getDownloadUrl();
             }).addOnCompleteListener(task -> {
 
-                if(task.isSuccessful()){
+                if(task.isSuccessful()&&downloadUri2!=null){
                     Uri downloadUri = task.getResult();
 
                     Map<String,String> profile = new HashMap<>();

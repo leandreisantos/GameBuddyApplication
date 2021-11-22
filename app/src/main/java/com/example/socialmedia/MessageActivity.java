@@ -128,12 +128,12 @@ public class MessageActivity extends AppCompatActivity {
         rootref2 = database.getReference("Message").child(receiver_uid).child(sender_uid);
         typingref = database.getReference("typing");
 
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+//        mediaRecorder = new MediaRecorder();
+//        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+//        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+//        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
 
-        mediaRecorder.setOutputFile(file);
+//        mediaRecorder.setOutputFile(file);
 
         sendbtn.setOnClickListener(v -> SendMessage());
         cambtn.setOnClickListener(v -> {

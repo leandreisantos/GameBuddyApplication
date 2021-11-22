@@ -68,6 +68,7 @@
         android:layout_marginStart="20dp"/>
 
     <EditText
+        android:id="@+id/et2_paypal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/border_input"
@@ -79,7 +80,23 @@
         android:padding="10dp"
         android:textColor="@color/white"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loginlot"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et2_paypal"
+        app:layout_constraintBottom_toTopOf="@id/lbl_ce"
+        app:lottie_rawRes="@raw/paypallot"
+        android:layout_marginTop="20dp"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
+
+
+
     <TextView
+        android:id="@+id/lbl_ce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Event"

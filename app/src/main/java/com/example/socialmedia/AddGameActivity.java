@@ -65,6 +65,7 @@ public class AddGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_game);
 
         gameMember = new GameMember();
+        devMember = new developerMember();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

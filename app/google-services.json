@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "585830556829",
-    "project_id": "game-buddy-8a288",
-    "storage_bucket": "game-buddy-8a288.appspot.com"
+    "project_number": "398447953732",
+    "project_id": "gamebuddy-f0a52",
+    "storage_bucket": "gamebuddy-f0a52.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:585830556829:android:1eba89c2f6c631a231e074",
+        "mobilesdk_app_id": "1:398447953732:android:9bbc9ce4b5079d31fb3911",
         "android_client_info": {
           "package_name": "com.example.socialmedia"
         }
       },
       "oauth_client": [
         {
-          "client_id": "585830556829-7qepv4urcditthppkpt82g62g8t8m41b.apps.googleusercontent.com",
+          "client_id": "398447953732-6p83numeah6kq3550vqff61rbq6dqrg4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.socialmedia",
-            "certificate_hash": "b2ed501f1cec847a9e642ac7d7c384cb59acba9e"
+            "certificate_hash": "f07b7b8236a7e9c47af23d2605a2a8d65e3fea74"
           }
         },
         {
-          "client_id": "585830556829-mtuibq29gurfjrqugsu42n9p4jrgtq90.apps.googleusercontent.com",
+          "client_id": "398447953732-e3bflrnjvnbeo6k6c9b0i8ci1phdn3gp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC_dKA7ksMDbiH4HtSGAPCBO-e-H58BS3Y"
+          "current_key": "AIzaSyBp0x5maAzxAG6OQ5NWmZ8wYE9IHn30Huw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "585830556829-mtuibq29gurfjrqugsu42n9p4jrgtq90.apps.googleusercontent.com",
+              "client_id": "398447953732-e3bflrnjvnbeo6k6c9b0i8ci1phdn3gp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

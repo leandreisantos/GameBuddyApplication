@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,6 +28,7 @@ public class GithubSignInActivity extends AppCompatActivity {
     EditText gitEmail;
     Button btn;
     ProgressBar pb;
+    TextView back;
 
     FirebaseAuth mAuth;
 
@@ -42,6 +44,7 @@ public class GithubSignInActivity extends AppCompatActivity {
         gitEmail = findViewById(R.id.et_email_git);
         btn = findViewById(R.id.button_login);
         pb = findViewById(R.id.pb_git);
+        back = findViewById(R.id.tv_back_git);
 
 
         btn.setOnClickListener(v -> {
@@ -62,6 +65,8 @@ public class GithubSignInActivity extends AppCompatActivity {
                );
             }
         });
+
+        back.setOnClickListener(view -> onBackPressed());
 
 
     }

@@ -54,7 +54,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/iv_cp_bg"
-                        android:scaleType="fitCenter"/>
+                        android:scaleType="centerCrop"/>
 
                 </androidx.cardview.widget.CardView>
 
