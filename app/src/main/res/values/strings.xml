@@ -103,5 +103,8 @@
 
     <string name="report_desc">Thank you for your concern,this report help the community of Gamebuddy to avoid malicious content.Send a reason and the team check the post and send a response to you.</string>
 
+    <string name="facebook_app_id">403985671426930</string>
+    <string name="fb_login_protocol_scheme">fb403985671426930</string>
+
 
 </resources>

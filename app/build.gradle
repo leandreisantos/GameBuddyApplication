@@ -105,7 +105,5 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 
 
-
-
 }
 apply plugin: 'com.google.gms.google-services'

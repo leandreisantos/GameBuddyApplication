@@ -3,8 +3,12 @@ package com.example.socialmedia;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -23,6 +27,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -63,10 +69,15 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private static int RC_SIGN_IN = 123;
 
+    CallbackManager mCallbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Initialize facebook sdk
+        FacebookSdk.sdkInitialize(LoginActivity.this);
 
         forgotpass = findViewById(R.id.tv_forgot_pass);
         emailEt = findViewById(R.id.login_email_et);
@@ -197,6 +208,12 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this,GithubSignInActivity.class);
             startActivity(intent);
         });
+        fb.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this,FaceBookLogin.class);
+            startActivity(intent);
+        });
+
+
 
 
     }
