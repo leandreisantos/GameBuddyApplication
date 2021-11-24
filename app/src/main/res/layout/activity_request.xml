@@ -36,6 +36,17 @@
         android:layout_marginTop="20dp"
         android:id="@+id/recyclerview_requestf3"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loginlot"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview_requestf3"
+        app:lottie_rawRes="@raw/creategrouplot"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

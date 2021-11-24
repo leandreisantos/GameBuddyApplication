@@ -1,5 +1,6 @@
 package com.example.socialmedia;
 
+import android.app.Application;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ public class RequestViewholder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void setRequest(FragmentActivity activity, String name, String url, String profession, String bio,
+    public void setRequest(Application application, String name, String url, String profession, String bio,
                            String Privacy, String email, String followers, String website, String userid){
 
         imageView = itemView.findViewById(R.id.imageView_request);

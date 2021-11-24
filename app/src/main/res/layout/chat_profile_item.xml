@@ -1,67 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="10dp"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/bg_input_login"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="10dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_vertical"
+        app:cardCornerRadius="35dp"
+        app:cardPreventCornerOverlap="false">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center_vertical"
-                app:cardCornerRadius="35dp"
-                app:cardPreventCornerOverlap="false">
-
-                <ImageView
-                    android:id="@+id/iv_ch_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_baseline_person_24"
-                    android:clickable="true"
-                    android:scaleType="fitCenter" />
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_ch_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_baseline_person_24"
+            android:clickable="true"
+            android:scaleType="fitCenter" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/white"
+        android:id="@+id/name_ch_item_tv"
+        android:text="name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/icon"
+        android:text="Send Message"
+        android:id="@+id/send_messagech_item_btn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="10dp"/>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:padding="10dp">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="70dp"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                app:cardCornerRadius="35dp"-->
+<!--                app:cardPreventCornerOverlap="false">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/iv_ch_item"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:background="@drawable/ic_baseline_person_24"-->
+<!--                    android:clickable="true"-->
+<!--                    android:scaleType="fitCenter" />-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textColor="@color/red"-->
+<!--                android:text="Send Message"-->
+<!--                android:id="@+id/send_messagech_item_btn"-->
+<!--                android:hint="time"-->
+<!--                android:layout_gravity="right"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="10sp"-->
+<!--                android:paddingStart="5dp"-->
+<!--                android:textColor="@android:color/darker_gray"-->
+<!--                android:id="@+id/name_ch_item_tv"-->
+<!--                android:hint="name" />-->
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/red"
-                android:text="Send Message"
-                android:id="@+id/send_messagech_item_btn"
-                android:hint="time"
-                android:layout_gravity="right"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:paddingStart="5dp"
-                android:textColor="@android:color/darker_gray"
-                android:id="@+id/name_ch_item_tv"
-                android:hint="name" />
-
-            <TextView
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/cardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
@@ -74,9 +122,9 @@
 
 
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

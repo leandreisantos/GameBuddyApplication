@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -37,6 +38,7 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     EditText searchEt;
     String userid;
+    TextView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
         
         searchEt = findViewById(R.id.search_userch);
         recyclerView = findViewById(R.id.rv_ch);
+        back = findViewById(R.id.tv_back_ac);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ChatActivity.this));
         profileRef = database.getReference("followers").child(userid);
@@ -102,8 +105,6 @@ public class ChatActivity extends AppCompatActivity {
                                         intent.putExtra("u",url);
                                         intent.putExtra("uid",uid);
                                         startActivity(intent);
-
-
 
                                     }
                                 });

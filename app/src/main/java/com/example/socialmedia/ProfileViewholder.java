@@ -124,6 +124,36 @@ public class ProfileViewholder extends RecyclerView.ViewHolder {
 
 
     }
+        public void setallGameDeveloper(Application fragmentActivity,String uid){
+
+        iv_developer = itemView.findViewById(R.id.iv_profile_dl);
+        tvNameDeveloper=itemView.findViewById(R.id.tv_name_dl);
+        tvAboutDeveloper= itemView.findViewById(R.id.tv_about_dl);
+
+        documentReference = database.getReference("All users").child(uid);
+
+        documentReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = snapshot.child("name").getValue(String.class);
+                String about = snapshot.child("about").getValue(String.class);
+                String url = snapshot.child("url").getValue(String.class);
+
+                Picasso.get().load(url).into(iv_developer);
+                tvNameDeveloper.setText(name);
+                tvAboutDeveloper.setText(about);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+    }
 
     public void setProfileInchat(Application fragmentActivity, String name, String uid, String prof,
                                  String url){

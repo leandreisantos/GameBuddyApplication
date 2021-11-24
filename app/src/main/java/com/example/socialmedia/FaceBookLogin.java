@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -26,6 +28,7 @@ public class FaceBookLogin extends AppCompatActivity {
 
 
     LoginButton loginButton;
+    TextView back;
 
     CallbackManager mCallbackManager;
     private FirebaseAuth mAuth;
@@ -34,6 +37,10 @@ public class FaceBookLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_book_login);
+
+        back = findViewById(R.id.tv_fb_back);
+
+        back.setOnClickListener(view -> onBackPressed());
 
         //Initialize facebook sdk
         FacebookSdk.sdkInitialize(FaceBookLogin.this);

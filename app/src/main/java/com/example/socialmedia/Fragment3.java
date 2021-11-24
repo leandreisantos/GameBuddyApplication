@@ -40,12 +40,13 @@ public class Fragment3 extends Fragment {
     DatabaseReference databaseReference,databaseReference1,profileRef,ntRef;
     RecyclerView recyclerView,recyclerView_profile;
     RequestMember requestMember;
-    TextView requesttv;
+    TextView requesttv,requestcount;
     EditText editText;
     String currentUserId,usertoken;
     String uid;
     NewMember newMember;
     TextView req;
+    int count;
 
     @Nullable
     @Override
@@ -72,6 +73,7 @@ public class Fragment3 extends Fragment {
 
         newMember = new NewMember();
         recyclerView_profile = getActivity().findViewById(R.id.recyclerview_profile);
+        requestcount = getActivity().findViewById(R.id.req_count);
 
 
         editText = getActivity().findViewById(R.id.search_f3);
@@ -189,6 +191,16 @@ public class Fragment3 extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                count = Integer.parseInt(String.valueOf(dataSnapshot.getChildrenCount()));
+                requestcount.setText(String.valueOf(count));
+            }
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -267,89 +279,89 @@ public class Fragment3 extends Fragment {
         recyclerView_profile.setAdapter(firebaseRecyclerAdapter1);
 
 
-        FirebaseRecyclerOptions<RequestMember> options =
-                new FirebaseRecyclerOptions.Builder<RequestMember>()
-                        .setQuery(databaseReference,RequestMember.class)
-                        .build();
-
-        FirebaseRecyclerAdapter<RequestMember,RequestViewholder> firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<RequestMember, RequestViewholder>(options) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull RequestViewholder holder, int position, @NonNull RequestMember model) {
-
-
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String currentUserId = user.getUid();
-                        final String postkey = getRef(position).getKey();
-
-                        holder.setRequest(getActivity(),model.getName(),model.getUrl(),model.getProfession()
-                                ,model.getBio(),model.getPrivacy(),model.getEmail(),model.getFollowers(),model.getWebsite(),model.getUserid());
-
-                        String uid = getItem(position).getUserid();
-                        String name = getItem(position).getName();
-                        String bio = getItem(position).getBio();
-                        String email = getItem(position).getEmail();
-                        String privacy = getItem(position).getPrivacy();
-                        String url = getItem(position).getUrl();
-                        String website = getItem(position).getWebsite();
-                        String age = getItem(position).getProfession();
-
-
-                        holder.button2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                String name = getItem(position).getName();
-                                decline(name);
-                            }
-                        });
-                        holder.button1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                                String uid = getItem(position).getUserid();
-                                databaseReference1 = database.getReference("followers").child(currentUserId);
-                                requestMember.setName(name);
-
-                                requestMember.setUserid(uid);
-                                requestMember.setUrl(url);
-                                requestMember.setProfession(age);
-                                String id = databaseReference1.push().getKey();
-                                databaseReference1.child(uid).setValue(requestMember);
-                                databaseReference.child(currentUserId).child(uid).removeValue();
-
-                                Toast.makeText(getActivity(), "Accepted", Toast.LENGTH_SHORT).show();
-                                sendNotification(currentUserId,name);
-                                decline(name);
-
-
-                                //handling request notification
-
-                                newMember.setName(name);
-                                newMember.setUid(uid);
-                                newMember.setUrl(url);
-                                newMember.setSeen("no");
-                                newMember.setText("Started Following you ");
-
-                                ntRef.child(uid+"f").setValue(newMember);
-
-
-                            }
-                        });
-
-                    }
-
-                    @NonNull
-                    @Override
-                    public RequestViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext())
-                                .inflate(R.layout.request_item,parent,false);
-
-                        return new RequestViewholder(view);
-                    }
-                };
-
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
-        firebaseRecyclerAdapter.startListening();
+//        FirebaseRecyclerOptions<RequestMember> options =
+//                new FirebaseRecyclerOptions.Builder<RequestMember>()
+//                        .setQuery(databaseReference,RequestMember.class)
+//                        .build();
+//
+//        FirebaseRecyclerAdapter<RequestMember,RequestViewholder> firebaseRecyclerAdapter =
+//                new FirebaseRecyclerAdapter<RequestMember, RequestViewholder>(options) {
+//                    @Override
+//                    protected void onBindViewHolder(@NonNull RequestViewholder holder, int position, @NonNull RequestMember model) {
+//
+//
+//                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                        String currentUserId = user.getUid();
+//                        final String postkey = getRef(position).getKey();
+//
+//                        holder.setRequest(getActivity(),model.getName(),model.getUrl(),model.getProfession()
+//                                ,model.getBio(),model.getPrivacy(),model.getEmail(),model.getFollowers(),model.getWebsite(),model.getUserid());
+//
+//                        String uid = getItem(position).getUserid();
+//                        String name = getItem(position).getName();
+//                        String bio = getItem(position).getBio();
+//                        String email = getItem(position).getEmail();
+//                        String privacy = getItem(position).getPrivacy();
+//                        String url = getItem(position).getUrl();
+//                        String website = getItem(position).getWebsite();
+//                        String age = getItem(position).getProfession();
+//
+//
+//                        holder.button2.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                String name = getItem(position).getName();
+//                                decline(name);
+//                            }
+//                        });
+//                        holder.button1.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//
+//                                String uid = getItem(position).getUserid();
+//                                databaseReference1 = database.getReference("followers").child(currentUserId);
+//                                requestMember.setName(name);
+//
+//                                requestMember.setUserid(uid);
+//                                requestMember.setUrl(url);
+//                                requestMember.setProfession(age);
+//                                String id = databaseReference1.push().getKey();
+//                                databaseReference1.child(uid).setValue(requestMember);
+//                                databaseReference.child(currentUserId).child(uid).removeValue();
+//
+//                                Toast.makeText(getActivity(), "Accepted", Toast.LENGTH_SHORT).show();
+//                                sendNotification(currentUserId,name);
+//                                decline(name);
+//
+//
+//                                //handling request notification
+//
+//                                newMember.setName(name);
+//                                newMember.setUid(uid);
+//                                newMember.setUrl(url);
+//                                newMember.setSeen("no");
+//                                newMember.setText("Started Following you ");
+//
+//                                ntRef.child(uid+"f").setValue(newMember);
+//
+//
+//                            }
+//                        });
+//
+//                    }
+//
+//                    @NonNull
+//                    @Override
+//                    public RequestViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                        View view = LayoutInflater.from(parent.getContext())
+//                                .inflate(R.layout.request_item,parent,false);
+//
+//                        return new RequestViewholder(view);
+//                    }
+//                };
+//
+//        recyclerView.setAdapter(firebaseRecyclerAdapter);
+//        firebaseRecyclerAdapter.startListening();
     }
 
     private void decline(String name) {

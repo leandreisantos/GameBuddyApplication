@@ -2,8 +2,12 @@ package com.example.socialmedia;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +31,17 @@ public class RequestActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference databaseReference,databaseReference1,profileRef,ntRef;
 
+    RecyclerView recyclerView;
+
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     String currentUserId = user.getUid();
 
     RequestMember requestMember;
 
+    NewMember newMember;
+
     TextView back;
+    String usertoken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,16 @@ public class RequestActivity extends AppCompatActivity {
         requestMember = new RequestMember();
 
         databaseReference = database.getReference("Requests").child(currentUserId);
+        ntRef = database.getReference("notification").child(currentUserId);
+        newMember = new NewMember();
+        recyclerView = findViewById(R.id.recyclerview_requestf3);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(RequestActivity.this));
 
         back = findViewById(R.id.tv_back_req);
 
@@ -64,10 +83,12 @@ public class RequestActivity extends AppCompatActivity {
                     protected void onBindViewHolder(@NonNull RequestViewholder holder, int position, @NonNull RequestMember model) {
 
 
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String currentUserId = user.getUid();
                         final String postkey = getRef(position).getKey();
 
-//                        holder.setRequest(getActivity(),model.getName(),model.getUrl(),model.getProfession()
-//                                ,model.getBio(),model.getPrivacy(),model.getEmail(),model.getFollowers(),model.getWebsite(),model.getUserid());
+                        holder.setRequest(getApplication(),model.getName(),model.getUrl(),model.getProfession()
+                                ,model.getBio(),model.getPrivacy(),model.getEmail(),model.getFollowers(),model.getWebsite(),model.getUserid());
 
                         String uid = getItem(position).getUserid();
                         String name = getItem(position).getName();
@@ -102,20 +123,19 @@ public class RequestActivity extends AppCompatActivity {
                                 databaseReference.child(currentUserId).child(uid).removeValue();
 
                                 Toast.makeText(RequestActivity.this, "Accepted", Toast.LENGTH_SHORT).show();
-//                                sendNotification(currentUserId,name);
+                                sendNotification(currentUserId,name);
                                 decline(name);
 
 
                                 //handling request notification
 
-//                                newMember.setName(name);
-//                                newMember.setUid(uid);
-//                                newMember.setUrl(url);
-//                                newMember.setSeen("no");
-//                                newMember.setAction("L");
-//                                newMember.setText("Started Following you ");
-//
-//                                ntRef.child(uid+"f").setValue(newMember);
+                                newMember.setName(name);
+                                newMember.setUid(uid);
+                                newMember.setUrl(url);
+                                newMember.setSeen("no");
+                                newMember.setText("Started Following you ");
+
+                                ntRef.child(uid+"f").setValue(newMember);
 
 
                             }
@@ -133,7 +153,7 @@ public class RequestActivity extends AppCompatActivity {
                     }
                 };
 
-//        recyclerView.setAdapter(firebaseRecyclerAdapter);
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
         firebaseRecyclerAdapter.startListening();
     }
 
@@ -155,5 +175,37 @@ public class RequestActivity extends AppCompatActivity {
                 ///
             }
         });
+    }
+
+    private void sendNotification(String currentUserId, String name){
+
+        FirebaseDatabase.getInstance().getReference().child(currentUserId).child("token")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        usertoken = snapshot.getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                FcmNotificationSender notificationsSender =
+                        new FcmNotificationSender(usertoken,"Social Media",name+" Started Following you",
+                                getApplicationContext(),RequestActivity.this);
+
+                notificationsSender.SendNotifications();
+
+            }
+        },3000);
+
     }
 }

@@ -1,30 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".ChatActivity">
 
+    <TextView
+        android:id="@+id/tv_back_ac"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Friends"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="13dp"/>
     <EditText
+        app:layout_constraintTop_toBottomOf="@id/tv_back_ac"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search"
-        android:layout_margin="5dp"
+        android:textColorHint="@color/grey"
+        android:layout_margin="10dp"
         android:id="@+id/search_userch"
         android:background="@drawable/search_back"
         android:drawableStart="@drawable/ic_baseline_search_24"
         android:paddingStart="10dp"
         android:drawablePadding="10dp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:padding="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@id/search_userch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/rv_ch"/>
 
 
@@ -32,4 +54,4 @@
 
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
