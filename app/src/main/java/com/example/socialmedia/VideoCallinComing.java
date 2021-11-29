@@ -28,7 +28,8 @@ import java.net.URL;
 public class VideoCallinComing extends AppCompatActivity {
 
     DatabaseReference referencecaller,referenceVc;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    databaseReference dbr = new databaseReference();
+    FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     String sender_url,sender_prof,sender_name,sender_uid,receiver_uid;
     VcModel model;
     ImageView imageView;
@@ -135,13 +136,15 @@ public class VideoCallinComing extends AppCompatActivity {
     private void sendResponse(String response) {
 
         if (response.equals("yes")){
-
+            Toast.makeText(VideoCallinComing.this, response, Toast.LENGTH_SHORT).show();
             model.setKey(sender_name+receiver_uid);
             model.setResponse(response);
-            referenceVc.child("res").setValue(model);
+            Toast.makeText(VideoCallinComing.this,sender_name+receiver_uid, Toast.LENGTH_SHORT).show();
+            Toast.makeText(VideoCallinComing.this, response, Toast.LENGTH_SHORT).show();
+            referenceVc.child("key").setValue(model);
             joinmeeting();
-            Handler handler = new Handler();
-            handler.postDelayed(() -> referenceVc.removeValue(),3000);
+//            Handler handler = new Handler();
+//            handler.postDelayed(() -> referenceVc.removeValue(),3000);
 
         }else if (response.equals("no")){
 

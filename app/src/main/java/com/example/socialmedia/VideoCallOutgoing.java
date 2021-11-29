@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,11 +35,13 @@ public class VideoCallOutgoing extends AppCompatActivity {
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     DatabaseReference reference,reference_response;
+    VcModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_call_outgoing);
+        model = new VcModel();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         sender_uid = user.getUid();
@@ -83,11 +86,27 @@ public class VideoCallOutgoing extends AppCompatActivity {
         sendCallInvitation();
         checkRespose();
 
+        declinebtn.setOnClickListener(view -> cancelVC());
+
+    }
+
+    private void cancelVC() {
+        DatabaseReference cancelRef;
+        cancelRef = database.getInstance().getReference("cancel");
+
+        model.setResponse("no");
+        cancelRef.child(sender_uid).setValue(model);
+        Toast.makeText(this, "Call ended", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(VideoCallOutgoing.this,MessageActivity.class);
+        startActivity(intent);
+        finish();
+
+
     }
 
     private void checkRespose() {
         reference_response = database.getReference("vcref").child(sender_uid).child(receiver_uid);
-        reference_response.child("res").addValueEventListener(new ValueEventListener() {
+        reference_response.child("key").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
