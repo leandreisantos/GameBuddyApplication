@@ -158,7 +158,7 @@ public class CreateProfile extends AppCompatActivity {
 
             Task<Uri> urlTask2 = uploadTask2.continueWithTask((Task<UploadTask.TaskSnapshot> task2) -> {
                 if(!task2.isSuccessful()){
-                    Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "error1", Toast.LENGTH_SHORT).show();
                     throw task2.getException();
                 }
                 return reference2.getDownloadUrl();
@@ -168,7 +168,7 @@ public class CreateProfile extends AppCompatActivity {
                 }
             });
 
-            Task<Uri> urlTask = uploadTask.continueWithTask(task -> {
+            Task<Uri> urlTask = uploadTask.continueWithTask((Task<UploadTask.TaskSnapshot> task) -> {
                 if(!task.isSuccessful()){
                     throw task.getException();
                 }

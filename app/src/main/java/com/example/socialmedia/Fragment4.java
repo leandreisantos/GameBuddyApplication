@@ -283,6 +283,7 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         holder.likechecker(postkey);
                         holder.commentchecker(postkey);
 
+
                         holder.sharebtn.setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(),ShareActivity.class);
                             intent.putExtra("p","public");
@@ -391,9 +392,6 @@ public class Fragment4 extends Fragment implements View.OnClickListener{
                         holder.iv_post.setOnClickListener(v -> ShowPost(url,userid,postkey,name));
 
                     }
-
-
-
 
                     @NonNull
                     @Override
